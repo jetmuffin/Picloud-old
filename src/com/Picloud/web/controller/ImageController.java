@@ -54,7 +54,6 @@ public class ImageController {
 		//	FileUtils.copyInputStreamToFile(attach.getInputStream(), f);
 			System.out.println(attach.getName()+","+attach.getOriginalFilename()+","+attach.getContentType());
 		}
-		
 		return "redirect:/server/list";			
 	}
 	

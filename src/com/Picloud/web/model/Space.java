@@ -1,5 +1,7 @@
 package com.Picloud.web.model;
 
+import java.text.DecimalFormat;
+
 public class Space {
 	
 	/**
@@ -23,4 +25,70 @@ public class Space {
 	String storage  = "";
 	//图片数量
 	String number = "";
+	
+	
+	public Space() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public Space(String key, String name, String desc, String cover,
+			String uid, String storage, String number) {
+		super();
+		this.key = key;
+		this.name = name;
+		this.desc = desc;
+		this.cover = cover;
+		this.uid = uid;
+		this.storage = storage;
+		this.number = number;
+	}
+
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	public String getCover() {
+		return cover;
+	}
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getStorage() {
+		return storage;
+	}
+	public void setStorage(String storage) {
+		double d = Double.parseDouble(storage);
+		DecimalFormat df  = new DecimalFormat("######0.00");  
+		this.storage = df.format(d);
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
+	
 }

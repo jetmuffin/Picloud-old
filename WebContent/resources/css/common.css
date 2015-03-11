@@ -1,0 +1,458 @@
+/**
+* @author Jet-Muffin
+*/
+body{
+	font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+	color: #676A6C;
+}
+li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+	color: #676A6C;
+	cursor: pointer;
+}
+a:hover{
+	text-decoration: none;
+	color: #676A6C;	
+}
+ul{
+	margin: 0;
+	padding: 0;
+}
+h1, h2 , h3 {
+	margin: 0;
+}
+p{
+	/*margin: 0;*/
+}
+button{
+	cursor: pointer;
+}
+body{
+	margin: 0;
+	padding: 0;
+	font-size: 14px;
+	color: #676a6c;
+}
+#wrap{
+	width: 100%;
+	background-color: #2F4050 !important;
+}
+
+/**
+*	sidebar
+*	@author Jet-Muffin
+*/
+.sidebar{
+	position: absolute;
+	z-index: 101;
+	width: 220px;
+	background-color: #2F4050 !important;
+	color:#A7B1C2;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+	height: 100%;
+
+}
+.sidebar a{
+	color: #a7b1c2;
+}
+.sidebar-nav> .nav-li {
+	position: relative;
+	display: block;
+}
+.sidebar-nav > .nav-li > a {
+	color: #a7b1c2;
+	font-weight: 600;
+	padding: 14px 20px 14px 25px;
+}
+.sidebar-nav >.nav-li :hover{
+	background-color: #293846; 
+	color: #fff;
+}
+.sidebar-nav > .active {
+	border-left: 4px solid #19aa8d;
+	background-color: #293846 ;
+}
+.sidebar-nav >  .active > a{
+	color: #fff;
+}
+.sidebar-nav >  .active ul{
+	border: 0;
+	background-color: #293846 ;
+}
+.sidebar-nav >.nav-li   > ul{
+	color:#A7B1C2;
+}
+.profile-element img{
+	margin-bottom: 5px;
+}
+.profile-element span{
+	display: block;
+}
+.logo-element{
+	display: none;
+}
+.nav-second-level li a {
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-left: 50px;
+}
+.nav-header{
+	height: 155px;
+	background-image: url("../images/header-profile.png");
+	padding: 33px 25px;
+}
+.nav-label{
+	margin-left: 5px;
+}
+
+
+.navbar-static-side,.nav-header, li.active, .page-wrapper, .footer {
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+}
+/**
+*	mini-sidebar
+*	@author Jet-Muffin
+*/
+body.mini-navbar .navbar-static-side {
+	width: 70px;
+}
+body.mini-navbar .nav-second-level {
+	display: none;
+}
+body.mini-navbar .profile-element, body.mini-navbar .nav-label, body.mini-navbar .navbar-default .nav li a span {
+	display: none;
+}
+body.mini-navbar .page-wrapper {
+	margin: 0 0 0 70px;
+}
+body.mini-navbar .navbar-default .nav > li > a {
+	font-size: 16px;
+}
+body.mini-navbar .nav-header {
+	height: 65px;
+	background-color: #1ab394;
+	padding: 15px 20px;
+}
+body.mini-navbar .logo-element{
+	display: block;
+	font-size: 24px;
+	color: #fff;
+}
+body.mini-navbar .nav-second-level {
+	position: absolute;
+	left: 65px;
+	top: 0px;
+	background-color: #2f4050;
+	padding: 10px 10px 10px 10px;
+	font-size: 12px;
+	width: 100px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+body.mini-navbar .sidebar-nav >.nav-li :hover{
+	background-color: #2F4050 ;
+}
+body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
+	font-size: 13px;
+	border-radius: 3px;
+}
+body.mini-navbar .nav-second-level li a {
+	padding: 10px 10px 10px 15px;
+}
+body.mini-navbar .nav-second-level li a:hover{
+	background-color: #293846 !important;
+}
+/**
+*	nav-top
+*	@author Jet-Muffin
+*/
+.border-bottom {
+	border-bottom: 1px solid #e7eaec !important;
+}
+.navbar-header{
+	float: left;
+}
+.minimalize-styl-2 {
+	padding: 4px 12px;
+	margin: 14px 5px 5px 20px;
+	font-size: 14px;
+	float: left;
+	background-color: #1AB394;
+	border-color: #1AB394;
+}
+.minimalize-styl-2:hover{
+	background-color: #18A588;
+	border-color:#18A588;
+}
+.navbar-top-links{
+	margin-right: 0;
+	float: right;
+}
+.navbar-top-links li {
+	display: inline-block;
+}
+.navbar-top-links span{
+	color: #999C9E !important;
+}
+.navbar-top-links li a {
+	padding-top: 18px;
+	padding-bottom: 14px;
+	min-height: 50px;
+	color: #777;
+}
+.page-heading{
+	background-color: #fff;
+	border-top: #E7EAEC 4px solid;
+	padding: 5px 0;
+}
+.page-heading h2{
+	font-weight: normal;
+}
+.page-heading .breadcrumb{
+	background-color: #fff;
+	margin-bottom: 0 !important;
+}
+
+/**
+*	wrap-content
+*	@author Jet-Muffin
+*/
+.page-wrapper{
+	background-color: #f3f3f4;
+	margin: 0 0 0 220px;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+	min-height: 600px;
+	position: relative;
+}
+.wrapper-content{
+	padding: 20px;
+}
+
+
+/**
+*	footer
+*	@author Jet-Muffin
+*/
+.footer {
+	background: none repeat scroll 0 0 white;
+	border-top: 1px solid #e7eaec;
+	padding: 10px 20px;
+}
+/**
+*	item-box
+*	@author Jet-Muffin
+*/
+
+.ibox {
+	clear: both;
+	margin-bottom: 25px;
+	margin-top: 0;
+	padding: 0;
+}
+.ibox-title {
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background-color: #ffffff;
+	border-color: #e7eaec;
+	border-image: none;
+	border-style: solid solid none;
+	border-width: 4px 0px 0;
+	color: inherit;
+	margin-bottom: 0;
+	padding: 14px 15px 7px;
+	height: 48px;
+}
+.ibox-title h5 {
+	display: inline-block;
+	font-size: 14px;
+	margin: 0 0 7px;
+	padding: 0;
+	text-overflow: ellipsis;
+	float: left;
+}
+.ibox-tools {
+	display: inline-block;
+	float: right;
+	margin-top: 0;
+	position: relative;
+	padding: 0;
+}
+.ibox-tools a {
+	cursor: pointer;
+	margin-left: 5px;
+	color: #c4c4c4;
+}
+.ibox-content {
+	background-color: #ffffff;
+	color: inherit;
+	padding: 15px 20px 20px 20px;
+	border-color: #e7eaec;
+	border-image: none;
+	border-style: solid solid none;
+	border-width: 1px 0px;
+	clear:both;
+}
+
+/**
+*	File Box
+*	@author Jet-Muffin
+*/
+.file-box {
+/*	float: left;
+	width: 220px;*/
+}
+.file {
+	border: 1px solid #e7eaec;
+	padding: 0;
+	background-color: #ffffff;
+	position: relative;
+	margin-bottom: 20px;
+	margin-right: 20px;
+}
+.corner {
+	position: absolute;
+	display: inline-block;
+	width: 0;
+	height: 0;
+	line-height: 0;
+	border: 0.6em solid transparent;
+	border-right: 0.6em solid #f1f1f1;
+	border-bottom: 0.6em solid #f1f1f1;
+	right: 0em;
+	bottom: 0em;
+}
+.file .icon, .file .image {
+	height: 100px;
+	overflow: hidden;
+}
+.file .file-name {
+	padding: 10px;
+	background-color: #f8f8f8;
+	border-top: 1px solid #e7eaec;
+	height: 60px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/**
+*	Input rewrite
+*	@author Jet-Muffin
+*/
+.jet-input{
+	border-radius: 0;
+}
+.jet-input:focus{
+	border-color: #1AB394;
+	box-shadow: none;
+}
+
+/**
+*	Button rewrite
+*	@author Jet-Muffin
+*/
+.btn-active:hover,.jet-button:hover,.jet-button:active,.btn-active:active,.jet-button:visited,.btn-active:visited,.jet-button:focus,.btn-active:focus{
+	background-color: #18a689;
+	border-color: #18a689;
+	color:#fff;
+}
+.jet-button,.btn-active{
+	background-color: #1AB394;
+	border-color:#1AB394;
+	color:#fff;
+}
+
+/**
+*	Progress rewrite
+*	@author Jet-Muffin
+*/
+.progress-small{
+	margin-top: 10px;
+}
+.progress-small, .progress-small .progress-bar {
+	height: 10px;
+}
+.progress .progress-default {
+	background-color: #1ab394;
+}
+
+/**
+*	label & badge colors
+*	@author Jet-Muffin
+*/
+.label-primary,.badge-primary {
+	  background-color: #1ab394;
+	  color: #FFFFFF;
+}
+.label-success,.badge-success {
+	  background-color: #1c84c6;
+	  color: #FFFFFF;
+}
+.label-warning,.badge-warning {
+	  background-color: #f8ac59;
+	  color: #FFFFFF;
+}
+.label-warning-light,.badge-warning-light {
+	  background-color: #f8ac59;
+	  color: #ffffff;
+}
+.label-danger,.badge-danger {
+	  background-color: #ed5565;
+	  color: #FFFFFF;
+}
+.label-info,.badge-info {
+	  background-color: #23c6c8;
+	  color: #FFFFFF;
+}
+.label-inverse,.badge-inverse {
+	  background-color: #262626;
+	  color: #FFFFFF;
+}
+.label-white,.badge-white {
+	  background-color: #FFFFFF;
+	  color: #5E5E5E;
+}
+.label-white,.badge-disable {
+	  background-color: #2A2E36;
+	  color: #8B91A0;
+}
+
+/**
+*	pagination rewrite
+*	@author Jet-Muffin
+*/
+
+.jet-pagination>.active>a, .jet-pagination>.active>span, .jet-pagination>.active>a:hover, .jet-pagination>.active>span:hover, .jet-pagination>.active>a:focus, .jet-pagination>.active>span:focus {
+	background-color: #1AB394;
+	border-color: #1AB394;
+}
+.jet-pagination>li>a, .jet-pagination>li>span{
+	color: #1AB394;
+}
+.hr-line-dashed {
+	border-top: 1px dashed #e7eaec;
+	color: #ffffff;
+	background-color: #ffffff;
+	height: 1px;
+	margin: 5px 0;
+}
+.row{
+	margin: 0 !important;
+}
+.clear{
+	clear: both;
+}

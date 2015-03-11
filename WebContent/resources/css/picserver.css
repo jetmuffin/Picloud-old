@@ -1,0 +1,159 @@
+/**
+*	PicServer样式表
+*	@author Jet-Muffin
+*/
+
+.dropzone{
+	margin-bottom: 20px;
+}
+.dropzone-group{
+	float: left;
+}
+.dropzone-group{
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+}
+.dropzone-group select{
+	float: right;
+	width: 100px;
+	margin-right: 10px;
+}
+
+.space-info{
+	text-align: center;
+	padding-bottom: 10px;
+}
+.space-info i{
+	margin-right: 5px;
+}
+.space-desc{
+	margin: 0 20px;
+	color: #A5A5A5;
+}
+.space-info .info-figure{
+	display: block;
+	font-size: 20px;
+	font-family: 'open sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.no-padding{
+	padding: 0 ;
+}
+.space-pic img{
+	overflow: hidden;
+}
+.folder-list{
+	margin-bottom: 15px;
+}
+.folder-list li {
+	border-bottom: 1px solid #e7eaec;
+	display: block;
+}
+.folder-list li a {
+	color: #666666;
+	display: block;
+	padding: 5px 0;
+}
+.folder-list li i {
+	margin-right: 8px;
+	color: #3d4d5d;
+}
+.file-manager .hr-line-dashed {
+	margin: 15px 0;
+}
+.file-manager .space-desc{
+	color: #a5a5a5;
+	margin: 0;
+}
+.picture-search{
+	margin-bottom: 10px;
+}
+.gallery-pag{
+	margin-right: 30px;
+}
+.project-files li a {
+	font-size: 11px;
+	color: #676a6c;
+	margin-left: 10px;
+	line-height: 22px;
+}
+.view-picture{
+	overflow: hidden;
+}
+.logo{
+	font-size: 30px;
+	color: #0F9479;
+	text-shadow: 1px 1px 1px #999;
+}
+.logo i{
+	margin-right: 10px;
+}
+ .text-warning {
+	font-size: 14px;
+	color: #f8ac59;
+	margin-right: 8px;
+}
+.project-manager .tag-list li a {
+	font-size: 10px;
+	background-color: white;
+	padding: 5px 12px;
+	color: inherit;
+	border-radius: 2px;
+	border: 1px solid #e7eaec;
+	margin-right: 5px;
+	margin-top: 5px;
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.project-manager .tag-list li a i{
+	margin-right: 5px;
+}
+.project-manager .other-group{
+	margin-top: 10px;
+}
+.project-manager .other-group a{
+	margin: 0 5px;
+	width: 100px;
+}
+.view-profile {
+	min-height: 260px;
+}
+.view-profile .dl-horizontal dd{
+	margin: 0;
+}
+.view-profile .dl-horizontal dt{
+	width: 100px;
+	margin: 0;
+}
+.view-profile .dl-group{
+	margin: 5px -10px 5px 0  !important;
+}
+.picture-button{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.picture-button a{
+	margin-right: 5px;
+}
+.picture-button a i{
+	margin-right: 3px;
+}
+.switch{
+	position: absolute;
+	top: 70px;
+	right: 50px;
+}
+#picture_name{
+	overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+}
+.space-pic a{
+	height: 200px;
+width: 272px;
+display: block;
+overflow: hidden;
+}
