@@ -40,13 +40,13 @@
 
 	<bean id="hbaseConfig" class="com.Picloud.config.HbaseConfig">
 		<property name="clientPort">
-			<value>${clientPort} </value>
+			<value>11 </value>
 		</property>
 		<property name="quorum">
-			<value>${quorum} </value>
+			<value>11 </value>
 		</property>
 				<property name="master">
-			<value>${master} </value>
+			<value>11 </value>
 		</property>
 	</bean>
 </beans>

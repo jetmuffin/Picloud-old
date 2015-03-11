@@ -1,18 +1,27 @@
 package com.Picloud.config;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
 
 public class HbaseConfig {
 	private String clientPort;
 	private String quorum;
 	private String master;
-	private Configuration configuration = null;
+	private Configuration configuration;
 	
+	
+	
+	public HbaseConfig() {
+		super();
+		configuration  = HBaseConfiguration.create(); 
+	}
 	public String getClientPort() {
 		return clientPort;
 	}
 	public void setClientPort(String clientPort) {
 		this.clientPort = clientPort;
+		if(clientPort == null)
+				System.out.println("null");
 		configuration.set("hbase.zookeeper.property.clientPort", clientPort); 
 	}
 	public String getQuorum() {
