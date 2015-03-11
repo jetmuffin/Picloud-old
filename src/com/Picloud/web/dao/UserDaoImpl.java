@@ -2,7 +2,7 @@ package com.Picloud.web.dao;
 
 import com.Picloud.web.model.User;
 
-public class UserDao implements IUserDao {
+public class UserDaoImpl implements IUserDao {
 
 	@Override
 	public void add(User user) {

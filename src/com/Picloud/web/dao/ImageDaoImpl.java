@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.Picloud.web.model.Image;
 
-public class ImageDao implements IImageDao {
+public class ImageDaoImpl implements IImageDao {
 
 	@Override
 	public void add(Image image) {
