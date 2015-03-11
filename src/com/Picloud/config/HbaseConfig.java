@@ -20,8 +20,6 @@ public class HbaseConfig {
 	}
 	public void setClientPort(String clientPort) {
 		this.clientPort = clientPort;
-		if(clientPort == null)
-				System.out.println("null");
 		configuration.set("hbase.zookeeper.property.clientPort", clientPort); 
 	}
 	public String getQuorum() {
