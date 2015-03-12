@@ -1,4 +1,4 @@
-package com.Picloud.hbase.utils.impl;
+package com.Picloud.hbase.service.impl;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.data.hadoop.hbase.HbaseTemplate;
 
-import com.Picloud.hbase.utils.IHbaseOperation;
+import com.Picloud.hbase.service.IHbaseOperation;
 
 public class HbaseOperationImpl implements IHbaseOperation{
 	

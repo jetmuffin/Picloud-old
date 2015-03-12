@@ -1,4 +1,4 @@
-package com.Picloud.hbase.utils.impl;
+package com.Picloud.hbase.service.impl;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;

@@ -47,6 +47,7 @@ public class TestController {
 
 	@RequestMapping(value = "/test")
 	public String test() {
+		System.out.println("Test");
 		User user = new User();
 		user.setUid("112314");
 		user.setNickname("sunzequn");
