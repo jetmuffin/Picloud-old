@@ -58,7 +58,6 @@ public class HdfsHandler {
 		try{
 			if(fs.exists(p)){
 				throw new FileException("文件已存在！(HDFS LargeFile)");
-				return false;
 			}
 
 			Progressable progress = new Progressable(){
@@ -91,7 +90,6 @@ public class HdfsHandler {
 		try {
 			if(!fs.exists(path)){
 				throw new FileException("未找到文件！");
-				return false;
 			}
 			FSDataInputStream in =  fs.open(path);
 			OutputStream out = new FileOutputStream(localPath);
@@ -118,7 +116,6 @@ public class HdfsHandler {
 		try {
 			if(!fs.exists(path)){
 				throw new FileException("未找到文件！");
-				return false;
 			}
 			fs.delete(path, true);
 		} catch (IOException e) {			
