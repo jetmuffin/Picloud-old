@@ -1,5 +1,9 @@
 package com.Picloud.web.model;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
 	
 	/**
@@ -64,6 +68,7 @@ public class User {
 		this.spaceNum = spaceNum;
 	}
 
+	@NotEmpty(message="用户名不能为空")
 	public String getUid() {
 		return uid;
 	}
@@ -104,6 +109,7 @@ public class User {
 		this.website = website;
 	}
 
+	@NotEmpty(message="昵称不能为空")
 	public String getNickname() {
 		return nickname;
 	}
@@ -111,7 +117,8 @@ public class User {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-
+	
+	@Size(min=6,message="密码长度不能小于6位")
 	public String getPassword() {
 		return password;
 	}

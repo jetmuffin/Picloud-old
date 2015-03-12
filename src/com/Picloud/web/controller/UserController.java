@@ -3,6 +3,7 @@ package com.Picloud.web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,18 +13,28 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.Picloud.exception.UserException;
+
+import com.Picloud.web.dao.impl.UserDaoImpl;
 import com.Picloud.web.model.User;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	
+	@Autowired
+	private UserDaoImpl mUserDaoImpl;
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(String username,String password,HttpSession session){
-		//TODO 用户信息验证
-		//session.setAttribute("user", u);
-		return "redirect:index";
+	public String login(String uid,String password,HttpSession session){
+		User user = mUserDaoImpl.find(uid);
+		if(user==null){
+			throw new UserException("用户名不存在");
+		} else if(!user.getPassword().equals(password)) {
+			throw new UserException("用户名或密码错误");
+		}
+		session.setAttribute("user", user);
+		return "redirect:../index";
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
@@ -36,7 +47,10 @@ public class UserController {
 		if(br.hasErrors()) {
 			return "register";
 		}
-		System.out.println(user);
+		if(mUserDaoImpl.find(user.getUid())!=null){
+			throw new UserException("用户名已被使用");
+		}
+		mUserDaoImpl.add(user);
 		return "test";
 	}
 	
@@ -76,10 +90,9 @@ public class UserController {
 		return "user/log";
 	}
 	
-	//TODO 异常处理
-//	@ExceptionHandler(value=(UserException.class))
-//	public String handlerException(UserException e,HttpServletRequest req){
-//		req.setAttribute("e", e);
-//		return "error";
-//	}
+	@ExceptionHandler(value=(UserException.class))
+	public String handlerException(UserException e,HttpServletRequest req){
+		req.setAttribute("e", e);
+		return "error";
+	}
 }

@@ -51,7 +51,9 @@ public class TestController {
 		User user = new User();
 		user.setUid("112314");
 		user.setNickname("sunzequn");
-		mUserDaoImpl.add(user);
+		String q = "chen9434";
+		User u = mUserDaoImpl.find(q);
+		System.out.println(u);
 		return "index";
 	}
 

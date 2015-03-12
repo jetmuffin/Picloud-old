@@ -29,18 +29,18 @@
 		</div>
 	</present>
 	<div class="middle-box">
-		<form method="post" action="{:U('Index/Login/login')}">
+		<form method="post" action="user/login">
 			<div class="form-group">
 				<input type="text" class="form-control login-input" name="uid" title="uid" id="uid" placeholder="请输入用户名/邮箱" >
 			</div>
 			<div class="form-group">
-				<input type="password" class="form-control login-input" name="pwd" title="pwd" id="pwd"  placeholder="请输入密码">
+				<input type="password" class="form-control login-input" name="password" title="pwd" id="pwd"  placeholder="请输入密码">
 			</div>
 			<div class="form-group">
 				<button type="submit" class="form-control btn btn-primary login-btn" name="submit" title="submit" id="submit" >登录</button>
 			</div>
 			<div class="form-group">
-				<a class="btn btn-default form-control" href="${ROOT}/register.jsp">注册</a>
+				<a class="btn btn-default form-control" href="user/register">注册</a>
 			</div>
 		</form>
 	</div>
