@@ -12,20 +12,44 @@
 	<!-- 配置自动扫描的包 -->
 	<context:component-scan base-package="com.Picloud.web."></context:component-scan>
 
-
-	<!-- Autowired -->
+	<!-- 自动装配 -->
 	<bean
 		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 
 	<!-- Hadoop Configuration -->
 	<hdp:configuration resources="classpath:/hbase-site.xml" />
 	<hdp:hbase-configuration configuration-ref="hadoopConfiguration" />
-	
+
+	<!-- hbase configuration -->
 	<bean id="hbaseTemplate" class="org.springframework.data.hadoop.hbase.HbaseTemplate"
 		p:configuration-ref="hbaseConfiguration" />
 
+
+	<!-- ////////////////// 上面是系统配置，下面是DAO配置 //////////////////////////////// -->
+
+
 	<!-- dao注入 -->
-	<bean id="userDaoImpl" class="com.Picloud.web.dao.impl.UserDaoImpl">
-		<property name="hbaseTemplate" ref="hbaseTemplate"></property>
+	<bean id="userDaoImpl" class="com.Picloud.web.dao.impl.UserDaoImpl"
+		p:hbaseTemplate-ref="hbaseTemplate" />
+		
+<!-- ////////////////// 上面是DAO配置，下面是Hbase创建配置 //////////////////////////////// -->
+	
+	<!-- 表名配置 -->
+	<util:list id="hbaseTableNames">
+		<value>cloud1</value>
+		<value>cloud2</value>
+	</util:list>
+	
+	<!-- 列族名配置 -->
+	<util:list id="hbaseTableColumnNames">
+		<value>attr</value>
+		<value>var</value>
+	</util:list>
+
+	<bean id="createHbase" class="com.Picloud.web.dao.impl.CreateHbase">
+		<constructor-arg name="mHbaseTemplate" ref="hbaseTemplate"></constructor-arg>
+		<constructor-arg name="mNameList"  ref="hbaseTableNames"></constructor-arg>
+		<constructor-arg name="mColumnList" ref="hbaseTableColumnNames"></constructor-arg>
 	</bean>
 </beans>
+

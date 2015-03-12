@@ -23,6 +23,7 @@ import com.Picloud.web.dao.impl.UserDaoImpl;
 
 /**
  * 测试Spring-mvc框架
+ * 
  * @author jeff
  */
 
@@ -31,46 +32,45 @@ public class TestController {
 	@Autowired
 	private UserDaoImpl user;
 
-	private HbaseAccessor  mHbaseAccessor = user.getHbaseTemplate();
-	private  Configuration mConfiguration = mHbaseAccessor.getConfiguration();
-	
-	
-	
-	@RequestMapping({"/test[{width},{height}]"})
-	public String hello(@PathVariable String width,@PathVariable String height,Model model){
+	@RequestMapping({ "/test[{width},{height}]" })
+	public String hello(@PathVariable String width,
+			@PathVariable String height, Model model) {
 		model.addAttribute("width", width);
 		model.addAttribute("height", height);
 		return "test";
 	}
-	
-	@RequestMapping(value="/test")
-	public String test(){
+
+	@RequestMapping(value = "/test")
+	public String test() {
 		user.find("123");
 		return "test";
 	}
-	
-	@RequestMapping(value="/test1")
-	public String test1(){
-//		// 创建云图片表
+
+	@RequestMapping(value = "/test1")
+	public String test1() {
+		// // 创建云图片表
 		String name = "cloud_test";
 		String[] column = { "attr", "var" };
 		createTable(name, column);
 		return "test";
 	}
+
+	public void createTable(String tableName, String[] column) {
 	
-	
-	public  void createTable(String tableName, String[] column) {
+		Configuration mConfiguration = user.getHbaseTemplate().getConfiguration();
+
 		try {
 			HBaseAdmin hBaseAdmin = new HBaseAdmin(mConfiguration);
 			// 如果存在要创建的表，不做操作
 			if (hBaseAdmin.tableExists(tableName)) {
-				//System.out.println(tableName + " is exist....");
+				// System.out.println(tableName + " is exist....");
 			} else {
 				// 建列族
-				HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf(tableName));
+				HTableDescriptor tableDescriptor = new HTableDescriptor(
+						TableName.valueOf(tableName));
 				int num = column.length;
 				for (int i = 0; i < num; i++) {
-					//添加列族
+					// 添加列族
 					tableDescriptor.addFamily(new HColumnDescriptor(column[i]));
 				}
 				hBaseAdmin.createTable(tableDescriptor);
