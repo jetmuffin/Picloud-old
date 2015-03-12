@@ -1,4 +1,4 @@
-package com.Picloud.hbase.utils;
+package com.Picloud.hbase.service;
 
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;

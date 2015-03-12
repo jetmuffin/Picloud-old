@@ -8,8 +8,8 @@ import org.springframework.data.hadoop.hbase.HbaseTemplate;
 import org.springframework.data.hadoop.hbase.RowMapper;
 import org.springframework.stereotype.Service;
 
-import com.Picloud.hbase.utils.impl.BeanMapping;
-import com.Picloud.hbase.utils.impl.HbaseOperationImpl;
+import com.Picloud.hbase.service.impl.BeanMapping;
+import com.Picloud.hbase.service.impl.HbaseOperationImpl;
 import com.Picloud.web.dao.IUserDao;
 import com.Picloud.web.model.User;
 
