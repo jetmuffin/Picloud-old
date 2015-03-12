@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,13 +17,29 @@ import com.Picloud.web.model.User;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
+	
+	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(String username,String password,HttpSession session){
 		//TODO 用户信息验证
 		//session.setAttribute("user", u);
-		return "redirect:/user/users";
+		return "redirect:index";
 	}
+	
+	@RequestMapping(value="/register",method=RequestMethod.GET)
+	public String register(@ModelAttribute("user") User user){
+		return "register";
+	}
+	
+	@RequestMapping(value="/register",method=RequestMethod.POST)
+	public String register(@Validated User user,BindingResult br){
+		if(br.hasErrors()) {
+			return "register";
+		}
+		System.out.println(user);
+		return "test";
+	}
+	
 	
 	/**
 	 * 查看个人信息

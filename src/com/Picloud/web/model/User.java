@@ -144,7 +144,13 @@ public class User {
 		this.spaceNum = spaceNum;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return "User [uid=" + uid + ", accountType=" + accountType + ", email="
+				+ email + ", lastLogin=" + lastLogin + ", website=" + website
+				+ ", nickname=" + nickname + ", password=" + password
+				+ ", imageNum=" + imageNum + ", imageTotalSize="
+				+ imageTotalSize + ", spaceNum=" + spaceNum + "]";
+	}
 	
 }
