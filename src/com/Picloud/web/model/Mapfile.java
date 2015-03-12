@@ -30,6 +30,11 @@ public class Mapfile {
 		this.picNum = picNum;
 	}
 	
+	public Mapfile() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getFlagNum() {
 		return flagNum;
 	}
