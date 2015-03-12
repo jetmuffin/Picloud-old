@@ -2,6 +2,7 @@ package com.Picloud.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.Picloud.exception.UserException;
-
 import com.Picloud.web.dao.impl.UserDaoImpl;
 import com.Picloud.web.model.User;
 
@@ -24,6 +24,7 @@ public class UserController {
 	
 	@Autowired
 	private UserDaoImpl mUserDaoImpl;
+	private String module = "用户中心";
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(String uid,String password,HttpSession session){
@@ -35,6 +36,12 @@ public class UserController {
 		}
 		session.setAttribute("user", user);
 		return "redirect:../index";
+	}
+	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public String logout(HttpSession session){
+		session.invalidate();
+		return "redirect:../login.jsp";
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
@@ -67,7 +74,9 @@ public class UserController {
 	 * 个人信息修改页
 	 */
 	@RequestMapping(value="/update",method=RequestMethod.GET)
-	public String update(){
+	public String update(Model model){
+		model.addAttribute("action","帐号管理");
+		model.addAttribute("module",module);
 		return "user/update";
 	}
 	
@@ -86,7 +95,9 @@ public class UserController {
 	 * 查看个人日志
 	 */
 	@RequestMapping(value="/log",method=RequestMethod.GET)
-	public String list(){
+	public String list(Model model){
+		model.addAttribute("action","操作日志");
+		model.addAttribute("module",module);
 		return "user/log";
 	}
 	
