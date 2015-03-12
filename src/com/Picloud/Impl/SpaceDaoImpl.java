@@ -1,7 +1,8 @@
-package com.Picloud.web.dao;
+package com.Picloud.Impl;
 
 import java.util.List;
 
+import com.Picloud.web.dao.ISpaceDao;
 import com.Picloud.web.model.Space;
 
 public class SpaceDaoImpl implements ISpaceDao {

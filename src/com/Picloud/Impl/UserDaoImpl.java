@@ -1,4 +1,4 @@
-package com.Picloud.web.dao;
+package com.Picloud.Impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.hadoop.hbase.HbaseTemplate;
 import org.springframework.data.hadoop.hbase.RowMapper;
 
+import com.Picloud.web.dao.IUserDao;
 import com.Picloud.web.model.User;
 
 public class UserDaoImpl implements IUserDao {

@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.Picloud.Impl.UserDaoImpl;
 import com.Picloud.config.HbaseConfig;
-import com.Picloud.web.dao.UserDaoImpl;
 
 /**
  * 测试Spring-mvc框架

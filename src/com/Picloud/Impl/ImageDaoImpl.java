@@ -1,7 +1,8 @@
-package com.Picloud.web.dao;
+package com.Picloud.Impl;
 
 import java.util.List;
 
+import com.Picloud.web.dao.IImageDao;
 import com.Picloud.web.model.Image;
 
 public class ImageDaoImpl implements IImageDao {
