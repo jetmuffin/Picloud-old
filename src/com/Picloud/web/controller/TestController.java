@@ -18,8 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.Picloud.config.HbaseConfig;
 import com.Picloud.web.dao.impl.UserDaoImpl;
+import com.Picloud.web.model.User;
 
 /**
  * 测试Spring-mvc框架
@@ -30,7 +30,7 @@ import com.Picloud.web.dao.impl.UserDaoImpl;
 @Controller
 public class TestController {
 	@Autowired
-	private UserDaoImpl user;
+	private UserDaoImpl mUserDaoImpl;
 
 	@RequestMapping({ "/test[{width},{height}]" })
 	public String hello(@PathVariable String width,
@@ -42,46 +42,10 @@ public class TestController {
 
 	@RequestMapping(value = "/test")
 	public String test() {
-		user.find("123");
-		return "test";
-	}
-
-	@RequestMapping(value = "/test1")
-	public String test1() {
-		// // 创建云图片表
-		String name = "cloud_test";
-		String[] column = { "attr", "var" };
-		createTable(name, column);
-		return "test";
-	}
-
-	public void createTable(String tableName, String[] column) {
-	
-		Configuration mConfiguration = user.getHbaseTemplate().getConfiguration();
-
-		try {
-			HBaseAdmin hBaseAdmin = new HBaseAdmin(mConfiguration);
-			// 如果存在要创建的表，不做操作
-			if (hBaseAdmin.tableExists(tableName)) {
-				// System.out.println(tableName + " is exist....");
-			} else {
-				// 建列族
-				HTableDescriptor tableDescriptor = new HTableDescriptor(
-						TableName.valueOf(tableName));
-				int num = column.length;
-				for (int i = 0; i < num; i++) {
-					// 添加列族
-					tableDescriptor.addFamily(new HColumnDescriptor(column[i]));
-				}
-				hBaseAdmin.createTable(tableDescriptor);
-				hBaseAdmin.close();
-			}
-		} catch (MasterNotRunningException e) {
-			e.printStackTrace();
-		} catch (ZooKeeperConnectionException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		User user = new User();
+		user.setUid("112314");
+		user.setNickname("sunzequn");
+		mUserDaoImpl.add(user);
+		return "index";
 	}
 }
