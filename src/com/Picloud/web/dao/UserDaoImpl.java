@@ -11,9 +11,16 @@ import com.Picloud.web.model.User;
 
 public class UserDaoImpl implements IUserDao {
 	
-	@Autowired
 	private HbaseTemplate hbaseTemplate;
 	
+	public HbaseTemplate getHbaseTemplate() {
+		return hbaseTemplate;
+	}
+
+	public void setHbaseTemplate(HbaseTemplate hbaseTemplate) {
+		this.hbaseTemplate = hbaseTemplate;
+	}
+
 	@Override
 	public void add(User user) {
 		// TODO Auto-generated method stub
@@ -34,9 +41,12 @@ public class UserDaoImpl implements IUserDao {
 
 	@Override
 	public User find(String uid) {
+		if(hbaseTemplate == null)
+			System.out.println("null");
 			List<String> rows = hbaseTemplate.find("cloud_user", "vldt:nickname", new RowMapper<String>() {
 			  @Override
 			  public String mapRow(Result result, int rowNum) throws Exception {
+				  System.out.println("123");
 			    return result.toString();
 			  }
 			});

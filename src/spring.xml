@@ -11,9 +11,9 @@
     http://www.springframework.org/schema/hadoop
     http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
 	
-	<!-- 配置自动扫描的包
+	<!-- 配置自动扫描的包	 -->
 	<context:component-scan base-package="com.Picloud.web."></context:component-scan>
-	 -->
+
 	 
 	 <!-- Autowired  -->
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
@@ -24,10 +24,8 @@
 	<bean id="hbaseTemplate" class="org.springframework.data.hadoop.hbase.HbaseTemplate"
 		p:configuration-ref="hbaseConfiguration" />
 		
-	<!--  
-		<bean id="userDaoImpl" class="com.Picloud.web.dao.UserDaoImpl">
-			<property name="hbaseTemplate" ref="hbaseTemplate"></property>
-		</bean>
-	-->
-			
+		  <!-- dao注入 -->  
+    <bean id="userDaoImpl" class="com.Picloud.web.dao.UserDaoImpl">  
+        <property name="hbaseTemplate" ref="hbaseTemplate"></property>  
+    </bean>  
 </beans>

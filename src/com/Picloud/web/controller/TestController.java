@@ -18,10 +18,8 @@ import com.Picloud.web.dao.UserDaoImpl;
 
 @Controller
 public class TestController {
-	
 	@Autowired
-	private UserDaoImpl userDaoImpl;
-	
+	private UserDaoImpl user;
 	@RequestMapping({"/test[{width},{height}]"})
 	public String hello(@PathVariable String width,@PathVariable String height,Model model){
 		model.addAttribute("width", width);
@@ -29,5 +27,9 @@ public class TestController {
 		return "test";
 	}
 	
-
+	@RequestMapping(value="/test")
+	public String test(){
+		user.find("123");
+		return "test";
+	}
 }
