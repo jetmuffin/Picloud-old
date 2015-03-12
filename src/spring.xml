@@ -46,7 +46,7 @@
 		<value>var</value>
 	</util:list>
 
-	<bean id="createHbase" class="com.Picloud.web.dao.impl.CreateHbase">
+	<bean id="createHbase" class="com.Picloud.web.config.HbaseCreateConfig">
 		<constructor-arg name="mHbaseTemplate" ref="hbaseTemplate"></constructor-arg>
 		<constructor-arg name="mNameList"  ref="hbaseTableNames"></constructor-arg>
 		<constructor-arg name="mColumnList" ref="hbaseTableColumnNames"></constructor-arg>

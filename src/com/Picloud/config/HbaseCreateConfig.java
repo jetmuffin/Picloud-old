@@ -1,4 +1,4 @@
-package com.Picloud.web.dao.impl;
+package com.Picloud.config;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,16 +23,16 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class CreateHbase {
+public class HbaseCreateConfig {
 
 	private HbaseTemplate mHbaseTemplate;
 	private List<String> mNameList;
 	private List<String> mColumnList;
 
-	public CreateHbase() {
+	public HbaseCreateConfig() {
 	}
 
-	public CreateHbase(HbaseTemplate mHbaseTemplate, List<String> mNameList,
+	public HbaseCreateConfig(HbaseTemplate mHbaseTemplate, List<String> mNameList,
 			List<String> mColumnList) {
 		super();
 		this.mHbaseTemplate = mHbaseTemplate;
@@ -75,7 +75,6 @@ public class CreateHbase {
 					hBaseAdmin.createTable(tableDescriptor);
 				}
 			}
-
 			hBaseAdmin.close();
 		} catch (MasterNotRunningException e) {
 			e.printStackTrace();
