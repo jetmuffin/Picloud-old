@@ -1,27 +1,27 @@
-package com.Pic.exception;
+package com.Picloud.exception;
 
-public class FileExistException extends RuntimeException {
+public class FileException extends RuntimeException {
 
-	public FileExistException() {
+	public FileException() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FileExistException(String message) {
+	public FileException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public FileExistException(Throwable cause) {
+	public FileException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public FileExistException(String message, Throwable cause) {
+	public FileException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public FileExistException(String message, Throwable cause,
+	public FileException(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub

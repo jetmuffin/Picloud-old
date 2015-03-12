@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.Picloud.config.HdfsConfig;
 import com.Picloud.config.SystemConfig;
+import com.Picloud.exception.FileException;
 
 @Service
 public class HdfsHandler {
@@ -52,11 +53,11 @@ public class HdfsHandler {
 	 * @return boolean
 	 * @throws IOException 
 	 */
-	public boolean upLoad(InputStream in, String hdfsPath) throws IOException{
+	public boolean upLoad(InputStream in, String hdfsPath) throws Exception{
 		Path p = new Path(hdfsPath);
 		try{
 			if(fs.exists(p)){
-				System.out.println("文件已存在！(HDFS LargeFile)");
+				throw new FileException("文件已存在！(HDFS LargeFile)");
 				return false;
 			}
 
@@ -89,7 +90,7 @@ public class HdfsHandler {
 		Path path = new Path(hdfsPath);
 		try {
 			if(!fs.exists(path)){
-				System.out.println("未找到文件！");
+				throw new FileException("未找到文件！");
 				return false;
 			}
 			FSDataInputStream in =  fs.open(path);
@@ -116,7 +117,7 @@ public class HdfsHandler {
 		Path path = new Path(hdfsPath);
 		try {
 			if(!fs.exists(path)){
-				System.out.println("未找到文件！");
+				throw new FileException("未找到文件！");
 				return false;
 			}
 			fs.delete(path, true);
