@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Picloud.config.HbaseConfig;
+import com.Picloud.config.HdfsConfig;
+import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.web.dao.impl.UserDaoImpl;
 
 /**
@@ -31,7 +33,10 @@ import com.Picloud.web.dao.impl.UserDaoImpl;
 public class TestController {
 	@Autowired
 	private UserDaoImpl user;
-
+	
+	@Autowired
+	private HdfsConfig hdfsConfig;
+	
 	@RequestMapping({ "/test[{width},{height}]" })
 	public String hello(@PathVariable String width,
 			@PathVariable String height, Model model) {
@@ -55,6 +60,12 @@ public class TestController {
 		return "test";
 	}
 
+	@RequestMapping(value="/testhdfs")
+	public String testhdfs() throws IOException{
+		HdfsHandler hdfsUtil = new HdfsHandler(hdfsConfig.getFileSystemPath());
+		return "test";
+	}
+	
 	public void createTable(String tableName, String[] column) {
 	
 		Configuration mConfiguration = user.getHbaseTemplate().getConfiguration();

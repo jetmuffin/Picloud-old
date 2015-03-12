@@ -46,10 +46,17 @@
 		<value>var</value>
 	</util:list>
 
-	<bean id="createHbase" class="com.Picloud.web.config.HbaseCreateConfig">
+	<bean id="createHbase" class="com.Picloud.config.HbaseCreateConfig">
 		<constructor-arg name="mHbaseTemplate" ref="hbaseTemplate"></constructor-arg>
 		<constructor-arg name="mNameList"  ref="hbaseTableNames"></constructor-arg>
 		<constructor-arg name="mColumnList" ref="hbaseTableColumnNames"></constructor-arg>
 	</bean>
+	
+	<!-- //////////////////  HDFS配置 /////////////////////  -->
+	<bean id="hdfsConfig" class="com.Picloud.config.HdfsConfig">
+		<constructor-arg name="fileSystemPath" value="hdfs://localhost:9000"></constructor-arg>
+		<constructor-arg name="uploadPath"  value="hdfs://localhost:9000/upload"></constructor-arg>
+	</bean>
+
 </beans>
 

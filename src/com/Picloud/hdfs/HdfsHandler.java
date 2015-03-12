@@ -1,4 +1,4 @@
-package com.Picloud.utils;
+package com.Picloud.hdfs;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -18,30 +18,41 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Progressable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.Picloud.config.HdfsConfig;
 import com.Picloud.config.SystemConfig;
 
-public class HdfsUtil {
+@Service
+public class HdfsHandler {
 	private Configuration conf;
-	private FileSystem fs;
+	private FileSystem fs; 
 	
 	/**
 	 * 构造方法
 	 * @throws IOException
 	 */
-	public HdfsUtil() throws IOException{
+	
+	public HdfsHandler(String fileSystemPath) throws IOException{
 		conf = new Configuration();
-		String hdfsPath = SystemConfig.getFileSystemPath();
-		fs = FileSystem.newInstance(URI.create(hdfsPath),conf);
+		FileSystem fs = FileSystem.newInstance(URI.create(fileSystemPath),conf);
+		System.out.println(fileSystemPath);
 	}
 	
+	public HdfsHandler() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * 上传文件
 	 * @param in
 	 * @param hdfsPath
 	 * @return boolean
+	 * @throws IOException 
 	 */
-	public boolean upLoad(InputStream in, String hdfsPath){
+	public boolean upLoad(InputStream in, String hdfsPath) throws IOException{
 		Path p = new Path(hdfsPath);
 		try{
 			if(fs.exists(p)){
@@ -57,11 +68,6 @@ public class HdfsUtil {
 			FSDataOutputStream out = fs.create(p,progress);
 			IOUtils.copyBytes(in, out, conf);
 			
-//			byte[] buffer = new byte[400];
-//			int length = 0;
-//			while ((length = in.read(buffer)) > 0) {
-//				out.write(buffer, 0, length);
-//			}
 			out.flush();
 			out.close();
 			in.close();		
@@ -77,8 +83,9 @@ public class HdfsUtil {
 	 * @param hdfsPath
 	 * @param localPath
 	 * @return boolean
+	 * @throws IOException 
 	 */
-	public boolean downLoad(String hdfsPath,String localPath ){
+	public boolean downLoad(String hdfsPath,String localPath ) throws IOException{
 		Path path = new Path(hdfsPath);
 		try {
 			if(!fs.exists(path)){
@@ -103,8 +110,9 @@ public class HdfsUtil {
 	 * 删除文件
 	 * @param hdfsPath
 	 * @return boolean
+	 * @throws IOException 
 	 */
-	public boolean deletePath(String hdfsPath){
+	public boolean deletePath(String hdfsPath) throws IOException{
 		Path path = new Path(hdfsPath);
 		try {
 			if(!fs.exists(path)){
@@ -125,8 +133,7 @@ public class HdfsUtil {
      * @param hadoopFile
      * @return buffer
      */
-    public  byte[] readFile(String hdfsPath) throws Exception
-    {
+    public  byte[] readFile(String hdfsPath) throws Exception{
         Configuration conf = new Configuration();
         Path path = new Path(hdfsPath);
         if ( fs.exists(path) )
