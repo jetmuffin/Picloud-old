@@ -1,8 +1,6 @@
-package com.Picloud.web.controller;
+package com.Picloud.web.dao.impl;
 
 import java.io.IOException;
-
-import javax.annotation.Resource;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
@@ -13,51 +11,25 @@ import org.apache.hadoop.hbase.ZooKeeperConnectionException;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.hadoop.hbase.HbaseAccessor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.Picloud.config.HbaseConfig;
-import com.Picloud.web.dao.impl.UserDaoImpl;
 
 /**
- * 测试Spring-mvc框架
- * @author jeff
+ * create hbase table
+ * @author hadoop
+ *
  */
-
-@Controller
-public class TestController {
+public class CreateHbase {
+	
 	@Autowired
-	private UserDaoImpl user;
-
-	private HbaseAccessor  mHbaseAccessor = user.getHbaseTemplate();
+	private UserDaoImpl mUserDaoImpl;
+	private HbaseAccessor  mHbaseAccessor = mUserDaoImpl.getHbaseTemplate();
 	private  Configuration mConfiguration = mHbaseAccessor.getConfiguration();
 	
-	
-	
-	@RequestMapping({"/test[{width},{height}]"})
-	public String hello(@PathVariable String width,@PathVariable String height,Model model){
-		model.addAttribute("width", width);
-		model.addAttribute("height", height);
-		return "test";
-	}
-	
-	@RequestMapping(value="/test")
-	public String test(){
-		user.find("123");
-		return "test";
-	}
-	
-	@RequestMapping(value="/test1")
-	public String test1(){
-//		// 创建云图片表
-		String name = "cloud_test";
-		String[] column = { "attr", "var" };
-		createTable(name, column);
-		return "test";
-	}
-	
+//	public static void main(String[] args) {
+////		// 创建云图片表
+//		String name1 = "cloud_picture";
+//		String[] column = { "attr", "var" };
+//		createTable(name1, column);
+//	}
 	
 	public  void createTable(String tableName, String[] column) {
 		try {
@@ -84,4 +56,5 @@ public class TestController {
 			e.printStackTrace();
 		}
 	}
+	
 }
