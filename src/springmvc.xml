@@ -40,6 +40,4 @@
 		<property name="resolveLazily" value="true" />
 		<property name="maxInMemorySize" value="4096" />
 	</bean>
-
-
 </beans>
