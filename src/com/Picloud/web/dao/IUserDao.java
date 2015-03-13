@@ -8,6 +8,4 @@ public interface IUserDao {
 	public void update(User user);
 	public void delete(String uid);
 	public User find(String uid);
-	
-	//TODO 其他获取方法
 }

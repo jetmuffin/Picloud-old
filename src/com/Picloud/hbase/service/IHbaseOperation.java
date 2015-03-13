@@ -29,7 +29,7 @@ public interface IHbaseOperation {
       * @param rowkey 主键
       * @return
       */
-     public Result QueryByRowKey(String tableName, String rowkey);
+     public Result queryByRowKey(String tableName, String rowkey);
      
      /**
       * 根据列和值检索表
@@ -39,7 +39,7 @@ public interface IHbaseOperation {
       * @param val 值
       * @return
       */
-     public  ResultScanner QueryByColumn(String tableName,String family, String column, String val);
+     public  ResultScanner queryByColumn(String tableName,String family, String column, String val);
      
      /**
       * 删除表
@@ -47,5 +47,66 @@ public interface IHbaseOperation {
       */
      public void dropTable(String tableName) ;
      
+     /**
+      * 根据用户和时间范围检索日志
+      * @param uid 用户id
+      * @param min  起始时间
+      * @param max 终止时间
+      * @return
+      */
+      public  ResultScanner queryLog(String uid, String min, String max);
+     /**
+      * 根据space和uid检索图片
+      * @param uid 用户id
+      * @param space 图片空间
+      * @return
+      */
+     public  ResultScanner queryImage(String uid, String space);
+     
+     /**
+      * 查询某个用户某个时间段内上传的图片
+      * @param uid 用户id
+      * @param sTime 起始时间
+      * @param eTime 终止时间
+      * @return
+      */
+     public  ResultScanner queryLimitImage(String uid, String sTime, String eTime) ;
+     
+     /**
+      * 根据图片名字前缀匹配检索图片
+      * @param uid
+      * @param subStr
+      * @return
+      */
+     public ResultScanner imageNameMatching(String uid, String subStr);
+     
+     /**
+      * 日志分页
+      * @param uid
+      * @param rowkey 
+      * @param num 每页数量
+      * @return
+      */
+ 	public ResultScanner logPage( String uid,String rowkey,  int num);
+ 	
+ 	/**
+ 	 * 根据时间图片分页
+ 	 * @param time
+ 	 * @param uid
+ 	 * @param spaceId
+ 	 * @param num
+ 	 * @return
+ 	 */
+ 	public ResultScanner imagePageByTime(String time, String uid, String spaceId,int num);
+ 	
+ 	/**
+ 	 * 根据主键图片分页
+ 	 * @param uid
+ 	 * @param key
+ 	 * @param spaceId
+ 	 * @param num
+ 	 * @return
+ 	 */
+ 	public ResultScanner imagePageByKey( String uid, String key,String spaceId,int num);
 }
 	

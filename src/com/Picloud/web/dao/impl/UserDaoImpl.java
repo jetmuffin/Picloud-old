@@ -1,19 +1,15 @@
 package com.Picloud.web.dao.impl;
 
-import java.util.List;
-
 import org.apache.hadoop.hbase.client.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.hadoop.hbase.HbaseTemplate;
-import org.springframework.data.hadoop.hbase.RowMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import com.Picloud.hbase.service.impl.BeanMapping;
 import com.Picloud.hbase.service.impl.HbaseOperationImpl;
 import com.Picloud.web.dao.IUserDao;
 import com.Picloud.web.model.User;
 
-@Service
+@Repository
 public class UserDaoImpl implements IUserDao {
 	
 	@Autowired
@@ -51,12 +47,12 @@ public class UserDaoImpl implements IUserDao {
 
 	@Override
 	public void delete(String uid) {
-		mHbaseOperationImpl.deleteRow("picloud_user", uid);
+		mHbaseOperationImpl.deleteRow("cloud_user", uid);
 	}
 
 	@Override
 	public User find(String uid) {
-		Result result = mHbaseOperationImpl.QueryByRowKey("cloud_user", uid);
+		Result result = mHbaseOperationImpl.queryByRowKey("cloud_user", uid);
 		return mBeanMapping.UserMapping(result, uid);
 	}
 

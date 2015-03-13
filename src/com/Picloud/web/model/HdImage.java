@@ -23,6 +23,9 @@ public class HdImage {
 			this.size = size;
 		}
 		
+		public HdImage() {
+		}
+
 		public String getKey() {
 			return key;
 		}

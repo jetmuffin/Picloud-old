@@ -7,7 +7,7 @@ public class Log {
 	String key = "";
 	
 	//用户
-	String user = "";
+	String uid = "";
 	//时间
 	String time = "";
 	//操作
@@ -15,24 +15,27 @@ public class Log {
 	
 	/**
 	 * 构造方法，为了进行排序，请使用该构造方法
-	 * @param user 用户id
+	 * @param uid 用户id
 	 * @param operation  操作
 	 */
-	public Log(String user, String operation) {
+	public Log(String uid, String operation) {
 		super();
-		this.user = user;
+		this.uid = uid;
 		this.operation = operation;
 		try {
 			this.time = DateUtil.getCurrentDateStr();
 			String max = "99999999999999999";
 			double d1 =   Double.parseDouble(max);
 			double d2 = Double.parseDouble(DateUtil.getCurrentDateMS());
-			this.key = String.valueOf(d1-d2)+user;
+			this.key = String.valueOf(d1-d2)+uid;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	public Log() {
+	}
+
 	public String getKey() {
 		return key;
 	}
@@ -41,11 +44,11 @@ public class Log {
 		this.key = key;
 	}
 	
-	public String getUser() {
-		return user;
+	public String getUid() {
+		return uid;
 	}
-	public void setUser(String user) {
-		this.user = user;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 	public String getTime() {
 		return time;

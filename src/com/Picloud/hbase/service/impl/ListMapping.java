@@ -1,260 +1,266 @@
 package com.Picloud.hbase.service.impl;
-//package com.Picloud.hbase.utils.impl;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import org.apache.hadoop.hbase.Cell;
-//import org.apache.hadoop.hbase.CellUtil;
-//import org.apache.hadoop.hbase.client.Result;
-//import org.apache.hadoop.hbase.client.ResultScanner;
-//
-//import com.picserver.bean.*;
-//
-///**
-// * 将数据库读出的数据映射到List
-// * @author hadoop
-// *
-// */
-//public class ListMapping {
-//	
-//	/**
-//	 * 将数据库读出的数据映射到PictureBean 的 List
-//	 * @param rs
-//	 * @return
-//	 */
-//	public List<PictureBean> pictureListMapping(ResultScanner rs){
-//		List<PictureBean> list = new ArrayList<PictureBean>();
-//		for (Result r : rs) {
-//			PictureBean pb = new PictureBean();
-//			pb.setKey(new String(r.getRow()));
-//			for(Cell cell:r.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					pb.setName(val);
-//				}
-//				if (v.equals("size")) {
-//					pb.setSize(val);
-//				}
-//				if (v.equals("type")) {
-//					pb.setType(val);
-//				}
-//				if (v.equals("space")) {
-//					pb.setSpace(val);
-//				}
-//				if (v.equals("usr")) {
-//					pb.setUsr(val);
-//				}
-//				if (v.equals("createTime")) {
-//					pb.setCreateTime(val);
-//				}
-//				if (v.equals("path")) {
-//					pb.setPath(val);
-//				}
-//				if (v.equals("status")) {
-//					pb.setStatus(val);
-//				}
-//				if (v.equals("updateTime")) {
-//					pb.setUpdateTime(val);
-//				}
-//				if (v.equals("visitCount")) {
-//					pb.setVisitCount(val);
-//				}
-//			}
-//			list.add(pb);
-//		}
-//		rs.close();
-//		if (list.size() == 0) {
-//			return null;
-//		}
-//		return list;
-//	}
-//	
-//	/**
-//	 * 将数据库读出的数据映射到SpaceBean 的 List
-//	 * @param rs
-//	 * @return
-//	 */
-//	public List<SpaceBean> spaceListMapping(ResultScanner rs){
-//		List<SpaceBean> list = new ArrayList<SpaceBean>();
-//		for (Result r : rs) {
-//			SpaceBean sb = new SpaceBean();
-//			sb.setKey(new String(r.getRow()));
-//			for(Cell cell:r.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					sb.setName(val);
-//				}
-//				if (v.equals("desc")) {
-//					sb.setDesc(val);
-//				}
-//				if (v.equals("cover")) {
-//					sb.setCover(val);
-//				}
-//				if (v.equals("uid")) {
-//					sb.setUid(val);
-//				}
-//				if (v.equals("storage")) {
-//					sb.setStorage(val);
-//				}
-//				if (v.equals("number")) {
-//					sb.setNumber(val);
-//				}
-//			}
-//			list.add(sb);
-//		}
-//		rs.close();
-//		if (list.size() == 0) {
-//			return null;
-//		}
-//		return list;
-//	}
-//	
-//	/**
-//	 * 将数据库读出的数据映射到LogBean的 List
-//	 * @param rs
-//	 * @return
-//	 */
-//	public List<LogBean> logListMapping(ResultScanner rs){
-//		System.out.println(rs);
-//		List<LogBean> list = new ArrayList<LogBean>();
-//		for (Result r : rs) {
-//			LogBean lb = new LogBean();
-//			lb.setLogid(new String(r.getRow()));
-//			for(Cell cell:r.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("user")) {
-//					lb.setUser(val);
-//				}
-//				if (v.equals("time")) {
-//					lb.setTime(val);
-//				}
-//				if (v.equals("operation")) {
-//					lb.setOperation(val);
-//				}
-//			}
-//			list.add(lb);
-//		}
-//		rs.close();
-//		if (list.size() == 0) {
-//			return null;
-//		}
-//		return list;
-//	}
-//	
-//	/**
-//	 * 将数据库读出的数据映射到HdBean的List
-//	 * @param rs
-//	 * @return
-//	 */
-//	public List<HdBean> hdListMapping(ResultScanner rs){
-//		List<HdBean> list = new ArrayList<HdBean>();
-//		for (Result r : rs) {
-//			HdBean hb = new HdBean();
-//			hb.setKey(new String(r.getRow()));
-//			for(Cell cell:r.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					hb.setName(val);
-//				}
-//				if (v.equals("uid")) {
-//					hb.setUid(val);
-//				}
-//				if (v.equals("createTime")) {
-//					hb.setCreateTime(val);
-//				}
-//				if (v.equals("size")) {
-//					hb.setSize(val);
-//				}
-//			}
-//			list.add(hb);
-//		}
-//		rs.close();
-//		if (list.size() == 0) {
-//			return null;
-//		}
-//		return list;
-//	}
-//	
-//	/**
-//	 * 将数据库读出的数据映射到Pic3DBean的List
-//	 * @param rs
-//	 * @return
-//	 */
-//	public List<Pic3DBean> pic3DListMapping(ResultScanner rs){
-//		List<Pic3DBean> list = new ArrayList<Pic3DBean>();
-//		for (Result r : rs) {
-//			Pic3DBean pbd = new Pic3DBean();
-//			pbd.setKey(new String(r.getRow()));
-//			for(Cell cell:r.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					pbd.setName(val);
-//				}
-//				if (v.equals("uid")) {
-//					pbd.setUid(val);
-//				}
-//				if (v.equals("createTime")) {
-//					pbd.setCreateTime(val);
-//				}
-//				if (v.equals("size")) {
-//					pbd.setSize(val);
-//				}
-//				if (v.equals("num")) {
-//					pbd.setNum(val);;
-//				}
-//			}
-//			list.add(pbd);
-//		}
-//		rs.close();
-//		if (list.size() == 0) {
-//			return null;
-//		}
-//		return list;
-//	}
-//	
-//	/**
-//	 * 将数据库读出的数据映射到PanoBean的List
-//	 * @param rs
-//	 * @return
-//	 */
-//	public List<PanoBean> panoListMapping(ResultScanner rs){
-//		List<PanoBean> list = new ArrayList<PanoBean>();
-//		for (Result r : rs) {
-//			PanoBean pb = new PanoBean();
-//			pb.setKey(new String(r.getRow()));
-//			for(Cell cell:r.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					pb.setName(val);
-//				}
-//				if (v.equals("uid")) {
-//					pb.setUid(val);
-//				}
-//				if (v.equals("createTime")) {
-//					pb.setCreateTime(val);
-//				}
-//				if (v.equals("size")) {
-//					pb.setSize(val);
-//				}
-//				if(v.equals("path")){
-//					pb.setPath(val);
-//				}
-//			}
-//			list.add(pb);
-//		}
-//		rs.close();
-//		if (list.size() == 0) {
-//			return null;
-//		}
-//		return list;
-//	}
-//
-//
-//}
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.springframework.stereotype.Service;
+
+import com.Picloud.web.model.HdImage;
+import com.Picloud.web.model.Image;
+import com.Picloud.web.model.Log;
+import com.Picloud.web.model.PanoImage;
+import com.Picloud.web.model.Space;
+import com.Picloud.web.model.ThreeDImage;
+
+/**
+ * 将数据库读出的数据映射到List
+ * @author hadoop
+ *
+ */
+@Service
+public class ListMapping {
+	
+	/**
+	 * 将数据库读出的数据映射到Image 的 List
+	 * @param rs
+	 * @return
+	 */
+	public List<Image> imageListMapping(ResultScanner rs){
+		List<Image> list = new ArrayList<Image>();
+		for (Result r : rs) {
+			Image image = new Image();
+			image.setKey(new String(r.getRow()));
+			for(Cell cell:r.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					image.setName(val);
+				}
+				if (v.equals("size")) {
+					image.setSize(val);
+				}
+				if (v.equals("type")) {
+					image.setType(val);
+				}
+				if (v.equals("space")) {
+					image.setSpace(val);
+				}
+				if (v.equals("uid")) {
+					image.setUid(val);
+				}
+				if (v.equals("createTime")) {
+					image.setCreateTime(val);
+				}
+				if (v.equals("path")) {
+					image.setPath(val);
+				}
+				if (v.equals("status")) {
+					image.setStatus(val);
+				}
+				if (v.equals("updateTime")) {
+					image.setUpdateTime(val);
+				}
+				if (v.equals("visitCount")) {
+					image.setVisitCount(val);
+				}
+			}
+			list.add(image);
+		}
+		rs.close();
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到Space 的 List
+	 * @param rs
+	 * @return
+	 */
+	public List<Space> spaceListMapping(ResultScanner rs){
+		List<Space> list = new ArrayList<Space>();
+		for (Result r : rs) {
+			Space space = new Space();
+			space.setKey(new String(r.getRow()));
+			for(Cell cell:r.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					space.setName(val);
+				}
+				if (v.equals("desc")) {
+					space.setDesc(val);
+				}
+				if (v.equals("cover")) {
+					space.setCover(val);
+				}
+				if (v.equals("uid")) {
+					space.setUid(val);
+				}
+				if (v.equals("storage")) {
+					space.setStorage(val);
+				}
+				if (v.equals("number")) {
+					space.setNumber(val);
+				}
+			}
+			list.add(space);
+		}
+		rs.close();
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到Log的 List
+	 * @param rs
+	 * @return
+	 */
+	public List<Log> logListMapping(ResultScanner rs){
+		System.out.println(rs);
+		List<Log> list = new ArrayList<Log>();
+		for (Result r : rs) {
+			Log log = new Log();
+			log.setKey(new String(r.getRow()));
+			for(Cell cell:r.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("uid")) {
+					log.setUid(val);
+				}
+				if (v.equals("time")) {
+					log.setTime(val);
+				}
+				if (v.equals("operation")) {
+					log.setOperation(val);
+				}
+			}
+			list.add(log);
+		}
+		rs.close();
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到HdImage的List
+	 * @param rs
+	 * @return
+	 */
+	public List<HdImage> hdImageListMapping(ResultScanner rs){
+		List<HdImage> list = new ArrayList<HdImage>();
+		for (Result r : rs) {
+			HdImage hdImage = new HdImage();
+			hdImage.setKey(new String(r.getRow()));
+			for(Cell cell:r.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					hdImage.setName(val);
+				}
+				if (v.equals("uid")) {
+					hdImage.setUid(val);
+				}
+				if (v.equals("createTime")) {
+					hdImage.setCreateTime(val);
+				}
+				if (v.equals("size")) {
+					hdImage.setSize(val);
+				}
+			}
+			list.add(hdImage);
+		}
+		rs.close();
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到ThreeDImage的List
+	 * @param rs
+	 * @return
+	 */
+	public List<ThreeDImage> ThreeDImageListMapping(ResultScanner rs){
+		List<ThreeDImage> list = new ArrayList<ThreeDImage>();
+		for (Result r : rs) {
+			ThreeDImage threeDImage = new ThreeDImage();
+			threeDImage.setKey(new String(r.getRow()));
+			for(Cell cell:r.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					threeDImage.setName(val);
+				}
+				if (v.equals("uid")) {
+					threeDImage.setUid(val);
+				}
+				if (v.equals("createTime")) {
+					threeDImage.setCreateTime(val);
+				}
+				if (v.equals("size")) {
+					threeDImage.setSize(val);
+				}
+				if (v.equals("number")) {
+					threeDImage.setNumber(val);;
+				}
+			}
+			list.add(threeDImage);
+		}
+		rs.close();
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到PanoImage的List
+	 * @param rs
+	 * @return
+	 */
+	public List<PanoImage> panoListMapping(ResultScanner rs){
+		List<PanoImage> list = new ArrayList<PanoImage>();
+		for (Result r : rs) {
+			PanoImage panoImage = new PanoImage();
+			panoImage.setKey(new String(r.getRow()));
+			for(Cell cell:r.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					panoImage.setName(val);
+				}
+				if (v.equals("uid")) {
+					panoImage.setUid(val);
+				}
+				if (v.equals("createTime")) {
+					panoImage.setCreateTime(val);
+				}
+				if (v.equals("size")) {
+					panoImage.setSize(val);
+				}
+				if(v.equals("path")){
+					panoImage.setPath(val);
+				}
+			}
+			list.add(panoImage);
+		}
+		rs.close();
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
+
+
+}

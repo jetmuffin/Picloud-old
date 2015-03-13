@@ -15,7 +15,10 @@ public class PanoImage {
 	//路径
 	String path="";
 	
-	
+	public PanoImage() {
+		super();
+	}
+
 	public PanoImage(String key, String name, String uid, String createTime,
 			String size, String path) {
 		super();

@@ -12,17 +12,23 @@ public class ThreeDImage {
 		String createTime = "";
 		//图片大小
 		String size = "";
+		//图片数量
+		String number;
 		
 		public ThreeDImage(String key, String name, String uid,
-				String createTime, String size) {
+				String createTime, String size,String number) {
 			super();
 			this.key = key;
 			this.name = name;
 			this.uid = uid;
 			this.createTime = createTime;
 			this.size = size;
+			this.number = number;
 		}
 		
+		public ThreeDImage() {
+		}
+
 		public String getKey() {
 			return key;
 		}
@@ -54,6 +60,12 @@ public class ThreeDImage {
 			this.size = size;
 		}
 
-		
-		
+		public String getNumber() {
+			return number;
+		}
+
+		public void setNumber(String number) {
+			this.number = number;
+		}
+
 }

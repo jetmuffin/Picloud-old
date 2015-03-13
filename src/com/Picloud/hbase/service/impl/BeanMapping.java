@@ -1,11 +1,20 @@
 package com.Picloud.hbase.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
 import org.springframework.stereotype.Service;
 
+import com.Picloud.web.model.HdImage;
+import com.Picloud.web.model.Image;
+import com.Picloud.web.model.Mapfile;
+import com.Picloud.web.model.PanoImage;
 import com.Picloud.web.model.Space;
+import com.Picloud.web.model.ThreeDImage;
 import com.Picloud.web.model.User;
 
 
@@ -24,94 +33,94 @@ public class BeanMapping {
 	
 
 	/**
-	 * 将数据库读出的数据映射到Picture
+	 * 将数据库读出的数据映射到Image
 	 * @param rs
 	 * @param rowkey
 	 * @return
 	 */
-//	public Picture PictureMapping(Result rs, String rowkey){
-//		Picture pb = new Picture();
-//		if (rs.isEmpty()) {
-//			// 没有检索到，说明数据库中没有该图片，返回错误信息
-//			return null;
-//		} else {
-//			pb.setKey(rowkey);
-//			for(Cell cell:rs.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					pb.setName(val);
-//				}
-//				if (v.equals("size")) {
-//					pb.setSize(val);
-//				}
-//				if (v.equals("type")) {
-//					pb.setType(val);
-//				}
-//				if (v.equals("space")) {
-//					pb.setSpace(val);
-//				}
-//				if (v.equals("usr")) {
-//					pb.setUsr(val);
-//				}
-//				if (v.equals("createTime")) {
-//					pb.setCreateTime(val);
-//				}
-//				if (v.equals("path")) {
-//					pb.setPath(val);
-//				}
-//				if (v.equals("status")) {
-//					pb.setStatus(val);
-//				}
-//				if (v.equals("updateTime")) {
-//					pb.setUpdateTime(val);
-//				}
-//				if (v.equals("visitCount")) {
-//					pb.setVisitCount(val);
-//				}
-//			}
-//		}
-//		return pb;
-//	}
-//
-//	/**
-//	 * 将数据库读出的数据映射到Space
-//	 * @param rs
-//	 * @param rowkey
-//	 * @return
-//	 */
-//	public Space SpaceMapping(Result rs,String rowkey){
-//		Space sb = new Space();
-//		if (rs.isEmpty()) {
-//			// 没有检索到，说明数据库中没有该图片，返回错误信息
-//			return null;
-//		} else {
-//			sb.setKey(rowkey);
-//			for(Cell cell:rs.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					sb.setName(val);
-//				}
-//				if (v.equals("desc")) {
-//					sb.setDesc(val);
-//				}
-//				if (v.equals("cover")) {
-//					sb.setCover(val);
-//				}
-//				if (v.equals("uid")) {
-//					sb.setUid(val);
-//				}
-//				if (v.equals("storage")) {
-//					sb.setStorage(val);
-//				}
-//				if (v.equals("number")) {
-//					sb.setNumber(val);
-//				}
-//			}
-//		}
-//		return sb;
-//	}
+	public Image ImageMapping(Result rs, String rowkey){
+		Image image = new Image();
+		if (rs.isEmpty()) {
+			// 没有检索到，说明数据库中没有该图片，返回错误信息
+			return null;
+		} else {
+			image.setKey(rowkey);
+			for(Cell cell:rs.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					image.setName(val);
+				}
+				if (v.equals("size")) {
+					image.setSize(val);
+				}
+				if (v.equals("type")) {
+					image.setType(val);
+				}
+				if (v.equals("space")) {
+					image.setSpace(val);
+				}
+				if (v.equals("uid")) {
+					image.setUid(val);
+				}
+				if (v.equals("createTime")) {
+					image.setCreateTime(val);
+				}
+				if (v.equals("path")) {
+					image.setPath(val);
+				}
+				if (v.equals("status")) {
+					image.setStatus(val);
+				}
+				if (v.equals("updateTime")) {
+					image.setUpdateTime(val);
+				}
+				if (v.equals("visitCount")) {
+					image.setVisitCount(val);
+				}
+			}
+		}
+		return image;
+	}
+
+	/**
+	 * 将数据库读出的数据映射到Space
+	 * @param rs
+	 * @param rowkey
+	 * @return
+	 */
+	public Space SpaceMapping(Result rs,String rowkey){
+		Space space = new Space();
+		if (rs.isEmpty()) {
+			// 没有检索到，说明数据库中没有该图片，返回错误信息
+			return null;
+		} else {
+			space.setKey(rowkey);
+			for(Cell cell:rs.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					space.setName(val);
+				}
+				if (v.equals("desc")) {
+					space.setDesc(val);
+				}
+				if (v.equals("cover")) {
+					space.setCover(val);
+				}
+				if (v.equals("uid")) {
+					space.setUid(val);
+				}
+				if (v.equals("storage")) {
+					space.setStorage(val);
+				}
+				if (v.equals("number")) {
+					space.setNumber(val);
+				}
+			}
+		}
+		return space;
+	}
 
 
 	/**
@@ -162,97 +171,141 @@ public class BeanMapping {
 		return user;
 		
 	}
-//	
-//	/**
-//	 * 将数据库读出的数据映射到MapfileBean
-//	 * @param rs
-//	 * @param rowkey
-//	 * @return
-//	 */
-//	public MapfileBean mapfileMapping(Result rs,String rowkey){
-//		MapfileBean mb = new MapfileBean();
-//		if (rs.isEmpty()) {
-//			// 没有检索到，说明数据库中没有该图片，返回错误信息
-//			return null;
-//		} else {
-//			mb.setKey(rowkey);
-//			for(Cell cell:rs.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					mb.setName(val);
-//				}
-//				if (v.equals("uid")) {
-//					mb.setUid(val);
-//				}
-//				if (v.equals("flagNum")) {
-//					mb.setFlagNum(val);
-//				}
-//				if (v.equals("picNum")) {
-//					mb.setPicNum(val);
-//				}
-//			}
-//			return mb;
-//		}
-//	}
-//	
-//	public PanoBean panoBeanMapping(Result rs, String rowkey){
-//		PanoBean pb = new PanoBean();
-//		if (rs.isEmpty()) {
-//			// 没有检索到，说明数据库中没有该图片，返回错误信息
-//			return null;
-//		} else {
-//			pb.setKey(rowkey);
-//			for(Cell cell:rs.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					pb.setName(val);
-//				}
-//				if (v.equals("uid")) {
-//					pb.setUid(val);
-//				}
-//				if (v.equals("createTime")) {
-//					pb.setCreateTime(val);
-//				}
-//				if (v.equals("size")) {
-//					pb.setSize(val);
-//				}
-//				if(v.equals("path")){
-//					pb.setPath(val);
-//				}
-//			}
-//		}
-//		return pb;
-//	}
-//	
-//	public Pic3DBean Pic3DMapping(Result rs, String rowkey){
-//		Pic3DBean pb = new Pic3DBean();
-//		if (rs.isEmpty()) {
-//			// 没有检索到，说明数据库中没有该图片，返回错误信息
-//			return null;
-//		} else {
-//			pb.setKey(rowkey);
-//			for(Cell cell:rs.rawCells()){
-//				String v = new String(CellUtil.cloneQualifier(cell));
-//				String val = new String(CellUtil.cloneValue(cell));
-//				if (v.equals("name")) {
-//					pb.setName(val);
-//				}
-//				if (v.equals("uid")) {
-//					pb.setUid(val);
-//				}
-//				if (v.equals("createTime")) {
-//					pb.setCreateTime(val);
-//				}
-//				if (v.equals("size")) {
-//					pb.setSize(val);
-//				}
-//				if (v.equals("num")) {
-//					pb.setNum(val);;
-//				}
-//			}
-//		}
-//		return pb;
-//	}
+	
+	/**
+	 * 将数据库读出的数据映射到Mapfile
+	 * @param rs
+	 * @param rowkey
+	 * @return
+	 */
+	public Mapfile mapfileMapping(Result rs,String rowkey){
+		Mapfile mapfile = new Mapfile();
+		if (rs.isEmpty()) {
+			// 没有检索到，说明数据库中没有该图片，返回错误信息
+			return null;
+		} else {
+			mapfile.setKey(rowkey);
+			for(Cell cell:rs.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					mapfile.setName(val);
+				}
+				if (v.equals("uid")) {
+					mapfile.setUid(val);
+				}
+				if (v.equals("flagNum")) {
+					mapfile.setFlagNum(val);
+				}
+				if (v.equals("picNum")) {
+					mapfile.setPicNum(val);
+				}
+			}
+			return mapfile;
+		}
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到PanoImage
+	 * @param rs
+	 * @param rowkey
+	 * @return
+	 */
+	public PanoImage panoImageMapping(Result rs, String rowkey){
+		PanoImage panoImage = new PanoImage();
+		if (rs.isEmpty()) {
+			// 没有检索到，说明数据库中没有该图片，返回错误信息
+			return null;
+		} else {
+			panoImage.setKey(rowkey);
+			for(Cell cell:rs.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					panoImage.setName(val);
+				}
+				if (v.equals("uid")) {
+					panoImage.setUid(val);
+				}
+				if (v.equals("createTime")) {
+					panoImage.setCreateTime(val);
+				}
+				if (v.equals("size")) {
+					panoImage.setSize(val);
+				}
+				if(v.equals("path")){
+					panoImage.setPath(val);
+				}
+			}
+		}
+		return panoImage;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到ThreeDImage
+	 * @param rs
+	 * @param rowkey
+	 * @return
+	 */
+	public ThreeDImage threeDImageMapping(Result rs, String rowkey){
+		ThreeDImage threeDImage = new ThreeDImage();
+		if (rs.isEmpty()) {
+			// 没有检索到，说明数据库中没有该图片，返回错误信息
+			return null;
+		} else {
+			threeDImage.setKey(rowkey);
+			for(Cell cell:rs.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					threeDImage.setName(val);
+				}
+				if (v.equals("uid")) {
+					threeDImage.setUid(val);
+				}
+				if (v.equals("createTime")) {
+					threeDImage.setCreateTime(val);
+				}
+				if (v.equals("size")) {
+					threeDImage.setSize(val);
+				}
+				if (v.equals("number")) {
+					threeDImage.setNumber(val);;
+				}
+			}
+		}
+		return threeDImage;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到HdImage
+	 * @param rs
+	 * @return
+	 */
+	public HdImage hdImageListMapping(Result rs, String rowkey){
+		HdImage hdImage = new HdImage();
+		if (rs.isEmpty()) {
+			// 没有检索到，说明数据库中没有该图片，返回错误信息
+			return null;
+		} else {
+			hdImage.setKey(rowkey);
+			for(Cell cell:rs.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("name")) {
+					hdImage.setName(val);
+				}
+				if (v.equals("uid")) {
+					hdImage.setUid(val);
+				}
+				if (v.equals("createTime")) {
+					hdImage.setCreateTime(val);
+				}
+				if (v.equals("size")) {
+					hdImage.setSize(val);
+				}
+			}
+		}
+		return hdImage;
+	}
 }
