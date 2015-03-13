@@ -14,6 +14,8 @@ $(document).ready(function(){
 			$("body").removeClass("mini-navbar");
 		}		
 	}
+	
+	$(".sidebar").height($(".page-wrapper").height());
 
 	mini_size();
 	//响应式

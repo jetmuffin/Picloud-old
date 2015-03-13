@@ -25,7 +25,7 @@
 	</div> -->
 	<present name="login_msg_box">
 		<div class="login-alert">
-		<!--  <strong>{$login_msg}</strong>-->	
+		  <strong>${LOGIN_MSG}</strong>	
 		</div>
 	</present>
 	<div class="middle-box">

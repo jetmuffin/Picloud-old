@@ -35,6 +35,7 @@ public class UserController {
 			throw new UserException("用户名或密码错误");
 		}
 		session.setAttribute("user", user);
+		session.removeAttribute("LOGIN_MSG");
 		return "redirect:../index";
 	}
 	
