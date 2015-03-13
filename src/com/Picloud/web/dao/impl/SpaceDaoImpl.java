@@ -50,7 +50,11 @@ public class SpaceDaoImpl implements ISpaceDao {
 	public void delete(Space space) {
 		mHbaseOperationImpl.deleteRow("cloud_space", space.getKey());
 		}
-
+	
+	@Override
+	public void delete(String key) {
+		mHbaseOperationImpl.deleteRow("cloud_space", key);
+	}
 	/**
 	 * 根据主键检索空间
 	 */
@@ -68,5 +72,7 @@ public class SpaceDaoImpl implements ISpaceDao {
 		ResultScanner rs = mHbaseOperationImpl.queryByColumn("cloud_space", "attr", "uid",uid);
 		return mListMapping.spaceListMapping(rs);
 	}
+
+
 
 }

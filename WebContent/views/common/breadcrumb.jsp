@@ -9,8 +9,8 @@
 			<c:if test="${action!=null}">
 				<li class="active">${action}</li>
 			</c:if>
-			<c:if test="${space!=null}">
-				<li class="active">${space}</li>
+			<c:if test="${activeSpace!=null}">
+				<li class="active">${activeSpace}</li>
 			</c:if>
 			
 		</ol>

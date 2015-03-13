@@ -35,7 +35,7 @@ public class UserDaoImpl implements IUserDao {
 		mHbaseOperationImpl.insertData("cloud_user", user.getUid(), "attr", "website", user.getWebsite());
 		mHbaseOperationImpl.insertData("cloud_user", user.getUid(), "var", "nickname", user.getNickname());
 		mHbaseOperationImpl.insertData("cloud_user", user.getUid(), "var", "password", user.getPassword());
-		mHbaseOperationImpl.insertData("cloud_user", user.getUid(), "var", "imageNumm", user.getImageNum());
+		mHbaseOperationImpl.insertData("cloud_user", user.getUid(), "var", "imageNum", user.getImageNum());
 		mHbaseOperationImpl.insertData("cloud_user", user.getUid(), "var", "imageTotalSize", user.getImageTotalSize());
 		mHbaseOperationImpl.insertData("cloud_user", user.getUid(), "var", "spaceNum", user.getSpaceNum());
 	}

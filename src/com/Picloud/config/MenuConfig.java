@@ -33,9 +33,9 @@ public class MenuConfig  extends HttpServlet{
 		List<Action> actions = new ArrayList<Action>();
 		
 		//图片空间
-		actions.add(new Action("PicSpace", "图片空间","#"));
-		actions.add(new Action("Upload", "快速上传","#"));
-		Module module_picserver = new Module("PicServer", "图片服务器", "link", "#",actions);
+		actions.add(new Action("PicSpace", "图片空间","spaces"));
+		actions.add(new Action("Upload", "快速上传","upload"));
+		Module module_picserver = new Module("space", "图片服务器", "link", "#",actions);
 		modules.add(module_picserver);
 		
 		//应用中心
