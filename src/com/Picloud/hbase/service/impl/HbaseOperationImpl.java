@@ -135,6 +135,7 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	             HBaseAdmin admin = new HBaseAdmin(mConfiguration); 
 	             admin.disableTable(tableName); 
 	             admin.deleteTable(tableName); 
+	             System.out.println("delete  " + tableName);
 //	             admin.close();
 	         } catch (MasterNotRunningException e) { 
 	             e.printStackTrace(); 

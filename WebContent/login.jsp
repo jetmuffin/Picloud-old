@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="${RESOURCES}/css/login.css" />
 </head>
 <body>
-
 <div class="logo">
 		<h1 class="logo-name">
 			<div class="logo-icon">
