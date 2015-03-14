@@ -1,8 +1,18 @@
 package com.Picloud.web.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,19 +22,54 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Picloud.hdfs.HdfsHandler;
+import com.Picloud.hdfs.MapfileHandler;
+import com.Picloud.image.ImageReader;
+import com.Picloud.web.dao.impl.ImageDaoImpl;
+import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.model.Image;
+import com.Picloud.web.model.User;
 
 @Controller
 @RequestMapping("/server")
 public class ImageController {
+	@Autowired
+	private InfoDaoImpl infoDaoImpl;
 	
 	/**
 	 * 查看单张图片（html）
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/{imageKey}",method=RequestMethod.GET)
-	public String show(@PathVariable String imageKey,Model model){
-		//TODO 
-		return "image/show";
+	public String show(@PathVariable String imageKey,HttpSession session,HttpServletResponse response) throws Exception{
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey,loginUser.getUid());
+		
+		if (buffer != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(buffer);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			PrintWriter out = response.getWriter();
+			out.println("Please input the correct image name.");
+		}
+		
+		return "server/show";
 	}
 	
 	/**
@@ -39,19 +84,7 @@ public class ImageController {
 		//TODO 查询Image
 		return image;
 	}
-	
 
-	
-	/**
-	 * 查看某空间下的所有图片
-	 * @param space
-	 */
-	@RequestMapping(value="/{space}",method=RequestMethod.GET)
-	public String list(@PathVariable String space){
-		//TODO
-		return "redirect:/server/list";
-	}
-	
 	/**
 	 * 删除单张图片
 	 * @param imageKey

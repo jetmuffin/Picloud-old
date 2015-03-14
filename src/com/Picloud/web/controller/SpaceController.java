@@ -24,14 +24,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Picloud.config.SystemConfig;
 import com.Picloud.exception.SpaceException;
 import com.Picloud.image.ImageWriter;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
+import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.SpaceDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
+import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Space;
 import com.Picloud.web.model.User;
+import com.Picloud.web.thread.SyncThread;
 
 @Controller
 @RequestMapping("/space")
@@ -44,7 +48,10 @@ public class SpaceController {
 	@Autowired
 	private ImageDaoImpl mImageDaoImpl;
 	@Autowired
-	private ImageWriter imageWriter;
+	private SystemConfig systemConfig;
+	@Autowired
+	private InfoDaoImpl infoDaoImpl;
+	
 	/**
 	 * 查看所有空间
 	 * 
@@ -116,6 +123,10 @@ public class SpaceController {
 		model.addAttribute("action", "图片空间");
 
 		Space space = mSpaceDaoImpl.find(spaceKey);
+		List<Image> images = mImageDaoImpl.load(spaceKey);
+		if(images!=null){
+			model.addAttribute("images",images);
+		}
 		model.addAttribute("activeSpace", space.getName());
 		model.addAttribute(space);
 		return "space/show";
@@ -154,11 +165,18 @@ public class SpaceController {
 			boolean flag = false;
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
+				ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
 				imageWriter.write(item, loginUser.getUid() , spaceKey);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+	    final String LocalPath = systemConfig.getLocalUploadPath() + "/" +  loginUser.getUid() + '/' + spaceKey + '/';
+	    // 同步线程
+	    SyncThread syncThread = new SyncThread(infoDaoImpl);
+	    syncThread.SetProperty(LocalPath,loginUser.getUid() , spaceKey);
+	    syncThread.start();
 		return "test";
 	}
 

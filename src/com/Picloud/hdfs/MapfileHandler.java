@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.Picloud.config.HdfsConfig;
 import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.MapfileDaoImpl;
 import com.Picloud.web.model.Image;
@@ -64,7 +65,7 @@ public class MapfileHandler {
 				writer.append(new Text(filename), new BytesWritable(buffer));
 				// 更新数据库
 				Image image = new Image(item);
-				image.setKey(item.getName() + uid);
+				image.setKey(EncryptUtil.imageEncryptKey(item.getName(), uid));
 				image.setStatus("HdfsSmallFile");
 				image.setPath(path.toString());
 				image.setUid(uid);

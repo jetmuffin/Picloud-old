@@ -65,7 +65,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String register(@Validated User user,BindingResult br){
+	public String register(@Validated User user,BindingResult br,HttpSession session){
 		if(br.hasErrors()) {
 			return "register";
 		}
@@ -73,7 +73,8 @@ public class UserController {
 			throw new UserException("用户名已被使用");
 		}
 		mUserDaoImpl.add(user);
-		return "test";
+		session.setAttribute("LOGIN_MSG", "注册成功，请登录！");
+		return "redirect:../login.jsp";
 	}
 	
 	

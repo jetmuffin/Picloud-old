@@ -23,6 +23,12 @@ public class GraphicMagick {
 	Info info = null;
 	String format = null;
 
+	
+	public GraphicMagick() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * 构造函数
 	 * 
@@ -53,14 +59,13 @@ public class GraphicMagick {
 	 */
 	public byte[] scaleImage(int width, int height) throws IOException,
 			InterruptedException, IM4JavaException {
-		GMOperation op = new GMOperation();
+		IMOperation op = new IMOperation();
 		byte[] imageOutData = null;
 		String formatOp = format + ":-";
 
 		try {
 			op.addImage("-");
-			op.size(width, height);
-			op.scale(width, height);
+			op.thumbnail(width, height, "!");
 			op.addImage(formatOp);
 
 			// gif动图特殊处理

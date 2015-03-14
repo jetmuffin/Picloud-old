@@ -51,26 +51,26 @@
 							</div>
 						</div>
 					</div>
+					
 					<div class="col-lg-9 animated fadeInRight">
 						<div class="row">
-							<volist name="pictures" id="picture">
-							<div class="file-box col-lg-4">
-								<div class="file">
-									<a href="{:U('Picserver/view/'.$picture['name'])}"> <span
-										class="corner"></span>
-										<div class="image">
-											<img alt="image" class="img-responsive"
-												src="http://localhost:8080/PicServer/ScaleImage?image={$picture.name}&uid={:session('uid')}&width=194">
-										</div>
-										<div class="file-name">
-											{$picture.name} <br> <small>
-												<?php echo timestr_totime($picture['createTime']); ?>
-											</small>
-										</div>
-									</a>
+							<c:forEach items="${images}"  var="image">
+								<div class="file-box col-lg-4">
+									<div class="file">
+										<a href="${ROOT }/server/${image.key }"> <span
+											class="corner"></span>
+											<div class="image">
+												<img alt="image" class="img-responsive"
+													src="http://localhost:8080/PicServer/ScaleImage?image={$picture.name}&uid={:session('uid')}&width=194">
+											</div>
+											<div class="file-name">
+												${image.name} <br> <small> ${image.createTime }
+												</small>
+											</div>
+										</a>
+									</div>
 								</div>
-							</div>
-							</volist>
+							</c:forEach>
 							<div class="clear"></div>
 							<nav class="pull-right gallery-pag">
 							<ul class="pagination jet-pagination">

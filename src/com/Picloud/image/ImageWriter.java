@@ -18,6 +18,7 @@ import com.Picloud.hdfs.MapfileHandler;
 import com.Picloud.utils.DateUtil;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
+import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.LogDaoImpl;
 import com.Picloud.web.dao.impl.SpaceDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
@@ -34,18 +35,30 @@ public class ImageWriter {
 	private static final String HDFS_UPLOAD_ROOT = "/upload";
 	//TODO 全局变量设置
 	
-	@Autowired
-	ImageDaoImpl mImageDaoImpl;
-	@Autowired
-	LogDaoImpl mLogDaoImpl;
-	@Autowired
-	UserDaoImpl mUserDaoImpl;
-	@Autowired
-	SpaceDaoImpl mSpaceDaoImpl;
-	@Autowired
-	HdfsHandler mHdfsHandler;
-	@Autowired
-	MapfileHandler mMapfileHandler;
+	private InfoDaoImpl infoDaoImpl;
+	private ImageDaoImpl mImageDaoImpl;
+	private LogDaoImpl mLogDaoImpl;
+	private UserDaoImpl mUserDaoImpl;
+	private SpaceDaoImpl mSpaceDaoImpl;
+	private HdfsHandler mHdfsHandler;
+	private MapfileHandler mMapfileHandler;
+	
+	
+	public ImageWriter() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ImageWriter(InfoDaoImpl infoDaoImpl){
+		this.infoDaoImpl = infoDaoImpl;
+		this.mHdfsHandler = infoDaoImpl.getmHdfsHandler();
+		this.mImageDaoImpl = infoDaoImpl.getmImageDaoImpl();
+		this.mUserDaoImpl = infoDaoImpl.getmUserDaoImpl();
+		this.mLogDaoImpl = infoDaoImpl.getmLogDaoImpl();
+		this.mSpaceDaoImpl = infoDaoImpl.getmSpaceDaoImpl();
+		this.mHdfsHandler = infoDaoImpl.getmHdfsHandler();
+		this.mMapfileHandler = infoDaoImpl.getmMapfileHandler();
+	}
 	
 	public boolean write(FileItem item,  String uid ,String space) throws Exception {
 		Image image = searchFile(item,uid);
@@ -185,7 +198,6 @@ public class ImageWriter {
 			final String LocalUidPath = SystemConfig.getSystemPath()
 					+ LOCAL_UPLOAD_ROOT + "/" + uid + '/';
 			final String LocalPath = LocalUidPath + '/' + space + '/' ;
-			System.out.println(LocalPath);
 			
 			//文件是否存在
 		    File LocalUidDir = new File(LocalUidPath);
@@ -201,7 +213,6 @@ public class ImageWriter {
 	            
 				String fileName = item.getName();
 				File file = new File(LocalPath, fileName);
-				System.out.println(file.getPath());
 				if (file.exists()) {
 					System.out.println("Local file exists!");
 					return false;
@@ -222,10 +233,11 @@ public class ImageWriter {
 	 * @param LocalPath
 	 * @throws Exception 
 	 */
-	public  void  localDirSync(String LocalPath, String uid , String space) throws Exception {
+	public  void  localDirSync(String LocalPath, String uid , String spaceKey) throws Exception {
 		File LocalDir = new File(LocalPath);
 		System.out.println(LocalDir.getPath());
 		double DirSize = getDirSize(LocalDir);
+		System.out.println(DirSize);
 		String filePath =  HDFS_UPLOAD_ROOT + "/" + uid + "/SmallFile/" + DateUtil.getCurrentDateStr();
 		
 		if(DirSize > MAX_SYNC_SIZE) {
@@ -239,7 +251,7 @@ public class ImageWriter {
             });
             
             //用Mapfile处理
-            mMapfileHandler.packageToHdfs(items, filePath, uid, space);
+            mMapfileHandler.packageToHdfs(items, filePath, uid, spaceKey);
             deleteFile(LocalDir);
             System.out.println("同步成功！");
 		}
