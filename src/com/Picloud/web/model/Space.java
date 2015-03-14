@@ -2,6 +2,8 @@ package com.Picloud.web.model;
 
 import java.text.DecimalFormat;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Space {
 	
 	/**
@@ -29,6 +31,8 @@ public class Space {
 	
 	public Space() {
 		super();
+		number = "0";
+		storage = "0";
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -51,12 +55,14 @@ public class Space {
 	public void setKey(String key) {
 		this.key = key;
 	}
+	@NotEmpty(message="空间名不能为空")
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
+	@NotEmpty(message="空间描述不能为空")
 	public String getDesc() {
 		return desc;
 	}
@@ -88,6 +94,14 @@ public class Space {
 	}
 	public void setNumber(String number) {
 		this.number = number;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Space [key=" + key + ", name=" + name + ", desc=" + desc
+				+ ", cover=" + cover + ", uid=" + uid + ", storage=" + storage
+				+ ", number=" + number + "]";
 	}
 	
 	

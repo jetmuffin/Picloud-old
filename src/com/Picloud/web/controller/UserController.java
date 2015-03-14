@@ -7,6 +7,7 @@ import javax.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,6 +40,7 @@ public class UserController {
 		} else if(!user.getPassword().equals(password)) {
 			throw new UserException("用户名或密码错误");
 		}
+
 		
 		Log log=new Log();
 		log.setKey("login");
@@ -46,8 +48,10 @@ public class UserController {
 		log.setTime(DateUtil.getCurrentDateMS());
 		log.setUid(uid);
 		mLogDaoImpl.add(log);
-		
-		session.setAttribute("user", user);
+
+
+		session.setAttribute("LoginUser", user);
+
 		session.removeAttribute("LOGIN_MSG");
 		
 		
@@ -90,7 +94,7 @@ public class UserController {
 	 * 个人信息修改页
 	 */
 	@RequestMapping(value="/update",method=RequestMethod.GET)
-	public String update(Model model){
+	public String update(Model model,@ModelAttribute("user") User user){
 		model.addAttribute("action","帐号管理");
 		model.addAttribute("module",module);
 		return "user/update";
@@ -100,11 +104,21 @@ public class UserController {
 	 * 修改个人信息
 	 */
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String update(@Validated User user,BindingResult br){
+	public String update(Model model,@Validated User user,BindingResult br,HttpSession session,String pwd_old){
+		model.addAttribute("action","帐号管理");
+		model.addAttribute("module",module);
+
+		User LoginUser = (User) session.getAttribute("LoginUser");
 		if(br.hasErrors()) {
 			return "user/update";
 		}
-		return "redirect:/user/show";			
+		if(!pwd_old.equals(LoginUser.getPassword())){
+			throw new UserException("原密码不正确");
+		}
+
+		mUserDaoImpl.update(user);
+		session.setAttribute("LoginUser", user);
+		return "redirect:/user/update";			
 	}
 	
 	/**

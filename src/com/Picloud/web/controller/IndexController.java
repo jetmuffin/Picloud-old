@@ -30,7 +30,7 @@ public class IndexController {
 	private String nowData;
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(Model model,HttpSession session){
-		User user=(User) session.getAttribute("user");
+		User user=(User) session.getAttribute("LoginUser");
 		
 		previousData=DateUtil.getPereviousDayMS();
 		nowData=DateUtil.getCurrentDateMS();

@@ -45,7 +45,7 @@ public class LoginInterceptor implements Filter {
         
         if(doFilter){
         	HttpSession session =  req.getSession();
-        	Object obj = session.getAttribute("user");  
+        	Object obj = session.getAttribute("LoginUser");  
         	if(obj == null)
         	{
         		String message = "请先登录";

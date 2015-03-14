@@ -48,7 +48,9 @@ public class User {
 	
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
+		imageNum = "0";
+		imageTotalSize = "0";
+		spaceNum = "0";
 	}
 
 	
@@ -100,7 +102,7 @@ public class User {
 	public void setLastLogin(String lastLogin) {
 		this.lastLogin = lastLogin;
 	}
-
+	
 	public String getWebsite() {
 		return website;
 	}

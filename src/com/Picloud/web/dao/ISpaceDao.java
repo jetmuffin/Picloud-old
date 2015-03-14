@@ -7,6 +7,7 @@ import com.Picloud.web.model.Space;
 public interface ISpaceDao {
 	public void add(Space space);
 	public void delete(Space space);
+	public void delete(String key);
 	public Space find(String key);
 	public List<Space> load(String uid);
 }
