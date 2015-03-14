@@ -1,5 +1,7 @@
 package com.Picloud.web.model;
 
+import java.util.Date;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -51,6 +53,7 @@ public class User {
 		imageNum = "0";
 		imageTotalSize = "0";
 		spaceNum = "0";
+		lastLogin = Long.toString(new Date().getTime());
 	}
 
 	

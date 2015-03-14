@@ -70,22 +70,19 @@ public class DateUtil {
 	 * 获取距离今日的时间统计
 	 */
 	public static String getLastTime(String lastTime){
-		String tLast = lastTime.substring(6, 8);
-		String tNow = DateUtil.getCurrentDateStr().substring(6, 8);
-		System.out.println(lastTime.substring(6, 8));
-		System.out.println(tNow);
-		int lastDays = Integer.getInteger(tNow)-Integer.getInteger(tLast);
-		if(lastDays > 0){
-			return lastDays + "天前";
+		Long lastTimeL = Long.parseLong(lastTime);
+		Long nowTime = new Date().getTime();
+		Long range = nowTime - lastTimeL;
+		int days = (int) (range/3600/1000/24);
+		if(days < 1){
+			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+			String date = sdf.format(new Date(lastTimeL));
+			return date;
+		} else if(days < 30){
+			return days + "天前";
+		} else {
+			return "很久以前";
 		}
-		else if(lastDays > 30)
-			return lastDays + "很久以前";
-		else 
-			return lastTime;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(new Date().getTime());
 	}
 }
 

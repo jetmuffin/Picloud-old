@@ -11,7 +11,7 @@
 					src="${RESOURCES}/images/user-thumb.png">
 				</span> <span class="block user-name"> <strong class="font-bold">${LoginUser.nickname}
 				</strong></span> <span class="block user-lastlogin">上次登录:
-					{:session('lastlogin')}</span>
+					${lastLogin }</span>
 			</div>
 			<div class="logo-element">
 				<i class="fa-cloud fa"></i>

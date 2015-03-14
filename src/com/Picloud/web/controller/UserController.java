@@ -1,5 +1,7 @@
 package com.Picloud.web.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
@@ -41,8 +43,9 @@ public class UserController {
 			throw new UserException("用户名或密码错误");
 		}
 		
-		Log log=new Log(uid,user.getNickname()+"登录系统");
+		Log log=new Log(uid,user.getNickname() + "登录系统");
 		mLogDaoImpl.add(log);
+		user.setLastLogin(Long.toString(new Date().getTime()));
 
 		session.setAttribute("LoginUser", user);
 		session.removeAttribute("LOGIN_MSG");
