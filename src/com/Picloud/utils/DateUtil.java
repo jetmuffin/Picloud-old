@@ -65,6 +65,28 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		return sdf.format(date);
 	}
+	
+	/**
+	 * 获取距离今日的时间统计
+	 */
+	public static String getLastTime(String lastTime){
+		String tLast = lastTime.substring(6, 8);
+		String tNow = DateUtil.getCurrentDateStr().substring(6, 8);
+		System.out.println(lastTime.substring(6, 8));
+		System.out.println(tNow);
+		int lastDays = Integer.getInteger(tNow)-Integer.getInteger(tLast);
+		if(lastDays > 0){
+			return lastDays + "天前";
+		}
+		else if(lastDays > 30)
+			return lastDays + "很久以前";
+		else 
+			return lastTime;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new Date().getTime());
+	}
 }
 
 

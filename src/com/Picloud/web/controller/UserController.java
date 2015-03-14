@@ -40,7 +40,6 @@ public class UserController {
 		} else if(!user.getPassword().equals(password)) {
 			throw new UserException("用户名或密码错误");
 		}
-
 		
 		Log log=new Log();
 		log.setKey("login");
@@ -49,11 +48,8 @@ public class UserController {
 		log.setUid(uid);
 		mLogDaoImpl.add(log);
 
-
 		session.setAttribute("LoginUser", user);
-
 		session.removeAttribute("LOGIN_MSG");
-		
 		
 		return "redirect:../index";
 	}
