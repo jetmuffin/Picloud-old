@@ -40,22 +40,7 @@ public class ImageController {
 		return image;
 	}
 	
-	/**
-	 * 上传图片
-	 * @param space 图片所在空间
-	 * @param attachs 图片附件数组
-	 */
-	@RequestMapping(value="/{space}/upload",method=RequestMethod.GET)
-	public String upload(@PathVariable String space,@RequestParam("attachs") MultipartFile[] attachs){
-		for(MultipartFile attach:attachs){
-			if(attach.isEmpty()) continue;
-		// TODO 图片上传处理	
-		//	File f = new File(realpath+"/"+attach.getOriginalFilename());
-		//	FileUtils.copyInputStreamToFile(attach.getInputStream(), f);
-			System.out.println(attach.getName()+","+attach.getOriginalFilename()+","+attach.getContentType());
-		}
-		return "redirect:/server/list";			
-	}
+
 	
 	/**
 	 * 查看某空间下的所有图片

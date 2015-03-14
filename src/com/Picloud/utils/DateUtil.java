@@ -6,6 +6,33 @@ import java.util.Date;
 public class DateUtil {
 
 	/**
+	 * 获取年月日字符串
+	 * @return
+	 */
+	public  static String getDateNum() {
+		Calendar c = Calendar.getInstance();
+		String year = Integer.toString(c.get(Calendar.YEAR));
+		String month = Integer.toString(c.get(Calendar.MONTH));
+		String date = Integer.toString(c.get(Calendar.DATE));
+		return year+month+date;
+	}
+	
+	/**
+	 * 获取年月日时分秒字符串
+	 * @return
+	 */
+	public  static String getSecNum() {
+		Calendar c = Calendar.getInstance();
+		String year = Integer.toString(c.get(Calendar.YEAR));
+		String month = Integer.toString(c.get(Calendar.MONTH));
+		String date = Integer.toString(c.get(Calendar.DATE));
+		String hour = Integer.toString(c.get(Calendar.HOUR));
+		String minute = Integer.toString(c.get(Calendar.MINUTE));
+		String second = Integer.toString(c.get(Calendar.SECOND));
+		return year+month+date+hour+minute+second;
+	}
+	
+	/**
 	 * 将时间按照格式进行转换
 	 * @param date 时间
 	 * @param format 时间格式
@@ -75,7 +102,7 @@ public class DateUtil {
 		Long range = nowTime - lastTimeL;
 		int days = (int) (range/3600/1000/24);
 		if(days < 1){
-			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String date = sdf.format(new Date(lastTimeL));
 			return date;
 		} else if(days < 30){
@@ -84,6 +111,17 @@ public class DateUtil {
 			return "很久以前";
 		}
 	}
+	
+	public static String getStrTime(String strTime){
+		String year = strTime.substring(0, 4);
+		String month = strTime.substring(4,6);
+		String day = strTime.substring(6,8);
+		String hour = strTime.substring(8,10);
+		String minute = strTime.substring(10,12);
+		String second = strTime.substring(12,14);
+		return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+	}
+
 }
 
 

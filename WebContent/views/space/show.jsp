@@ -19,10 +19,84 @@
 			<jsp:include page="../common/navbar.jsp" />
 			<jsp:include page="../common/breadcrumb.jsp" />
 			<div class="wrapper wrapper-content animated fadeInDown">
-				<block name="content"> 
-					${space.name }
-					|${space.desc }
-				</block>
+				<block name="content"> <block name="content">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="ibox ">
+							<div class="ibox-content">
+								<div class="file-manager">
+									<h4>${space.name}</h4>
+									<h5 class="space-desc">${space.desc}</h5>
+									<div class="hr-line-dashed"></div>
+									<a class="jet-button btn btn-primary btn-block"
+										href="${space.key }/upload">上传图片</a>
+									<div class="hr-line-dashed"></div>
+									<label class="control-label">其他空间</label>
+									<ul class="folder-list" style="padding: 0">
+										<volist name="spaces" id="otherspace">
+										<li><a
+											href="{:U('Picserver/space/'.$otherspace['name'])}?page=1"><i
+												class="fa fa-folder"></i>{$otherspace.name}</a></li>
+										</volist>
+									</ul>
+									<div class="picture-search">
+										<label class="control-label">搜索图片</label>
+										<form action="{:U('Picserver/search')}" method="get">
+											<input type="text" placeholder="搜索" name="key"
+												class="form-control jet-input">
+										</form>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-9 animated fadeInRight">
+						<div class="row">
+							<volist name="pictures" id="picture">
+							<div class="file-box col-lg-4">
+								<div class="file">
+									<a href="{:U('Picserver/view/'.$picture['name'])}"> <span
+										class="corner"></span>
+										<div class="image">
+											<img alt="image" class="img-responsive"
+												src="http://localhost:8080/PicServer/ScaleImage?image={$picture.name}&uid={:session('uid')}&width=194">
+										</div>
+										<div class="file-name">
+											{$picture.name} <br> <small>
+												<?php echo timestr_totime($picture['createTime']); ?>
+											</small>
+										</div>
+									</a>
+								</div>
+							</div>
+							</volist>
+							<div class="clear"></div>
+							<nav class="pull-right gallery-pag">
+							<ul class="pagination jet-pagination">
+								<if condition="($_GET['page'] eq 1) ">
+								<li class="disabled"><a href="">&laquo;</a></li>
+								<else />
+								<li><a
+									href="{:U('Picserver/space/'.$space['name']).'?page='.($_GET['page']-1)}&dir=prev">&laquo;</a></li>
+								</if>
+								<li><a href="">{$_GET['page']}</a></li>
+								<if condition="($pic_list.ifNext eq 'false')">
+								<li class="disabled"><a href="">&raquo;</a></li>
+								<else />
+								<li><a
+									href="{:U('Picserver/space/'.$space['name']).'?page='.($_GET['page']+1)}&dir=next">&raquo;</a></li>
+								</if>
+							</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<div class="switch">
+					<a href=""><i class="fa fa-heart"></i>缩略图</a> &nbsp;|&nbsp; <a
+						href=""><i class="fa fa-heart"></i>列表</a>
+				</div>
+				</block> </block>
 			</div>
 			<jsp:include page="../common/footer.jsp" />
 		</div>

@@ -113,8 +113,35 @@ public class EncryptUtil {
         mac.init(secretKey);  
         BigInteger macBI = new BigInteger(mac.doFinal(data));  
         return macBI.toString(16);  
-  
-    }  
+    }
+    
+    /**
+     * 图片加密方法 imageName_uid 再进行md5加密后再进行sha加密，最后进行base64加密
+     * @param imageName
+     * @param uid
+     * @return
+     * @throws Exception
+     */
+    public static String imageEncryptKey(String imageName,String uid) throws Exception{
+    	String data = imageName + "_" + uid;
+    	String md5 = encryptMD5(data.getBytes());
+    	String sha = encryptSHA(md5.getBytes());
+    	String key = encryptBASE64(sha.getBytes());
+    	return key;
+    }
+    
+    /**
+     * 空间名加密方法 spaceName_uid 在进行base64加密
+     * @param spaceName
+     * @param uid
+     * @return
+     * @throws Exception
+     */
+    public static String spaceEncryptKey(String spaceName,String uid) throws Exception{
+		String data =spaceName + "_" + uid;
+		String key = encryptBASE64(data.getBytes());
+		return key;
+    }
 
     
     public static void main(String[] args) throws Exception {

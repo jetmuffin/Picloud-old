@@ -12,6 +12,7 @@ import com.Picloud.hbase.service.impl.HbaseOperationImpl;
 import com.Picloud.hbase.service.impl.ListMapping;
 import com.Picloud.web.dao.ISpaceDao;
 import com.Picloud.web.model.Space;
+import com.Picloud.web.model.User;
 
 @Repository
 public class SpaceDaoImpl implements ISpaceDao {
@@ -41,6 +42,11 @@ public class SpaceDaoImpl implements ISpaceDao {
 		mHbaseOperationImpl.insertData("cloud_space",space.getKey(), "var", "storage", space.getStorage());
 		mHbaseOperationImpl.insertData("cloud_space",space.getKey(), "var", "number", space.getNumber());
 
+	}
+	
+	@Override
+	public void update(Space space) {
+		add(space);
 	}
 
 	/**
@@ -72,7 +78,5 @@ public class SpaceDaoImpl implements ISpaceDao {
 		ResultScanner rs = mHbaseOperationImpl.queryByColumn("cloud_space", "attr", "uid",uid);
 		return mListMapping.spaceListMapping(rs);
 	}
-
-
 
 }

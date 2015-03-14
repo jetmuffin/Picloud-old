@@ -77,9 +77,11 @@ public class ImageDaoImpl implements IImageDao {
 	 * 检索某空间下的所有图片
 	 */
 	@Override
-	public List<Image> load(String space) {
-		return null;
+	public List<Image> load(String spaceId) {
+		ResultScanner rs = mHbaseOperationImpl.queryByColumn("cloud_image", "attr", "space", spaceId);
+		return mListMapping.imageListMapping(rs);
 	}
+
 
 	/**
 	 * 根据图片的某个列值匹配检索图片

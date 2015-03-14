@@ -47,4 +47,10 @@ public class MapfileDaoImpl implements IMapfileDao {
 		return mBeanMapping.mapfileMapping(rs, key);
 	}
 
+	@Override
+	public void update(Mapfile mapfile) {
+		add(mapfile);
+		
+	}
+
 }

@@ -34,12 +34,12 @@ public class IndexController {
 		User user=(User) session.getAttribute("LoginUser");
 		String yesterday = DateUtil.getPereviousDayMS();
 		String today = DateUtil.getCurrentDateMS();
-		List<Space> space = mSpaceDaoImpl.load(user.getUid());
-		List<Log> log = mLogDaoImpl.getByTime(user.getUid(),yesterday ,today);
+		List<Space> spaces = mSpaceDaoImpl.load(user.getUid());
+		List<Log> logs = mLogDaoImpl.getByTime(user.getUid(),yesterday ,today);
 		
 		session.setAttribute("lastLogin", DateUtil.getLastTime(user.getLastLogin()));
-		model.addAttribute("space",space);
-		model.addAttribute("log",log);
+		model.addAttribute("spaces",spaces);
+		model.addAttribute("logs",logs);
 		return "index";
 	}
 }

@@ -10,4 +10,5 @@ public interface ISpaceDao {
 	public void delete(String key);
 	public Space find(String key);
 	public List<Space> load(String uid);
+	public void update(Space space);
 }

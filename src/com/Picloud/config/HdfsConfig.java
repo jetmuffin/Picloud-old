@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HdfsConfig {
-	private String fileSystemPath;
-	private String uploadPath;
+	private String fileSystemPath = "localhost:9000";
+	private String uploadPath = "localhost:9000/upload";
 	
 	public HdfsConfig(String fileSystemPath, String uploadPath){
 		this.fileSystemPath = fileSystemPath;

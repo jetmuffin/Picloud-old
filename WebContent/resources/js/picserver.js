@@ -1,11 +1,12 @@
 $(document).ready(function(){
-            Dropzone.options.myAwesomeDropzone = {
-
+        var url = window.location.href;  
+		Dropzone.options.myAwesomeDropzone = {
+           
                 autoProcessQueue: false,
                 uploadMultiple: true,
                 parallelUploads: 200,
                 maxFiles: 200,
-                url: "http://localhost:8080/PicServer/UploadAjax",
+                url: url,
                 method: "post",
                 // Dropzone settings
                 init: function() {
