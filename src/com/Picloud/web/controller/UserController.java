@@ -42,11 +42,7 @@ public class UserController {
 		}
 
 		
-		Log log=new Log();
-		log.setKey("login");
-		log.setOperation(user.getNickname()+"登录系统");
-		log.setTime(DateUtil.getCurrentDateMS());
-		log.setUid(uid);
+		Log log=new Log(uid,user.getNickname()+"登录系统");
 		mLogDaoImpl.add(log);
 
 
