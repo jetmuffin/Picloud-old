@@ -5,6 +5,6 @@
 <div class="footer">
     <div class="pull-right"><strong>Picloud</strong> - 不是所有的云都叫Picloud</div>
     <div>
-        <strong>Copyright</strong> JetMuffin InnerAc Solaric goodPJ © 2014-4ever
+        <strong>Copyright</strong> JetMuffin InnerAc Solaric GMPJ © 2014-4ever
     </div>
 </div>	

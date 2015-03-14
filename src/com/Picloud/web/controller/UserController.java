@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.Picloud.exception.UserException;
+import com.Picloud.utils.DateUtil;
+import com.Picloud.web.dao.impl.LogDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
+import com.Picloud.web.model.Log;
 import com.Picloud.web.model.User;
 
 @Controller
@@ -24,6 +27,8 @@ public class UserController {
 	
 	@Autowired
 	private UserDaoImpl mUserDaoImpl;
+	@Autowired
+	private LogDaoImpl mLogDaoImpl;
 	private String module = "用户中心";
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
@@ -34,8 +39,18 @@ public class UserController {
 		} else if(!user.getPassword().equals(password)) {
 			throw new UserException("用户名或密码错误");
 		}
+		
+		Log log=new Log();
+		log.setKey("login");
+		log.setOperation(user.getNickname()+"登录系统");
+		log.setTime(DateUtil.getCurrentDateMS());
+		log.setUid(uid);
+		mLogDaoImpl.add(log);
+		
 		session.setAttribute("user", user);
 		session.removeAttribute("LOGIN_MSG");
+		
+		
 		return "redirect:../index";
 	}
 	

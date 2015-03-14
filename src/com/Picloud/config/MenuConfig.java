@@ -59,5 +59,6 @@ public class MenuConfig  extends HttpServlet{
 		application.setAttribute("MODULE_APPCENTER", module_appcenter);
 		application.setAttribute("MODULE_PICSERVER", module_picserver);
 		application.setAttribute("MODULE_USERCENTER", module_usercenter);
+		
 	}
 }

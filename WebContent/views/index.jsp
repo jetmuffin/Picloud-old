@@ -20,6 +20,7 @@
 			<div class="wrapper wrapper-content animated fadeInDown">
 				<block name="content">
 					${user.uid} 你好!!!
+					<c:forEach var="spacename" items="space" ></c:forEach>
 				</block>
 			</div>
 			<jsp:include page="common/footer.jsp" />

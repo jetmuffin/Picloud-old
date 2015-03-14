@@ -1,7 +1,7 @@
 package com.Picloud.utils;
 
 import java.text.SimpleDateFormat;
-
+import java.util.Calendar;
 import java.util.Date;
 public class DateUtil {
 
@@ -48,6 +48,20 @@ public class DateUtil {
 	
 	public static String getCurrentDateMS() {
 		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		return sdf.format(date);
+	}
+	
+	/**
+	 * 获取当前时间的前一天
+	 * @return
+	 */
+	public static String getPereviousDayMS() {
+		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+		date = calendar.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		return sdf.format(date);
 	}

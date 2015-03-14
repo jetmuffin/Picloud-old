@@ -53,7 +53,7 @@
 		</sf:form>
 	</div>
 	<div class="copyright">
-		<small>Developed by JetMuffin, Sloric, InnerAc, Goodpj </small> <br />©
+		<small>Developed by JetMuffin, Sloric, InnerAc, GMpj </small> <br />©
 		<small>2014 copyright </small>
 	</div>
 	<script type="text/javascript"
