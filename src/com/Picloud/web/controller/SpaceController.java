@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.Picloud.exception.SpaceException;
+import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.SpaceDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
 import com.Picloud.web.model.Space;
@@ -43,18 +44,18 @@ public class SpaceController {
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(Model model,@Validated Space space,BindingResult br,HttpSession session){
+	public String add(Model model,@Validated Space space,BindingResult br,HttpSession session) throws Exception{
 		model.addAttribute("module", module);
 		model.addAttribute("action", "图片空间");
 		
-		//TODO 中文问题
 		User LoginUser = (User) session.getAttribute("LoginUser");
 		if(br.hasErrors()) {
 			return "space/list";
 		}
 		
-		//设定key = space.desc + "_" + uid
-		String key = space.getName() + "_" + LoginUser.getUid();
+		//设定data = space.desc + "_" + uid , key = base64(data)
+		String data = space.getName() + "_" + LoginUser.getUid();
+		String key = EncryptUtil.encryptBASE64(data.getBytes());
 		if(mSpaceDaoImpl.find(key)!=null){
 			throw new SpaceException("该空间已存在！");
 		}
@@ -63,22 +64,18 @@ public class SpaceController {
 		mSpaceDaoImpl.add(space);
 		
 		String spaceNum = LoginUser.getSpaceNum();
-		if(spaceNum.equals(""))
-			spaceNum = "0";
 		LoginUser.setSpaceNum(Integer.toString(Integer.parseInt(spaceNum)+1));
 		mUserDaoImpl.update(LoginUser);
 		return "redirect:spaces";
 	}
 	
-	@RequestMapping(value="/{spaceName}",method=RequestMethod.GET)
-	public String show(@PathVariable String spaceName,Model model,HttpSession session){
+	@RequestMapping(value="/{spaceKey}",method=RequestMethod.GET)
+	public String show(@PathVariable String spaceKey,Model model,HttpSession session) throws Exception{
 		model.addAttribute("module", module);
 		model.addAttribute("action", "图片空间");
-		model.addAttribute("activeSpace", spaceName);
 
-		User LoginUser = (User) session.getAttribute("LoginUser");
-		String key = spaceName + "_" + LoginUser.getUid();
-		Space space = mSpaceDaoImpl.find(key);
+		Space space = mSpaceDaoImpl.find(spaceKey);
+		model.addAttribute("activeSpace", space.getName());
 		model.addAttribute(space);
 		return "space/show";
 	}

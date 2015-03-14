@@ -50,7 +50,7 @@ public class User {
 		super();
 		imageNum = "0";
 		imageTotalSize = "0";
-		String spaceNum = "0";
+		spaceNum = "0";
 	}
 
 	

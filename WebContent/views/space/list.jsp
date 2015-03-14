@@ -28,7 +28,7 @@
 								<h5>${space.name}</h5>
 							</div>
 							<div class="ibox-content  space-pic">
-								<a href="${space.name }">
+								<a href="${space.key }">
 									<c:choose>
 										<c:when test="${space.cover=='' }">
 										<img src="${RESOURCES}/images/p3.jpg">
@@ -56,13 +56,13 @@
 								<div class="user-button">
 									<div class="row">
 										<div class="col-md-6">
-											<a href="${space.name }"
+											<a href="${space.key }"
 												type="button" class="btn btn-primary btn-block jet-button"><i
 												class="fa fa-folder-open"></i> 查看</a>
 										</div>
 										<div class="col-md-6">
 											<a
-												href="${space.name }/delete?space={$space['name']}"
+												href="${space.name }/delete"
 												class="btn btn-default btn-block"><i class="fa fa-trash"></i>
 												删除</a>
 										</div>
