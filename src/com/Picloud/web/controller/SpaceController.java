@@ -286,11 +286,6 @@ public class SpaceController {
 	}
 	
 	/**
-	 * 
-	 * @param imageKey
-	 * @return Image 图片信息JSON
-	 */
-	/**
 	 * 读取空间信息
 	 * @param spaceKey
 	 * @return Space信息JSON
@@ -301,5 +296,18 @@ public class SpaceController {
 		Space space = new Space();
 		space = mSpaceDaoImpl.find(spaceKey);
 		return space;
+	}
+	
+
+	/**
+	 * 读取空间内所有图片信息
+	 * @param spaceKey
+	 * @return Space所有图片信息JSON
+	 */
+	@RequestMapping(value="/{spaceKey}/images.json",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Image> getAllImages (@PathVariable String spaceKey){
+		List<Image> images = mImageDaoImpl.load(spaceKey); 
+		return images;
 	}
 }
