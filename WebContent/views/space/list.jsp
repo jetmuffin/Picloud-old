@@ -34,7 +34,7 @@
 										<img src="${RESOURCES}/images/p3.jpg">
 										</c:when>
 										<c:otherwise>
-										
+											<img src="${ROOT}/process/${space.cover}/scale[400,-]"/>
 										</c:otherwise>
 									</c:choose>
 								</a>

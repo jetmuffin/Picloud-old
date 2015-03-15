@@ -35,7 +35,6 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	
 	private Configuration mConfiguration;
 	public HbaseOperationImpl() {
-		System.out.println("HbaseOperationImpl的无参构造方法");
 	}
 	
 	public HbaseOperationImpl(HbaseTemplate mHbaseTemplate) {

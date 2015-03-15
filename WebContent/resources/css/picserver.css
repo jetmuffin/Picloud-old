@@ -157,3 +157,9 @@ width: 272px;
 display: block;
 overflow: hidden;
 }
+.view-profile .dl-horizontal dt {
+	overflow:auto !important;
+}
+.view-picture {
+	height:267px;
+}

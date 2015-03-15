@@ -26,7 +26,7 @@
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
 								<h5>
-									上传图片<small>- ${space.name } </small>
+									上传图片<small>- ${space.name}<c:if test="${spaces!=null}">快速上传</c:if></small>
 								</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"><i class="fa fa-chevron-up"></i></a> <a
@@ -39,6 +39,13 @@
 									<div class="dropzone-previews"></div>
 									<div class="dropzone-group">
 										<button type="submit" class="btn btn-primary pull-right">提交</button>
+										<c:if test="${spaces!=null}">
+											<select class="form-control jet-input" name="space">
+												<c:forEach items="${spaces}" var="space">
+												<option>${space.name}</option>
+												</c:forEach>
+											</select>
+										</c:if>
 									</div>
 									<div class="dz-default dz-message">
 										<span>Drop files here to upload</span>

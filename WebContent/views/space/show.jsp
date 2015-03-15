@@ -33,11 +33,11 @@
 									<div class="hr-line-dashed"></div>
 									<label class="control-label">其他空间</label>
 									<ul class="folder-list" style="padding: 0">
-										<volist name="spaces" id="otherspace">
-										<li><a
-											href="{:U('Picserver/space/'.$otherspace['name'])}?page=1"><i
-												class="fa fa-folder"></i>{$otherspace.name}</a></li>
-										</volist>
+										<c:forEach items="${spaces}"  var="otherspace">
+											<c:if test="${space.name ne otherspace.name}">
+												<li><a href="${ROOT}/space/${otherspace.key}">${otherspace.name }</a></li>
+											</c:if>
+										</c:forEach>
 									</ul>
 									<div class="picture-search">
 										<label class="control-label">搜索图片</label>
@@ -57,11 +57,11 @@
 							<c:forEach items="${images}"  var="image">
 								<div class="file-box col-lg-4">
 									<div class="file">
-										<a href="${ROOT }/server/${image.key }"> <span
+										<a href="${ROOT }/server/${image.key}/view"> <span
 											class="corner"></span>
 											<div class="image">
 												<img alt="image" class="img-responsive"
-													src="http://localhost:8080/PicServer/ScaleImage?image={$picture.name}&uid={:session('uid')}&width=194">
+													src="${ROOT}/process/${image.key}/scale[198,-]">
 											</div>
 											<div class="file-name">
 												${image.name} <br> <small> ${image.createTime }

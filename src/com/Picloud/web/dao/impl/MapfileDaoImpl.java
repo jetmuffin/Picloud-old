@@ -8,6 +8,7 @@ import com.Picloud.hbase.service.impl.BeanMapping;
 import com.Picloud.hbase.service.impl.HbaseOperationImpl;
 import com.Picloud.hbase.service.impl.ListMapping;
 import com.Picloud.web.dao.IMapfileDao;
+import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Mapfile;
 
 @Repository
@@ -53,4 +54,11 @@ public class MapfileDaoImpl implements IMapfileDao {
 		
 	}
 
+	/**
+	 * 删除图片
+	 */
+	@Override
+	public void delete(Mapfile mapfile) {
+		mHbaseOperationImpl.deleteRow("cloud_mapfie", mapfile.getKey());
+	}
 }

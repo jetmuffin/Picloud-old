@@ -122,22 +122,49 @@ public class SpaceController {
 		model.addAttribute("module", module);
 		model.addAttribute("action", "图片空间");
 
+		User loginUser = (User) session.getAttribute("LoginUser");
 		Space space = mSpaceDaoImpl.find(spaceKey);
+		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
 		List<Image> images = mImageDaoImpl.load(spaceKey);
 		if(images!=null){
 			model.addAttribute("images",images);
 		}
-		model.addAttribute("activeSpace", space.getName());
+		model.addAttribute("activeSpace", space);
 		model.addAttribute(space);
+		model.addAttribute("spaces", spaces);
 		return "space/show";
 	}
+	
+	/**
+	 * 快速上传页面
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/upload", method = RequestMethod.GET)
+	public String upload(Model model,HttpSession session) {
+		model.addAttribute("module", module);
+		model.addAttribute("action", "上传图片");
 
+		User loginUser = (User) session.getAttribute("LoginUser");
+		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
+		model.addAttribute("spaces",spaces);
+		return "space/upload";
+	}
+	
+	/**
+	 * 上传图片页面
+	 * @param spaceKey
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/{spaceKey}/upload", method = RequestMethod.GET)
 	public String upload(@PathVariable String spaceKey, Model model) {
 		model.addAttribute("module", module);
 		model.addAttribute("action", "上传图片");
 
 		Space space = mSpaceDaoImpl.find(spaceKey);
+		model.addAttribute("activeSpace", space);
 		model.addAttribute(space);
 		return "space/upload";
 	}

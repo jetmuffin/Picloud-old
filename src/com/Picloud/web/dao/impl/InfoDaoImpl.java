@@ -21,6 +21,7 @@ public class InfoDaoImpl {
 	@Autowired
 	MapfileHandler mMapfileHandler;
 	@Autowired
+	MapfileDaoImpl mMapfileDaoImpl;
 	
 	public ImageDaoImpl getmImageDaoImpl() {
 		return mImageDaoImpl;
@@ -57,6 +58,12 @@ public class InfoDaoImpl {
 	}
 	public void setmMapfileHandler(MapfileHandler mMapfileHandler) {
 		this.mMapfileHandler = mMapfileHandler;
+	}
+	public MapfileDaoImpl getmMapfileDaoImpl() {
+		return mMapfileDaoImpl;
+	}
+	public void setmMapfileDaoImpl(MapfileDaoImpl mMapfileDaoImpl) {
+		this.mMapfileDaoImpl = mMapfileDaoImpl;
 	}
 	
 	

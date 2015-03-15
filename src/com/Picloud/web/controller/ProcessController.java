@@ -25,7 +25,9 @@ import com.Picloud.exception.ProcessException;
 import com.Picloud.exception.UserException;
 import com.Picloud.image.GraphicMagick;
 import com.Picloud.image.ImageReader;
+import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
+import com.Picloud.web.model.Image;
 import com.Picloud.web.model.User;
 
 @Controller
@@ -35,6 +37,8 @@ public class ProcessController {
 	private InfoDaoImpl infoDaoImpl;
 	@Autowired
 	private SystemConfig systemConfig;
+	@Autowired
+	private ImageDaoImpl mImageDaoImpl;
 
 	/**
 	 * 缩放图片
@@ -48,14 +52,15 @@ public class ProcessController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/{imageKey}/scale[{width},{height}]", method = RequestMethod.GET)
-	public String scale(@PathVariable String imageKey, @PathVariable int width,
+	public void scale(@PathVariable String imageKey, @PathVariable int width,
 			@PathVariable int height, HttpSession session,
 			HttpServletResponse response) throws Exception {
 
+		Image image = mImageDaoImpl.find(imageKey);
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey, loginUser.getUid());
-		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width, height);
 
 		if (bufferOut != null) {
@@ -79,7 +84,6 @@ public class ProcessController {
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
-		return "process/scale";
 	}
 
 	/**
@@ -92,13 +96,14 @@ public class ProcessController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/{imageKey}/scale[{width},-]", method = RequestMethod.GET)
-	public String scale(@PathVariable String imageKey, @PathVariable int width,
+	public void  scale(@PathVariable String imageKey, @PathVariable int width,
 			HttpSession session, HttpServletResponse response) throws Exception {
 
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		Image image = mImageDaoImpl.find(imageKey);
 		byte[] buffer = imageReader.readPicture(imageKey, loginUser.getUid());
-		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width);
 
 		if (bufferOut != null) {
@@ -122,7 +127,6 @@ public class ProcessController {
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
-		return "process/scale";
 	}
 
 	/**
@@ -142,7 +146,7 @@ public class ProcessController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/{imageKey}/crop[{startX},{startY},{width},{height}]", method = RequestMethod.GET)
-	public String crop(@PathVariable String imageKey, @PathVariable int startX,
+	public void crop(@PathVariable String imageKey, @PathVariable int startX,
 			@PathVariable int startY, @PathVariable int width,
 			@PathVariable int height,HttpServletResponse response,HttpSession session) throws Exception {
 		
@@ -173,8 +177,6 @@ public class ProcessController {
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
-		
-		return "process/crop";
 	}
 
 	/**
@@ -198,7 +200,7 @@ public class ProcessController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/{imageKey}/watermark[{startX},{startY}],[{width},{height}],[{logo},{optical}]", method = RequestMethod.GET)
-	public String watermark(@PathVariable String imageKey,
+	public void  watermark(@PathVariable String imageKey,
 			@PathVariable int startX, @PathVariable int startY,
 			@PathVariable int width, @PathVariable int height,
 			@PathVariable String logo, @PathVariable int optical,HttpSession session,HttpServletResponse response) throws Exception {
@@ -231,8 +233,6 @@ public class ProcessController {
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
-		
-		return "process/watermark";
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class ProcessController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/{imageKey}/textmark[{startX},{startY},{text},{fontSize},{color}]", method = RequestMethod.GET)
-	public String textmark(@PathVariable String imageKey,
+	public void  textmark(@PathVariable String imageKey,
 			@PathVariable int startX, @PathVariable int startY,
 			@PathVariable int fontSize, @PathVariable String text,
 			@PathVariable String color,HttpSession session,HttpServletResponse response) throws Exception {
@@ -286,8 +286,6 @@ public class ProcessController {
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
-		
-		return "process/textmark";
 	}
 
 	@ExceptionHandler(value=(ProcessException.class))

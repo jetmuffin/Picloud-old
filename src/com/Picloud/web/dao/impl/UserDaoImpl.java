@@ -20,7 +20,6 @@ public class UserDaoImpl implements IUserDao {
 
 	public UserDaoImpl() {
 		super();
-		System.out.println("UserDaoImpl的无参构造方法");
 	}
 
 	@Override

@@ -69,7 +69,6 @@ public class ImageWriter {
 		}
 		double fileLength = (double) item.getSize() / 1024 / 1024;
 		// 文件大小判断
-		System.out.println(fileLength);
 		if (fileLength > MAX_FILE_SIZE) {
 			flag = uploadToHdfs(item, uid , space);
 		} else {
@@ -119,7 +118,6 @@ public class ImageWriter {
 			final String hdfsPath = HDFS_UPLOAD_ROOT + "/" + uid + "/LargeFile/" + space + '/';
 			
 			String filePath = hdfsPath + item.getName();
-			System.out.println(item.getName());
 			InputStream uploadedStream = item.getInputStream();
 			flag = mHdfsHandler.upLoad(uploadedStream, filePath);
 			//更新数据库
@@ -170,9 +168,7 @@ public class ImageWriter {
 		try {
 		boolean flag;
 		final String hdfsPath = HDFS_UPLOAD_ROOT + "/" + uid + "/LargeFile/" + space + '/';
-		System.out.println(hdfsPath);
 		String filePath = hdfsPath +name;
-		System.out.println(name);
 		ByteArrayInputStream in = new ByteArrayInputStream(buffer); 
 		flag = mHdfsHandler.upLoad(in, filePath);
 		System.out.println("成功将byte数组写入hdfs中");
@@ -235,9 +231,7 @@ public class ImageWriter {
 	 */
 	public  void  localDirSync(String LocalPath, String uid , String spaceKey) throws Exception {
 		File LocalDir = new File(LocalPath);
-		System.out.println(LocalDir.getPath());
 		double DirSize = getDirSize(LocalDir);
-		System.out.println(DirSize);
 		String filePath =  HDFS_UPLOAD_ROOT + "/" + uid + "/SmallFile/" + DateUtil.getCurrentDateStr();
 		
 		if(DirSize > MAX_SYNC_SIZE) {
@@ -255,7 +249,6 @@ public class ImageWriter {
             deleteFile(LocalDir);
             System.out.println("同步成功！");
 		}
-		System.out.println(DirSize);
 	}
 	
 	

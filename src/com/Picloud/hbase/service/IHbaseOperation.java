@@ -108,5 +108,6 @@ public interface IHbaseOperation {
  	 * @return
  	 */
  	public ResultScanner imagePageByKey( String uid, String key,String spaceId,int num);
+
 }
 	

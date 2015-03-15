@@ -65,6 +65,12 @@ public class Mapfile {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
+
+	@Override
+	public String toString() {
+		return "Mapfile [key=" + key + ", name=" + name + ", uid=" + uid
+				+ ", flagNum=" + flagNum + ", picNum=" + picNum + "]";
+	}
 	
 	
 }

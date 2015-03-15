@@ -58,7 +58,6 @@ public class MapfileHandler {
 				key.getClass(), value.getClass());
 		// 通过writer向文档中写入记录
 		for (File item : items) {
-			System.out.println(item.getName());
 			try {
 				String filename = item.getName();
 				byte buffer[] = getBytes(item);
@@ -81,7 +80,6 @@ public class MapfileHandler {
 			mapfile.setFlagNum("0");
 			String name = hdfsDir.substring(hdfsDir.length() - 14,
 					hdfsDir.length());
-			System.out.println(name);
 			mapfile.setKey(name + uid);
 			mapfile.setName(name);
 			mMapfileDaoImpl.add(mapfile);
@@ -173,8 +171,6 @@ public class MapfileHandler {
 
 		// 对文件进行写入PictureBean
 		for (Image image : images) {
-			System.out.println(image.getName());
-			System.out.println(hdfsDir);
 			byte[] data = readFromHdfs(hdfsDir, image.getName());
 			if (data == null)
 				System.out.println("null");

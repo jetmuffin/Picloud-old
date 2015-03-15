@@ -28,7 +28,6 @@ public class BeanMapping {
 	
 	public BeanMapping() {
 		super();
-		System.out.println("BeanMapping的无参构造方法");
 	}
 	
 

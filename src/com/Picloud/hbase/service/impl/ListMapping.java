@@ -34,6 +34,7 @@ public class ListMapping {
 		for (Result r : rs) {
 			Image image = new Image();
 			image.setKey(new String(r.getRow()));
+			boolean flag = true;
 			for(Cell cell:r.rawCells()){
 				String v = new String(CellUtil.cloneQualifier(cell));
 				String val = new String(CellUtil.cloneValue(cell));
@@ -59,6 +60,7 @@ public class ListMapping {
 					image.setPath(val);
 				}
 				if (v.equals("status")) {
+					if(val.equals("deleted")) flag = false;
 					image.setStatus(val);
 				}
 				if (v.equals("updateTime")) {
@@ -68,7 +70,8 @@ public class ListMapping {
 					image.setVisitCount(val);
 				}
 			}
-			list.add(image);
+			if(flag)
+				list.add(image);
 		}
 		rs.close();
 		if (list.size() == 0) {
@@ -124,7 +127,6 @@ public class ListMapping {
 	 * @return
 	 */
 	public List<Log> logListMapping(ResultScanner rs){
-		System.out.println(rs);
 		List<Log> list = new ArrayList<Log>();
 		for (Result r : rs) {
 			Log log = new Log();
