@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -101,9 +102,10 @@ public class ImageController {
 		Space space = spaceDaoImpl.find(image.getSpace());
 		
 		//其他图片
-		
+		List<Image> otherImages = imageDaoImpl.getOtherImages(image.getSpace(), image.getName());
 		
 		model.addAttribute("image",image);
+		model.addAttribute("otherImages",otherImages);
 		model.addAttribute("space",space);
 		model.addAttribute("activeSpace", space);
 		model.addAttribute("activeImage",image);

@@ -1,5 +1,6 @@
 package com.Picloud.web.dao.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.hadoop.hbase.client.Result;
@@ -130,5 +131,19 @@ public class ImageDaoImpl implements IImageDao {
 		ResultScanner rs = mHbaseOperationImpl.imagePageByKey(key, uid, spaceId, num);
 		return mListMapping.imageListMapping(rs);
 	}
-	
+
+	/**
+	 * 其他图片信息
+	 */
+	@Override
+	public List<Image> getOtherImages(String spaceId, String imageName,int num) {
+		ResultScanner rs = mHbaseOperationImpl.getOtherImages(spaceId, imageName,num);
+		List<Image> otherImages =  mListMapping.imageListMapping(rs);
+		if(otherImages.size()<=num)
+				return otherImages;
+		else{
+			Collections.shuffle(otherImages);
+			return otherImages.subList(0, num);
+		}
+	}
 }

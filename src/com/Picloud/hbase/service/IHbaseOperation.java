@@ -1,7 +1,11 @@
 package com.Picloud.hbase.service;
 
+import java.util.List;
+
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
+
+import com.Picloud.web.model.Image;
 
 public interface IHbaseOperation {
 
@@ -109,5 +113,13 @@ public interface IHbaseOperation {
  	 */
  	public ResultScanner imagePageByKey( String uid, String key,String spaceId,int num);
 
+ 	/**
+ 	 * 得到其他图片
+ 	 * @param spaceId
+ 	 * @param imageName
+ 	 * @param num 图片数量
+ 	 * @return
+ 	 */
+	public ResultScanner  getOtherImages( String spaceId,String imageName,int num);
 }
 	

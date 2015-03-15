@@ -210,6 +210,45 @@ public class HbaseOperationImpl implements IHbaseOperation{
          } 
      } 
      
+     /**
+      * 得到其他图片
+      */
+     @Override
+ 	public ResultScanner  getOtherImages( String spaceId,String imageName,int num){
+    	  try { 
+         	 HTable table=new HTable(mConfiguration, "cloud_image");
+              List<Filter> filters = new ArrayList<Filter>(); 
+              
+              Filter filter1 = new SingleColumnValueFilter(Bytes 
+                      .toBytes("attr"), Bytes .toBytes("name"), 
+                      CompareOp.NOT_EQUAL, Bytes .toBytes(imageName)); 
+              filters.add(filter1); 
+   
+              Filter filter2 = new SingleColumnValueFilter(Bytes 
+                      .toBytes("attr"), Bytes .toBytes("space"), 
+                      CompareOp.EQUAL, Bytes .toBytes(spaceId)); 
+              filters.add(filter2); 
+              
+              Filter filter3 = new SingleColumnValueFilter(Bytes 
+                      .toBytes("var"), Bytes .toBytes("status"), 
+                      CompareOp.NOT_EQUAL, Bytes .toBytes("deleted")); 
+              filters.add(filter3); 
+              
+	            PageFilter pf = new PageFilter(num*4);
+	            filters.add(pf);
+              
+              FilterList filterList = new FilterList(filters); 
+              Scan scan = new Scan(); 
+              scan.setFilter(filterList); 
+              ResultScanner rs = table.getScanner(scan);
+//              table.close();
+              return rs;
+          } catch (Exception e) { 
+              e.printStackTrace(); 
+              return null;
+          } 
+ 	}
+     
     /**
      * 查询某个用户某个时间段内上传的图片
      */
