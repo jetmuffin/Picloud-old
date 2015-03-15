@@ -102,7 +102,7 @@ public class ImageController {
 		Space space = spaceDaoImpl.find(image.getSpace());
 		
 		//其他图片
-		List<Image> otherImages = imageDaoImpl.getOtherImages(image.getSpace(), image.getName());
+		List<Image> otherImages = imageDaoImpl.getOtherImages(image.getSpace(), image.getName(),6);
 		
 		model.addAttribute("image",image);
 		model.addAttribute("otherImages",otherImages);

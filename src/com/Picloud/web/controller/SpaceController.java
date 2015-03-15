@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Picloud.config.SystemConfig;
@@ -282,5 +283,23 @@ public class SpaceController {
 	public String handlerException(SpaceException e, HttpServletRequest req) {
 		req.setAttribute("e", e);
 		return "error";
+	}
+	
+	/**
+	 * 
+	 * @param imageKey
+	 * @return Image 图片信息JSON
+	 */
+	/**
+	 * 读取空间信息
+	 * @param spaceKey
+	 * @return Space信息JSON
+	 */
+	@RequestMapping(value="/{spaceKey}.json",method=RequestMethod.GET)
+	@ResponseBody
+	public Space show(@PathVariable String spaceKey){
+		Space space = new Space();
+		space = mSpaceDaoImpl.find(spaceKey);
+		return space;
 	}
 }
