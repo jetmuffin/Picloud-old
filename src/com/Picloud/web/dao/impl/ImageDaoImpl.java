@@ -1,5 +1,6 @@
 package com.Picloud.web.dao.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.hadoop.hbase.client.Result;
@@ -78,7 +79,7 @@ public class ImageDaoImpl implements IImageDao {
 	 */
 	@Override
 	public List<Image> load(String spaceId) {
-		ResultScanner rs = mHbaseOperationImpl.queryByColumn("cloud_image", "attr", "space", spaceId);
+		ResultScanner rs = mHbaseOperationImpl.queryImage(spaceId);
 		return mListMapping.imageListMapping(rs);
 	}
 
@@ -100,15 +101,7 @@ public class ImageDaoImpl implements IImageDao {
 		ResultScanner rs = mHbaseOperationImpl.queryLimitImage(uid, sTime, eTime);
 		return mListMapping.imageListMapping(rs);
 	}
-	
-	/**
-	 * 根据spaceId和uid检索表
-	 */
-	@Override
-	public List<Image> getByUid(String uid, String spaceId){
-		ResultScanner rs = mHbaseOperationImpl.queryImage(uid, spaceId);
-		return mListMapping.imageListMapping(rs);
-	}
+
 
 	/**
 	 * 根据图片名字前缀匹配检索图片
@@ -138,5 +131,19 @@ public class ImageDaoImpl implements IImageDao {
 		ResultScanner rs = mHbaseOperationImpl.imagePageByKey(key, uid, spaceId, num);
 		return mListMapping.imageListMapping(rs);
 	}
-	
+
+	/**
+	 * 其他图片信息
+	 */
+	@Override
+	public List<Image> getOtherImages(String spaceId, String imageName,int num) {
+		ResultScanner rs = mHbaseOperationImpl.getOtherImages(spaceId, imageName,num);
+		List<Image> otherImages =  mListMapping.imageListMapping(rs);
+		if(otherImages.size()<=num)
+				return otherImages;
+		else{
+			Collections.shuffle(otherImages);
+			return otherImages.subList(0, num);
+		}
+	}
 }

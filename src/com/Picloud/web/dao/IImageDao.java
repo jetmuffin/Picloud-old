@@ -22,8 +22,6 @@ public interface IImageDao {
 
 	public List<Image> getByTime(String uid, String sTime, String eTime);
 
-	public List<Image> getByUid(String uid, String spaceId);
-
 	public List<Image> imageNameMatching(String uid, String subStr);
 
 	public List<Image> imagePageByTime(String time, String uid,
@@ -31,4 +29,7 @@ public interface IImageDao {
 
 	public List<Image> imagePageByKey(String uid, String key, String spaceId,
 			int num);
+	
+	public List<Image> getOtherImages( String spaceId,String imageName,int num);
+	
 }

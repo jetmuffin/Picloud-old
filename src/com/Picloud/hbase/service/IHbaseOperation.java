@@ -1,7 +1,11 @@
 package com.Picloud.hbase.service;
 
+import java.util.List;
+
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
+
+import com.Picloud.web.model.Image;
 
 public interface IHbaseOperation {
 
@@ -61,7 +65,7 @@ public interface IHbaseOperation {
       * @param space 图片空间
       * @return
       */
-     public  ResultScanner queryImage(String uid, String space);
+     public  ResultScanner queryImage( String space);
      
      /**
       * 查询某个用户某个时间段内上传的图片
@@ -109,5 +113,13 @@ public interface IHbaseOperation {
  	 */
  	public ResultScanner imagePageByKey( String uid, String key,String spaceId,int num);
 
+ 	/**
+ 	 * 得到其他图片
+ 	 * @param spaceId
+ 	 * @param imageName
+ 	 * @param num 图片数量
+ 	 * @return
+ 	 */
+	public ResultScanner  getOtherImages( String spaceId,String imageName,int num);
 }
 	
