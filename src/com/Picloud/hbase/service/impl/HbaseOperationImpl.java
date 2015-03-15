@@ -180,19 +180,14 @@ public class HbaseOperationImpl implements IHbaseOperation{
      } 
      
      /**
-      * 根据space和uid检索图片
+      * 根据space检索图片
       */
      @Override
-     public  ResultScanner queryImage(String uid, String space) { 
+     public  ResultScanner queryImage(String space) { 
          try { 
         	 HTable table=new HTable(mConfiguration, "cloud_image");
              List<Filter> filters = new ArrayList<Filter>(); 
   
-             Filter filter1 = new SingleColumnValueFilter(Bytes 
-                     .toBytes("attr"), Bytes .toBytes("usr"), 
-                     CompareOp.EQUAL, Bytes .toBytes(uid)); 
-             filters.add(filter1); 
-             
              Filter filter2 = new SingleColumnValueFilter(Bytes 
                      .toBytes("attr"), Bytes .toBytes("space"), 
                      CompareOp.EQUAL, Bytes .toBytes(space)); 

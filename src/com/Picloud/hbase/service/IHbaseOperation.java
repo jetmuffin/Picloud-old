@@ -61,7 +61,7 @@ public interface IHbaseOperation {
       * @param space 图片空间
       * @return
       */
-     public  ResultScanner queryImage(String uid, String space);
+     public  ResultScanner queryImage( String space);
      
      /**
       * 查询某个用户某个时间段内上传的图片

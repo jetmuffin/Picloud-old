@@ -78,7 +78,7 @@ public class ImageDaoImpl implements IImageDao {
 	 */
 	@Override
 	public List<Image> load(String spaceId) {
-		ResultScanner rs = mHbaseOperationImpl.queryByColumn("cloud_image", "attr", "space", spaceId);
+		ResultScanner rs = mHbaseOperationImpl.queryImage(spaceId);
 		return mListMapping.imageListMapping(rs);
 	}
 
@@ -100,15 +100,7 @@ public class ImageDaoImpl implements IImageDao {
 		ResultScanner rs = mHbaseOperationImpl.queryLimitImage(uid, sTime, eTime);
 		return mListMapping.imageListMapping(rs);
 	}
-	
-	/**
-	 * 根据spaceId和uid检索表
-	 */
-	@Override
-	public List<Image> getByUid(String uid, String spaceId){
-		ResultScanner rs = mHbaseOperationImpl.queryImage(uid, spaceId);
-		return mListMapping.imageListMapping(rs);
-	}
+
 
 	/**
 	 * 根据图片名字前缀匹配检索图片

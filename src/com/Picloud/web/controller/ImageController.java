@@ -99,6 +99,10 @@ public class ImageController {
 		
 		Image image = imageDaoImpl.find(imageKey);
 		Space space = spaceDaoImpl.find(image.getSpace());
+		
+		//其他图片
+		
+		
 		model.addAttribute("image",image);
 		model.addAttribute("space",space);
 		model.addAttribute("activeSpace", space);
