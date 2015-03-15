@@ -208,6 +208,7 @@ public class ImageWriter {
 	            }	 
 	            
 				String fileName = item.getName();
+				
 				File file = new File(LocalPath, fileName);
 				if (file.exists()) {
 					System.out.println("Local file exists!");
