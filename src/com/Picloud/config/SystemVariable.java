@@ -15,6 +15,7 @@ public class SystemVariable extends HttpServlet {
     public static String UPLOAD;
     public static String TITLE;
     public static String VIEWS;
+    public static String IP;
     
     public SystemVariable() {
         super();
@@ -30,6 +31,7 @@ public class SystemVariable extends HttpServlet {
 		UPLOAD = ROOT + "/resources/upload";
 		VIEWS = ROOT + "/views";
 		TITLE = "Picloud图片存储云";
+		IP = "http://localhost:8080";
 		
 		application.setAttribute("ROOT",ROOT);
 		application.setAttribute("RESOURCES", RESOURCES);
@@ -37,6 +39,7 @@ public class SystemVariable extends HttpServlet {
 		application.setAttribute("UPLOAD",UPLOAD);
 		application.setAttribute("VIEWS", VIEWS);
 		application.setAttribute("TITLE", TITLE);
+		application.setAttribute("IP",IP);
 		
     }  
 }

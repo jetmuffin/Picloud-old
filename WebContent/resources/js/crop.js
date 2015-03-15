@@ -1,5 +1,15 @@
 $(document).ready(function(){
+	
+	var url_base = $('#url_base').html();
 	var image_name = 'test.jpg';
+	var image_name = 'test.jpg';
+	var crop_link = url_base + '/process';
+	
+	function cropUrl(width,height,image){
+		return crop_link + '/' + image + '[' + width + ',' + height + ']';
+	}
+	
+	/*
 	var crop_link = 'http://localhost:8080/PicServer/CropImage';
 	var uid = $('#user_id').html();
 
@@ -63,7 +73,8 @@ $(document).ready(function(){
 		});
 		jcrop_api.setImage(url_crop);
 	});
-
+*/
+	
 	//jcrop设置
 	var jcrop_api;
 	$('#jcrop-form').on('change','input',function(e){

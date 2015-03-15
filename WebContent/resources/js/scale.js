@@ -1,4 +1,16 @@
 $(document).ready(function(){
+	
+	var url_base = $('#url_base').html();
+	console.log(url_base);
+	var image_name = 'test.jpg';
+	var scale_link = url_base + '/process';
+	
+	function scaleUrl(width,height,image){
+		return scale_link + '/' + image + '[' + width + ',' + height + ']';
+	}
+	
+	
+	/*
 	var image_name = 'test.jpg';
 	var scale_link = 'http://localhost:8080/PicServer/ScaleImage';
 	var uid = $('#user_id').html();
@@ -12,6 +24,7 @@ $(document).ready(function(){
 	pic_chosen.chosen();
 	select_reload(val,uid,url);
 
+	
 	//select 重新加载方法
 	function select_reload(val,uid,url){
 		$.getJSON(url, { space: val, uid: uid }, function(json){
@@ -39,6 +52,7 @@ $(document).ready(function(){
 		select_reload(val,uid,url);
 	});
 
+	
 	//ajax加载图片
 	pic_chosen.chosen().change(function(){
 		image_name = $('.chosen-single span').html();
@@ -53,7 +67,7 @@ $(document).ready(function(){
 		$(pic_overview).appendTo($(".overview-pic"));
 		
 		// $('#picture_overview').attr('src',url_overview);
-	});
+	});*/
 
 	//缩放输入框成比例调整
 	var height_input = $("#pic-height");
@@ -67,7 +81,7 @@ $(document).ready(function(){
 		var new_width = $(this).val();
 		var new_height = parseInt(new_width / scale);
 		height_input.val(new_height);
-		$(".scale-link").html(scale_link +'?image=' + image_name + "&width=" + new_width + "&height=" + new_height + "&uid="+uid);
+		$(".scale-link").html(scaleUrl(width,height,'test.jpg'));
 	});
 
 	//height_input 键盘监听
@@ -75,7 +89,7 @@ $(document).ready(function(){
 		var new_height = $(this).val();
 		var new_width = parseInt(new_height*scale);
 		width_input.val(new_width);
-		$(".scale-link").html(scale_link +'?image=' + image_name + "&width=" +new_width + "&height=" + new_height+ "&uid="+uid);
+		$(".scale-link").html(scaleUrl(width,height,'test.jpg'));
 	});	
 
 	//reset事件
@@ -95,6 +109,7 @@ $(document).ready(function(){
 	                'max':  100
 	            }
 	});
+	
 	$("#basic_slider").Link('lower').to($("#slider-value"), null, wNumb({
 		decimals: 0,
 		postfix:'%'
@@ -116,9 +131,7 @@ $(document).ready(function(){
 			var value = $(this).val();
 			var height = parseInt(value * pic_height / 100);
 			var width = parseInt(value * pic_width / 100);
-			var new_link = scale_link +'?image=' + image_name + "&width=" +
-										 width + "&height=" + height+"&uid="+uid;
-			$(".scale-link").html(new_link);
+			$(".scale-link").html(scaleUrl(width,height,'test.jpg'));
 		}
 	});
 

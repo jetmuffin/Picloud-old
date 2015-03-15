@@ -40,11 +40,11 @@ public class MenuConfig  extends HttpServlet{
 		
 		//应用中心
 		actions = new ArrayList<Action>();
-		actions.add(new Action("AppList", "应用列表","#"));
-		actions.add(new Action("Process", "图片处理","#"));		
+		actions.add(new Action("AppList", "应用列表","tools"));
+		actions.add(new Action("Process", "图片处理","scale"));		
 		actions.add(new Action("HighDefi", "高清图片","#"));		
 		actions.add(new Action("PanoView", "全景展示","#"));		
-		Module module_appcenter = new Module("AppCenter", "应用中心", "th-large", "#",actions);
+		Module module_appcenter = new Module("process", "应用中心", "th-large", "#",actions);
 		modules.add(module_appcenter);
 		
 		//个人中心

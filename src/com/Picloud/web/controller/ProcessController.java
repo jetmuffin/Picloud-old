@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.im4java.core.IM4JavaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,48 @@ public class ProcessController {
 	private SystemConfig systemConfig;
 	@Autowired
 	private ImageDaoImpl mImageDaoImpl;
-
+	private String module = "应用中心";
+	
+	/**
+	 *  应用列表
+	 */
+	@RequestMapping(value="/tools",method=RequestMethod.GET)
+	public String  list(Model model){
+		model.addAttribute("module", module);
+		return "process/list";
+	}
+	
+	@RequestMapping(value="/scale",method=RequestMethod.GET)
+	public String  scale(Model model){
+		model.addAttribute("module", module);
+		model.addAttribute("action", "缩放");
+		
+		return "process/scale";
+	}
+	
+	@RequestMapping(value="/crop",method=RequestMethod.GET)
+	public String  crop(Model model){
+		model.addAttribute("module", module);
+		model.addAttribute("action", "裁剪");
+		
+		return "process/crop";
+	}
+	
+	@RequestMapping(value="/watermark",method=RequestMethod.GET)
+	public String  watermark(Model model){
+		model.addAttribute("module", module);
+		model.addAttribute("action", "图片水印");
+		
+		return "process/watermark";
+	}
+	
+	@RequestMapping(value="/textmark",method=RequestMethod.GET)
+	public String  textmark(Model model){
+		model.addAttribute("module", module);
+		model.addAttribute("action", "文字水印");
+		
+		return "process/watermark";
+	}
 	/**
 	 * 缩放图片
 	 * 
