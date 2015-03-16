@@ -243,6 +243,7 @@ public class SpaceController {
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		@SuppressWarnings("rawtypes")
 		List items = upload.parseRequest(request);
+		System.out.println("我的"+items);
 		@SuppressWarnings("rawtypes")
 		Iterator iter = items.iterator();
 		User loginUser = (User) session.getAttribute("LoginUser");
