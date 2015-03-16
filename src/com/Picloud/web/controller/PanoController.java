@@ -64,7 +64,6 @@ public class PanoController {
 		
 		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "查看全景图片");
 		mLogDaoImpl.add(log);
-		
 		return "pano/list";
 	}
 /**
@@ -74,16 +73,18 @@ public class PanoController {
  * @return
  * @throws Exception
  */
-	@RequestMapping(value="/delete",method=RequestMethod.DELETE)
-	public String delete(@PathVariable String imageName,HttpSession session) throws Exception{
+	@RequestMapping(value="/{imageName}/delete",method=RequestMethod.GET)
+	public String delete(@PathVariable String imageName,HttpSession session,Model model) throws Exception{
 		User loginUser = (User) session.getAttribute("LoginUser");
 		String panokey=EncryptUtil.imageEncryptKey(imageName, loginUser.getUid());
 		panoImageDao.delete(panokey);
 		
+		List<PanoImage> panoImages = panoImageDao.load(loginUser.getUid());
+		model.addAttribute("panoImages", panoImages);
+		
 		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除全景图片"+imageName);
 		mLogDaoImpl.add(log);
-		
-		return "redirect:list";
+		return "pano/list";
 	}
 	/**
 	 * 上传全景图片
