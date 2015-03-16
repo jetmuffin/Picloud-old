@@ -140,6 +140,24 @@ public class PanoController {
 		return "redirect:list";
 	}
 
-	
+	/**
+	 * 查看全景图片
+	 * @param imageName 图片名
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
+		@RequestMapping(value="/{imageName}/show",method=RequestMethod.GET)
+		public String show(@PathVariable String imageName,HttpSession session,Model model) throws Exception{
+			User loginUser = (User) session.getAttribute("LoginUser");
+			String panokey=EncryptUtil.imageEncryptKey(imageName, loginUser.getUid());
+			
+			PanoImage panoImage = panoImageDao.find(panokey);
+			model.addAttribute("panoImage", panoImage);
+			System.out.println(panoImage.getName());
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "查看全景图片"+imageName);
+			mLogDaoImpl.add(log);
+			return "pano/showPano";
+		}
 	
 }

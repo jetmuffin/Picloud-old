@@ -51,7 +51,7 @@
 											</tr>
 											
 											<c:forEach var="pano"  items="${panoImages}" > 
-											<td class="project-title"><a href="project_detail.html">${pano.name}</a>
+											<td class="project-title"><a href="${ROOT}/pano/${pano.name }/show/">${pano.name}</a>
 											</td>
 											<td class="project-completion">图片大小:${pano.size } /1024/1024)MB	
 											</td>
