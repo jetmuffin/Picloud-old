@@ -1,7 +1,9 @@
 package com.Picloud.web.model;
 
 import java.io.File;
+
 import org.apache.commons.fileupload.FileItem;
+
 import com.Picloud.utils.DateUtil;
 
 public class Image {
@@ -29,11 +31,15 @@ public class Image {
 	String uid = "";
 	//创建时间
 	String createTime = "";
-	//图片所在路径
+	//图片宽度
+	String width = "";
+	//图片高度
+	String height="";
 	
 	/**
 	 * var列族
 	 */
+	//图片所在路径
 	String path="";
 	//当前状态，三种状态分别用...表示
 	String status = "";
@@ -67,8 +73,9 @@ public class Image {
 	
 	//全参数构造方法
 	public Image(String key, String name, String size, String type,
-			String space, String uid, String createTime, String path,
-			String status, String updateTime, String visitCount) {
+			String space, String uid, String createTime, String width,
+			String height, String path, String status, String updateTime,
+			String visitCount) {
 		super();
 		this.key = key;
 		this.name = name;
@@ -77,15 +84,36 @@ public class Image {
 		this.space = space;
 		this.uid = uid;
 		this.createTime = createTime;
+		this.width = width;
+		this.height = height;
 		this.path = path;
 		this.status = status;
 		this.updateTime = updateTime;
 		this.visitCount = visitCount;
 	}
 
+	
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
 	public String getKey() {
 		return key;
 	}
+	
+
 	public void setKey(String key) {
 		this.key = key;
 	}
