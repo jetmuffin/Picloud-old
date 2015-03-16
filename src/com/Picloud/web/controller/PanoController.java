@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,7 +24,9 @@ import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.image.ImageWriter;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
+import com.Picloud.web.dao.impl.LogDaoImpl;
 import com.Picloud.web.dao.impl.PanoImageDao;
+import com.Picloud.web.model.Log;
 import com.Picloud.web.model.PanoImage;
 import com.Picloud.web.model.User;
 import com.Picloud.utils.DateUtil;
@@ -38,6 +41,9 @@ public class PanoController {
 	private SystemConfig systemConfig;
 	@Autowired
 	private InfoDaoImpl infoDaoImpl;
+	@Autowired
+	private LogDaoImpl mLogDaoImpl;
+	
 	private static final String HDFS_UPLOAD_ROOT = "/upload";
 
 	/**
@@ -55,9 +61,30 @@ public class PanoController {
 		User loginUser = (User) session.getAttribute("LoginUser");
 		List<PanoImage> panoImages = panoImageDao.load(loginUser.getUid());
 		model.addAttribute("panoImages", panoImages);
+		
+		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "查看全景图片");
+		mLogDaoImpl.add(log);
+		
 		return "pano/list";
 	}
-
+/**
+ * 删除全景图片
+ * @param imageName 图片名
+ * @param session
+ * @return
+ * @throws Exception
+ */
+	@RequestMapping(value="/delete",method=RequestMethod.DELETE)
+	public String delete(@PathVariable String imageName,HttpSession session) throws Exception{
+		User loginUser = (User) session.getAttribute("LoginUser");
+		String panokey=EncryptUtil.imageEncryptKey(imageName, loginUser.getUid());
+		panoImageDao.delete(panokey);
+		
+		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除全景图片"+imageName);
+		mLogDaoImpl.add(log);
+		
+		return "redirect:list";
+	}
 	/**
 	 * 上传全景图片
 	 * 
@@ -86,16 +113,13 @@ public class PanoController {
 					String hdfsPath = HDFS_UPLOAD_ROOT + "/"
 							+ loginUser.getUid() + "/Pano/";
 					//TODO 修改方法
-					HdfsHandler hdfsHandler = new HdfsHandler(SystemConfig.getSystemPath());
-					InputStream uploadedStream = item.getInputStream();
 					String filePath = hdfsPath +item.getName() ;
-					System.out.println("16");
-					flag = hdfsHandler.upLoad(uploadedStream, filePath);
-//					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-//					flag = imageWriter.uploadToHdfs(hdfsPath, item,
-//							loginUser.getUid());
+
+					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
+					flag = imageWriter.uploadToHdfs(filePath, item,
+							loginUser.getUid());
 					
-					System.out.println("17");
+
 					String key = EncryptUtil.imageEncryptKey(item.getName(),
 							loginUser.getUid());
 					String createTime = DateUtil.getCurrentDateStr();
@@ -104,6 +128,9 @@ public class PanoController {
 									.getSize()), hdfsPath);
 					panoImageDao.add(panoImage);
 					System.out.println("更新数据库成功！");
+					
+					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
+					mLogDaoImpl.add(log);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -112,4 +139,6 @@ public class PanoController {
 		return "redirect:list";
 	}
 
+	
+	
 }

@@ -66,10 +66,6 @@
 									<div class="form-group">
 										<label class="control-label">图片预览</label>
 										<div class="row overview-pic">
-											<present name="picture['name']"> <img
-												id="picture_overview" class="col-xs-12"
-												src="__TOMCAT__/ReadImage?image={$picture.name}&uid={:session('uid')}">
-											</present>
 										</div>
 									</div>
 								</div>

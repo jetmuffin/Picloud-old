@@ -129,7 +129,7 @@ public class EncryptUtil {
     	String key = encryptBASE64(sha.getBytes());
     	return key;
     }
-    
+   
     /**
      * 空间名加密方法 spaceName_uid 在进行base64加密
      * @param spaceName
