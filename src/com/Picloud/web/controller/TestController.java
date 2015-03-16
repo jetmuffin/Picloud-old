@@ -59,7 +59,6 @@ public class TestController {
 
 	@RequestMapping(value="/testhdfs")
 	public String testhdfs() throws IOException{
-		HdfsHandler hdfsUtil = new HdfsHandler(hdfsConfig.getFileSystemPath());
 		return "test";
 	}
 	

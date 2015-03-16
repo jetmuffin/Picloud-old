@@ -24,25 +24,22 @@ import org.springframework.stereotype.Service;
 import com.Picloud.config.HdfsConfig;
 import com.Picloud.config.SystemConfig;
 import com.Picloud.exception.FileException;
+import com.Picloud.utils.PropertiesUtil;
 
 @Service
 public class HdfsHandler {
 	private Configuration conf;
 	private FileSystem fs; 
-	
 	/**
 	 * 构造方法
 	 * @throws IOException
 	 */
 	
-	public HdfsHandler(String fileSystemPath) throws IOException{
-		conf = new Configuration();
-		fs = FileSystem.newInstance(URI.create(fileSystemPath),conf);
-	}
 	
-	public HdfsHandler() {
+	public HdfsHandler() throws IOException {
 		super();
-		// TODO Auto-generated constructor stub
+		conf = new Configuration();
+		fs = FileSystem.newInstance(URI.create(PropertiesUtil.getValue("FileSystemPath")),conf);
 	}
 
 	/**
