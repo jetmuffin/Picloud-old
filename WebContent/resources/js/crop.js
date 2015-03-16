@@ -64,6 +64,7 @@ $(document).ready(function(){
 		$(".overview-pic").html('');
 		$(pic_overview).appendTo($(".overview-pic"));
 		
+	
 		$('#jcrop').Jcrop({
 			onChange:   showCoords,
 		      	onSelect:   showCoords,
@@ -71,9 +72,10 @@ $(document).ready(function(){
 		},function(){
 		      	jcrop_api = this;
 		});
-		jcrop_api.setImage(url_crop);
-	});
-*/
+		*/
+	//	jcrop_api.setImage(url_crop);
+
+
 	
 	//jcrop设置
 	var jcrop_api;

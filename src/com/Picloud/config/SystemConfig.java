@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemConfig {
 	private String fileSystemPath = "localhost:9000";
-	private String uploadPath = "localhost:9000/upload";
+	private String uploadPath = "hdfs://localhost:9000/upload";
 	private String systemPath = "/home/jeff/workspace";
 	private String localUploadPath = "/home/jeff/workspace/upload";
 	private String imagePath = "http://localhost:8080/Picloud/server/";

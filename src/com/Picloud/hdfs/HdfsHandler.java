@@ -37,7 +37,7 @@ public class HdfsHandler {
 	
 	public HdfsHandler(String fileSystemPath) throws IOException{
 		conf = new Configuration();
-		FileSystem fs = FileSystem.newInstance(URI.create(fileSystemPath),conf);
+		fs = FileSystem.newInstance(URI.create(fileSystemPath),conf);
 	}
 	
 	public HdfsHandler() {

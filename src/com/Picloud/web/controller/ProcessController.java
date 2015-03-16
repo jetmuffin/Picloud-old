@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +29,10 @@ import com.Picloud.image.GraphicMagick;
 import com.Picloud.image.ImageReader;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
+import com.Picloud.web.dao.impl.SpaceDaoImpl;
+import com.Picloud.web.dao.impl.UserDaoImpl;
 import com.Picloud.web.model.Image;
+import com.Picloud.web.model.Space;
 import com.Picloud.web.model.User;
 
 @Controller
@@ -40,7 +44,12 @@ public class ProcessController {
 	private SystemConfig systemConfig;
 	@Autowired
 	private ImageDaoImpl mImageDaoImpl;
+	@Autowired
+	private UserDaoImpl mUserDaoImpl;
+	@Autowired
+	private SpaceDaoImpl  mSpaceDaoImpl;
 	private String module = "应用中心";
+	
 	
 	/**
 	 *  应用列表
@@ -52,34 +61,46 @@ public class ProcessController {
 	}
 	
 	@RequestMapping(value="/scale",method=RequestMethod.GET)
-	public String  scale(Model model){
+	public String  scale(Model model,HttpSession session){
 		model.addAttribute("module", module);
 		model.addAttribute("action", "缩放");
-		
+
+		User loginUser = (User) session.getAttribute("LoginUser");
+		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
+		model.addAttribute("spaces",spaces);
 		return "process/scale";
 	}
 	
 	@RequestMapping(value="/crop",method=RequestMethod.GET)
-	public String  crop(Model model){
+	public String  crop(Model model,HttpSession session){
 		model.addAttribute("module", module);
 		model.addAttribute("action", "裁剪");
 		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
+		model.addAttribute("spaces",spaces);
 		return "process/crop";
 	}
 	
 	@RequestMapping(value="/watermark",method=RequestMethod.GET)
-	public String  watermark(Model model){
+	public String  watermark(Model model,HttpSession session){
 		model.addAttribute("module", module);
 		model.addAttribute("action", "图片水印");
 		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
+		model.addAttribute("spaces",spaces);
 		return "process/watermark";
 	}
 	
 	@RequestMapping(value="/textmark",method=RequestMethod.GET)
-	public String  textmark(Model model){
+	public String  textmark(Model model,HttpSession session){
 		model.addAttribute("module", module);
 		model.addAttribute("action", "文字水印");
 		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
+		model.addAttribute("spaces",spaces);
 		return "process/watermark";
 	}
 	/**

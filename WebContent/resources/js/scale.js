@@ -6,35 +6,28 @@ $(document).ready(function(){
 	var scale_link = url_base + '/process';
 	
 	function scaleUrl(width,height,image){
-		return scale_link + '/' + image + '[' + width + ',' + height + ']';
+		return scale_link + '/' + image + '/scale[' + width + ',' + height + ']';
 	}
 	
-	
-	/*
-	var image_name = 'test.jpg';
-	var scale_link = 'http://localhost:8080/PicServer/ScaleImage';
-	var uid = $('#user_id').html();
-
+	var url = url_base + "/space/" + val +"/images.json";
 	var val = $('#spaces_select').val();
-	var url = "http://localhost:8080/PicServer/ListPicture";
 
 	var pic_chosen = $(".chosen-select");
 	var pic_default = pic_chosen.attr("data-default");
 	var pic_select = $('#pictures_select');
 	pic_chosen.chosen();
-	select_reload(val,uid,url);
+	select_reload(url);
 
-	
 	//select 重新加载方法
-	function select_reload(val,uid,url){
-		$.getJSON(url, { space: val, uid: uid }, function(json){
-			if(json.Picture) {
+	function select_reload(url){
+		$.getJSON(url, function(json){
+			if(json) {
 	 		 	var options = '<option></option>';
-			 	$.each(json.Picture,function(n,value){
+			 	$.each(json,function(n,value){
 			 		if(value.name == pic_default)
 						options += '<option selected="selected">' + value.name + '</option>';
 			 		else	
-			 			options += '<option>' + value.name + '</option>';
+			 			options += '<option value=' + value.key + '>' + value.name + '</option>';
 			 	});
 			 	pic_select.html(options);
 			 	pic_chosen.trigger("chosen:updated");			
@@ -45,29 +38,25 @@ $(document).ready(function(){
 		});	
 	}
 
+	
 	//ajax添加chosen-select
 	$('#spaces_select').change(function(){
 		var val = $(this).val();
-		var url = "http://localhost:8080/PicServer/ListPicture";
-		select_reload(val,uid,url);
+		url = url_base + "/space/" + val +"/images.json";
+		select_reload(url);
+		console.log(url);
 	});
 
-	
+
 	//ajax加载图片
 	pic_chosen.chosen().change(function(){
 		image_name = $('.chosen-single span').html();
-		var url_base = 'http://localhost:8080/PicServer/ScaleImage?uid='+uid+'&image=';
-		var url_overview = url_base + image_name + '&width=270';
-		var url_crop = url_base + image_name + '&width=500';
-		var url_watermask = url_base + image_name + '&width=500';
-
 		var pic_overview = "<img src='" + url_overview + "'/>";
-		console.log(pic_overview);
 		$(".overview-pic").html('');
 		$(pic_overview).appendTo($(".overview-pic"));
 		
 		// $('#picture_overview').attr('src',url_overview);
-	});*/
+	});
 
 	//缩放输入框成比例调整
 	var height_input = $("#pic-height");

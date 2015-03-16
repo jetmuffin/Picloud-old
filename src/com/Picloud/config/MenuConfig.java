@@ -42,8 +42,9 @@ public class MenuConfig  extends HttpServlet{
 		actions = new ArrayList<Action>();
 		actions.add(new Action("AppList", "应用列表","tools"));
 		actions.add(new Action("Process", "图片处理","scale"));		
-		actions.add(new Action("HighDefi", "高清图片","#"));		
-		actions.add(new Action("PanoView", "全景展示","#"));		
+		actions.add(new Action("HighDefi", "高清图片","../hd/list"));		
+		actions.add(new Action("PanoView", "全景展示","../pano/list"));		
+		actions.add(new Action("3DView", "3D物品","../threeD/list"));		
 		Module module_appcenter = new Module("process", "应用中心", "th-large", "#",actions);
 		modules.add(module_appcenter);
 		
