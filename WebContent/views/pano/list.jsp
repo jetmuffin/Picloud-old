@@ -51,16 +51,16 @@
 											</tr>
 											
 											<c:forEach var="pano"  items="${panoImages}" > 
-											<td class="project-title"><a href="${ROOT}/pano/${pano.name }/show/">${pano.name}</a>
+											<td class="project-title"><a target="_blank" href="${ROOT}/pano/${pano.key }">${pano.name}</a>
 											</td>
 											<td class="project-completion">图片大小:${pano.size } /1024/1024)MB	
 											</td>
 											<td class="project-create">创建时间：${pano.createTime } 
 											</td>
 											<td class="project-actions"><a
-												href="{:U('Appcenter/overallview/'.$pano['name'])}"
+												href="${ROOT}/pano/${pano.key }"
 												class="btn btn-default btn-sm" target="_blank"><i
-													class="fa fa-folder"></i> 查看 </a> <a href="${ROOT}/pano/${pano.name }/delete/"
+													class="fa fa-folder"></i> 查看 </a> <a href="${ROOT}/pano/${pano.key }/delete/"
 												class="btn btn-default btn-sm"><i class="fa fa-pencil"></i>
 													删除 </a></td>
 											</tr>

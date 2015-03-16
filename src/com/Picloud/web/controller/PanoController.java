@@ -73,16 +73,16 @@ public class PanoController {
  * @return
  * @throws Exception
  */
-	@RequestMapping(value="/{imageName}/delete",method=RequestMethod.GET)
-	public String delete(@PathVariable String imageName,HttpSession session,Model model) throws Exception{
+	@RequestMapping(value="/{panokey}/delete",method=RequestMethod.GET)
+	public String delete(@PathVariable String panokey,HttpSession session,Model model) throws Exception{
 		User loginUser = (User) session.getAttribute("LoginUser");
-		String panokey=EncryptUtil.imageEncryptKey(imageName, loginUser.getUid());
+		PanoImage panoImage = panoImageDao.find(panokey);
 		panoImageDao.delete(panokey);
 		
 		List<PanoImage> panoImages = panoImageDao.load(loginUser.getUid());
 		model.addAttribute("panoImages", panoImages);
 		
-		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除全景图片"+imageName);
+		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除全景图片"+panoImage.getName());
 		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
@@ -147,17 +147,14 @@ public class PanoController {
 	 * @return
 	 * @throws Exception
 	 */
-		@RequestMapping(value="/{imageName}/show",method=RequestMethod.GET)
-		public String show(@PathVariable String imageName,HttpSession session,Model model) throws Exception{
+		@RequestMapping(value="/{panokey}",method=RequestMethod.GET)
+		public String show(@PathVariable String panokey,HttpSession session,Model model) throws Exception{
 			User loginUser = (User) session.getAttribute("LoginUser");
-			String panokey=EncryptUtil.imageEncryptKey(imageName, loginUser.getUid());
-			
+
 			PanoImage panoImage = panoImageDao.find(panokey);
-			model.addAttribute("panoImage", panoImage);
 			System.out.println(panoImage.getName());
-			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "查看全景图片"+imageName);
-			mLogDaoImpl.add(log);
-			return "pano/showPano";
+			model.addAttribute("panoImage", panoImage);
+			return "pano/show";
 		}
 	
 }
