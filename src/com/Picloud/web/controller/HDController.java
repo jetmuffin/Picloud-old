@@ -31,6 +31,7 @@ import com.Picloud.web.dao.impl.PanoImageDao;
 import com.Picloud.web.model.HdImage;
 import com.Picloud.web.model.Log;
 import com.Picloud.web.model.PanoImage;
+import com.Picloud.web.model.ThreeDImage;
 import com.Picloud.web.model.User;
 
 @Controller
@@ -75,16 +76,16 @@ public class HDController {
  * @return
  * @throws Exception
  */
-	@RequestMapping(value="/{imageName}/delete",method=RequestMethod.GET)
-	public String delete(@PathVariable String imageName,HttpSession session,Model model) throws Exception{
+	@RequestMapping(value="/{hdkey}/delete",method=RequestMethod.GET)
+	public String delete(@PathVariable String hdkey,HttpSession session,Model model) throws Exception{
 		User loginUser = (User) session.getAttribute("LoginUser");
-		String hdkey=EncryptUtil.imageEncryptKey(imageName, loginUser.getUid());
 		hdImageDao.delete(hdkey);
 		
+		HdImage hdImage=hdImageDao.find(hdkey);
 		List<HdImage> hdImages = hdImageDao.load(loginUser.getUid());
 		model.addAttribute("hdImages", hdImages);
 		
-		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除高清图片"+imageName);
+		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除高清图片"+hdImage.getName());
 		mLogDaoImpl.add(log);
 		return "hd/list";
 	}
@@ -140,5 +141,19 @@ public class HDController {
 		}
 		return "redirect:list";
 	}
-
+	/**
+	 * 查看高清图片
+	 * @param imageName 图片名
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
+		@RequestMapping(value="/{hdkey}",method=RequestMethod.GET)
+		public String show(@PathVariable String hdkey,HttpSession session,Model model) throws Exception{
+			User loginUser = (User) session.getAttribute("LoginUser");
+			HdImage hdImage = hdImageDao.find(hdkey);
+			System.out.println(hdImage.getName());
+			model.addAttribute("hdImage", hdImage);
+			return "hd/show";
+		}
 }

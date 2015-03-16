@@ -49,22 +49,22 @@
                       <a href="#" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
                     </td>
                   </tr>
-                    <volist name="tds" id="td">
+                    <c:forEach var="threeD"  items="${threeDImages}" > 
                     <td class="project-title">
-                      <a href="project_detail.html">{$td.name}</a>
+                      <a href="${ROOT}/threeD/${threeD.key }">${threeD.name}</a>
                     </td>
                     <td class="project-completion">
-                      图片大小: <?php echo sprintf("%.2f", $td['size']/1024/1024);?>MB
+                      图片大小: ${threeD.size}MB
                     </td>
                     <td class="project-create">
-                      创建时间：<?php echo timestr_totime($td['createTime']);?>
+                      创建时间：${threeD.createTime}
                     </td>
                     <td class="project-actions">
-                      <a href="{:U('Appcenter/tdgood/'.$td['name'])}" class="btn btn-default btn-sm"  target="_blank"><i class="fa fa-folder"></i> 查看 </a>
-                      <a href="#" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
+                      <a href="${ROOT}/threeD/${threeD.key }" class="btn btn-default btn-sm"  target="_blank"><i class="fa fa-folder"></i> 查看 </a>
+                      <a href="${ROOT}/threeD/${threeD.key }/delete/" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
                     </td>        
                     </tr>            
-                  </volist>
+                  </c:forEach>
                 </tbody>
               </table>
               <button type="button" class="btn btn-primary  jet-button " data-toggle="modal" data-target="#myModal">

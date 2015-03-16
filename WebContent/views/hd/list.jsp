@@ -49,23 +49,23 @@
                       <a href="#" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
                     </td>
                   </tr>
-                  <volist name="hds" id="hd">
+                    <c:forEach var="hdImage"  items="${hdImages}" > 
                     <tr>
                       <td class="project-title">
-                        <a href="project_detail.html">{$hd.name}</a>
+                        <a href="${ROOT}/hd/${hdImage.key }">${hdImage.name}</a>
                       </td>
                       <td class="project-completion">
-                        图片大小: {$hd.size}MB
+                        图片大小: ${hdImage.size}MB
                       </td>
                       <td class="project-create">
-                        创建时间：<?php echo timestr_totime($hd['createTime']);?>
+                        创建时间：${hdImage.createTime}
                       </td>
                       <td class="project-actions">
-                        <a href="{:U('Appcenter/hidfpic/'.$hd['name'])}" class="btn btn-default btn-sm"  target="_blank"><i class="fa fa-folder"></i> 查看 </a>
-                        <a href="#" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
+                        <a href="${ROOT}/hd/${hdImage.key }" class="btn btn-default btn-sm"  target="_blank"><i class="fa fa-folder"></i> 查看 </a>
+                        <a href="${ROOT}/hd/${hdImage.key }/delete/" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
                       </td>
                     </tr>
-                  </volist>
+                 </c:forEach>
                 </tbody>
               </table>
               <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModal">

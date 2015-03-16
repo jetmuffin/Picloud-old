@@ -26,6 +26,7 @@ import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.LogDaoImpl;
 import com.Picloud.web.dao.impl.ThreeDImageDao;
 import com.Picloud.web.model.Log;
+import com.Picloud.web.model.PanoImage;
 import com.Picloud.web.model.ThreeDImage;
 import com.Picloud.web.model.User;
 
@@ -63,7 +64,7 @@ public class ThreeDController {
 		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "查看3D图片");
 		mLogDaoImpl.add(log);
 		
-		return "threeD/list";
+		return "threed/list";
 	}
 /**
  * 删除3D图片
@@ -72,20 +73,19 @@ public class ThreeDController {
  * @return
  * @throws Exception
  */
-	@RequestMapping(value="/{imageName}/delete",method=RequestMethod.GET)
-	public String delete(@PathVariable String imageName,HttpSession session,Model model) throws Exception{
+	@RequestMapping(value="/{threeDkey}/delete",method=RequestMethod.GET)
+	public String delete(@PathVariable String threeDkey,HttpSession session,Model model) throws Exception{
 		User loginUser = (User) session.getAttribute("LoginUser");
-		String threeDkey=EncryptUtil.imageEncryptKey(imageName, loginUser.getUid());
 		ThreeDImage threeDImage=threeDImageDao.find(threeDkey);
 		threeDImageDao.delete(threeDImage);
 		
 		List<ThreeDImage> threeDImages = threeDImageDao.load(loginUser.getUid());
 		model.addAttribute("threeDImages", threeDImages);
 		
-		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除3D图片"+imageName);
+		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除3D图片"+threeDImage.getName());
 		mLogDaoImpl.add(log);
 		
-		return "threeD/list";
+		return "threed/list";
 	}
 	/**
 	 * 上传3D图片
@@ -141,4 +141,20 @@ public class ThreeDController {
 		return "redirect:list";
 	}
 
+	/**
+	 * 查看3D图片
+	 * @param imageName 图片名
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
+		@RequestMapping(value="/{threeDkey}",method=RequestMethod.GET)
+		public String show(@PathVariable String threeDkey,HttpSession session,Model model) throws Exception{
+			User loginUser = (User) session.getAttribute("LoginUser");
+
+			ThreeDImage threeDImage = threeDImageDao.find(threeDkey);
+			System.out.println(threeDImage.getName());
+			model.addAttribute("threeDImages", threeDImage);
+			return "threed/show";
+		}
 }
