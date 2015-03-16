@@ -55,6 +55,12 @@ public class ListMapping {
 				if (v.equals("createTime")) {
 					image.setCreateTime(val);
 				}
+				if (v.equals("width")) {
+					image.setWidth(val);
+				}
+				if (v.equals("height")) {
+					image.setHeight(val);
+				}
 				if (v.equals("path")) {
 					image.setPath(val);
 				}

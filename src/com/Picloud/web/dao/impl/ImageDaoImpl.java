@@ -42,6 +42,8 @@ public class ImageDaoImpl implements IImageDao {
 		mHbaseOperationImpl.insertData("cloud_image", image.getKey(), "attr", "createTime", image.getCreateTime());
 		mHbaseOperationImpl.insertData("cloud_image", image.getKey(), "attr", "uid", image.getUid());
 		mHbaseOperationImpl.insertData("cloud_image", image.getKey(), "attr", "path", image.getPath());
+		mHbaseOperationImpl.insertData("cloud_image", image.getKey(), "attr", "width", image.getWidth());
+		mHbaseOperationImpl.insertData("cloud_image", image.getKey(), "attr", "height", image.getHeight());
 		mHbaseOperationImpl.insertData("cloud_image", image.getKey(), "var", "status", image.getStatus());
 		mHbaseOperationImpl.insertData("cloud_image", image.getKey(), "var", "updateTime", image.getUpdateTime());
 		mHbaseOperationImpl.insertData("cloud_image", image.getKey(), "var", "visitCount", image.getVisitCount());
