@@ -87,13 +87,10 @@ public class PanoController {
 							+ loginUser.getUid() + "/Pano/";
 					
 					//TODO 修改方法
-					HdfsHandler hdfsHandler = new HdfsHandler(SystemConfig.getSystemPath());
-					InputStream uploadedStream = item.getInputStream();
 					String filePath = hdfsPath +item.getName() ;
-					flag = hdfsHandler.upLoad(uploadedStream, filePath);
-//					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-//					flag = imageWriter.uploadToHdfs(hdfsPath, item,
-//							loginUser.getUid());
+					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
+					flag = imageWriter.uploadToHdfs(filePath, item,
+							loginUser.getUid());
 					
 					
 					String key = EncryptUtil.imageEncryptKey(item.getName(),

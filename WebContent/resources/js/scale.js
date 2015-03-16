@@ -1,13 +1,24 @@
 $(document).ready(function(){
 	
+	//url定义
 	var url_base = $('#url_base').html();
 	console.log(url_base);
-	var image_name = 'test.jpg';
-	var scale_link = url_base + '/process';
+	var val = $('#spaces_select').val();
+	var url_json = url_base + "/space/" + val +"/images.json";
+	console.log(url_json);
+
+	//select定义
+	var img_chosen = $(".chosen-select");
+	var img_default = pic_chosen.attr("data-default");
+	var img_select = $('#pictures_select');
 	
-	function scaleUrl(width,height,image){
+	function getScaleUrl(width,height,image){
 		return scale_link + '/' + image + '/scale[' + width + ',' + height + ']';
 	}
+
+/*
+	var image_name = 'test.jpg';
+	var scale_link = url_base + '/process';
 	
 	var url = url_base + "/space/" + val +"/images.json";
 	var val = $('#spaces_select').val();
@@ -57,6 +68,7 @@ $(document).ready(function(){
 		
 		// $('#picture_overview').attr('src',url_overview);
 	});
+*/
 
 	//缩放输入框成比例调整
 	var height_input = $("#pic-height");
@@ -90,13 +102,13 @@ $(document).ready(function(){
 
 	//noUiSlider设置
 	$("#basic_slider").noUiSlider({
-	            start: 100,
-	            behaviour: 'tap',
-	            connect: 'lower',
-	            range: {
-	                'min':  0,
-	                'max':  100
-	            }
+      start: 100,
+      behaviour: 'tap',
+      connect: 'lower',
+      range: {
+          'min':  0,
+          'max':  100
+      }
 	});
 	
 	$("#basic_slider").Link('lower').to($("#slider-value"), null, wNumb({
