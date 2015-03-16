@@ -1,74 +1,68 @@
 $(document).ready(function(){
 	
+	var imageKey = "testKey";
+	
 	//url定义
 	var url_base = $('#url_base').html();
-	console.log(url_base);
-	var val = $('#spaces_select').val();
-	var url_json = url_base + "/space/" + val +"/images.json";
-	console.log(url_json);
+	var val_default = $('#spaces_select').val();
 
 	//select定义
 	var img_chosen = $(".chosen-select");
-	var img_default = pic_chosen.attr("data-default");
+	var img_default = img_chosen.attr("data-default");
 	var img_select = $('#pictures_select');
 	
-	function getScaleUrl(width,height,image){
-		return scale_link + '/' + image + '/scale[' + width + ',' + height + ']';
-	}
-
-/*
-	var image_name = 'test.jpg';
-	var scale_link = url_base + '/process';
+	select_reload(getJsonUrl(val_default));
+	img_chosen.chosen();
 	
-	var url = url_base + "/space/" + val +"/images.json";
-	var val = $('#spaces_select').val();
-
-	var pic_chosen = $(".chosen-select");
-	var pic_default = pic_chosen.attr("data-default");
-	var pic_select = $('#pictures_select');
-	pic_chosen.chosen();
-	select_reload(url);
-
 	//select 重新加载方法
 	function select_reload(url){
 		$.getJSON(url, function(json){
 			if(json) {
 	 		 	var options = '<option></option>';
 			 	$.each(json,function(n,value){
-			 		if(value.name == pic_default)
+			 		console.log(value.key);
+			 		if(value.name == img_default)
 						options += '<option selected="selected">' + value.name + '</option>';
 			 		else	
 			 			options += '<option value=' + value.key + '>' + value.name + '</option>';
 			 	});
-			 	pic_select.html(options);
-			 	pic_chosen.trigger("chosen:updated");			
+			 	img_select.html(options);
+			 	img_chosen.trigger("chosen:updated");			
 			 } else {
-			 	pic_select.html('<option></option>');
-			 	pic_chosen.trigger("chosen:updated");
+			 	img_select.html('<option></option>');
+			 	img_chosen.trigger("chosen:updated");
 			 }
 		});	
 	}
-
 	
-	//ajax添加chosen-select
+	//添加chosen-select事件,加载相应的图片option
 	$('#spaces_select').change(function(){
 		var val = $(this).val();
 		url = url_base + "/space/" + val +"/images.json";
-		select_reload(url);
-		console.log(url);
+		select_reload(getJsonUrl(val));
 	});
-
-
-	//ajax加载图片
-	pic_chosen.chosen().change(function(){
-		image_name = $('.chosen-single span').html();
-		var pic_overview = "<img src='" + url_overview + "'/>";
+	
+	//chosen事件，加载图片
+	img_chosen.on('change',function(e,params){
+		var pic_overview = "<img src='" + getScaleUrl(270,"-",params.selected) + "'/>";
 		$(".overview-pic").html('');
 		$(pic_overview).appendTo($(".overview-pic"));
-		
-		// $('#picture_overview').attr('src',url_overview);
+		imageKey = params.selected;
 	});
-*/
+	
+	function getAtag(scale_link){
+		return "<a target='_blank' href='" + scale_link + "'>" + "点击打开" + "</a>";
+	}
+	
+	//获取缩放URL方法
+	function getScaleUrl(width,height,imageKey){
+		return url_base + '/process/' + imageKey + '/scale[' + width + ',' + height + ']';
+	}
+	
+	//获取空间图片json地址
+	function getJsonUrl(val){
+		return url_base + "/space/" + val +"/images.json";
+	}
 
 	//缩放输入框成比例调整
 	var height_input = $("#pic-height");
@@ -82,7 +76,8 @@ $(document).ready(function(){
 		var new_width = $(this).val();
 		var new_height = parseInt(new_width / scale);
 		height_input.val(new_height);
-		$(".scale-link").html(scaleUrl(width,height,'test.jpg'));
+		var scale_link = getScaleUrl(width,height,imageKey);
+		$(".scale-link").html(getAtag(scale_link));
 	});
 
 	//height_input 键盘监听
@@ -90,7 +85,8 @@ $(document).ready(function(){
 		var new_height = $(this).val();
 		var new_width = parseInt(new_height*scale);
 		width_input.val(new_width);
-		$(".scale-link").html(scaleUrl(width,height,'test.jpg'));
+		var scale_link = getScaleUrl(width,height,imageKey);
+		$(".scale-link").html(getAtag(scale_link));
 	});	
 
 	//reset事件
@@ -132,8 +128,9 @@ $(document).ready(function(){
 			var value = $(this).val();
 			var height = parseInt(value * pic_height / 100);
 			var width = parseInt(value * pic_width / 100);
-			$(".scale-link").html(scaleUrl(width,height,'test.jpg'));
+			var scale_link = getScaleUrl(width,height,imageKey);
+			$(".scale-link").html(getAtag(scale_link));
+			console.log(getAtag(scale_link));
 		}
 	});
-
 });

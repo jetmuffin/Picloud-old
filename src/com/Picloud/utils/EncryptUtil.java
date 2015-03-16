@@ -127,6 +127,7 @@ public class EncryptUtil {
     	String md5 = encryptMD5(data.getBytes());
     	String sha = encryptSHA(md5.getBytes());
     	String key = encryptBASE64(sha.getBytes());
+    	key = key.substring(0, 12);
     	return key;
     }
     
@@ -147,7 +148,10 @@ public class EncryptUtil {
     public static void main(String[] args) throws Exception {
 		String str = "测试空间_chen9434";
 		byte[] data = str.getBytes();
-
+		
+		String imageKey = imageEncryptKey("测试空间", "chen9434");
+		System.out.println("ImageKey:" + imageKey);
+		
 		String base64 = encryptBASE64(data);  
         System.out.println("BASE64:\n" + base64);  
         
