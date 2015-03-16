@@ -67,35 +67,35 @@ public class PanoController {
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String add(HttpSession session, HttpServletRequest request) {
-		User loginUser = (User) session.getAttribute("LoginUser");
+		
 
+		User loginUser = (User) session.getAttribute("LoginUser");
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (!isMultipart) {
 			throw new PanoImageException("上传全景图片错误，没有文件域！");
+			
 		} else {
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			try {
 				List items = upload.parseRequest(request);
 				Iterator iter = items.iterator();
-
 				boolean flag = false;
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
-
 					String hdfsPath = HDFS_UPLOAD_ROOT + "/"
 							+ loginUser.getUid() + "/Pano/";
-					
 					//TODO 修改方法
 					HdfsHandler hdfsHandler = new HdfsHandler(SystemConfig.getSystemPath());
 					InputStream uploadedStream = item.getInputStream();
 					String filePath = hdfsPath +item.getName() ;
+					System.out.println("16");
 					flag = hdfsHandler.upLoad(uploadedStream, filePath);
 //					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
 //					flag = imageWriter.uploadToHdfs(hdfsPath, item,
 //							loginUser.getUid());
 					
-					
+					System.out.println("17");
 					String key = EncryptUtil.imageEncryptKey(item.getName(),
 							loginUser.getUid());
 					String createTime = DateUtil.getCurrentDateStr();
