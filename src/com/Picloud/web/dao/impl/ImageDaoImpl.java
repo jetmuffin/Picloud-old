@@ -139,6 +139,8 @@ public class ImageDaoImpl implements IImageDao {
 	public List<Image> getOtherImages(String spaceId, String imageName,int num) {
 		ResultScanner rs = mHbaseOperationImpl.getOtherImages(spaceId, imageName,num);
 		List<Image> otherImages =  mListMapping.imageListMapping(rs);
+		if(otherImages==null)
+				return null;
 		if(otherImages.size()<=num)
 				return otherImages;
 		else{
