@@ -103,9 +103,10 @@ public class ImageController {
 		
 		//其他图片
 		List<Image> otherImages = imageDaoImpl.getOtherImages(image.getSpace(), image.getName(),6);
-		
+		if(otherImages!=null){
+			model.addAttribute("otherImages",otherImages);
+		}
 		model.addAttribute("image",image);
-		model.addAttribute("otherImages",otherImages);
 		model.addAttribute("space",space);
 		model.addAttribute("activeSpace", space);
 		model.addAttribute("activeImage",image);

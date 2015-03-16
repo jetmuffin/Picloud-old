@@ -64,9 +64,11 @@
 	          </div>	
             <h4><i class="fa fa-circle text-warning"></i>其他图片</h4>
 						<ul class="tag-list" style="padding: 0">
-				<c:forEach items="${otherImages}" var="otherImage">
-					 <li><a href="${ROOT}/server/${otherImage.key}/view"><i class="fa fa-file"></i>${otherImage.name}</a></li>
-				</c:forEach>
+				<c:if test="${otherImages!=null }">
+					<c:forEach items="${otherImages}" var="otherImage">
+						 <li><a href="${ROOT}/server/${otherImage.key}/view"><i class="fa fa-file"></i>${otherImage.name}</a></li>
+					</c:forEach>
+				</c:if>
             </ul>	
             <div class="other-group">
             	<a  href="${ROOT}/space/${space.key}/upload" class="btn btn-xs btn-primary jet-button">上传图片</a>

@@ -86,11 +86,7 @@
 									<form class="form-horizontal"
 										action="__TOMCAT__/ScaleImageUpdate" method="get">
 										<div class="form-group">
-											<label class="col-sm-2 control-label">图片长度</label> <input
-												name="uid" value="{:session('uid')}" style="display: none" />
-											<input name="space" value="{$space.name}"
-												style="display: none" /> <input name="image"
-												value="car2.jpg" style="display: none" />
+											<label class="col-sm-2 control-label">图片长度</label> 
 											<div class="col-sm-4">
 												<input type="text" id="pic-width" name="width"
 													class="jet-input form-control" value="400">
