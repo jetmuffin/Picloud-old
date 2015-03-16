@@ -51,7 +51,7 @@ $(document).ready(function(){
 	});
 	
 	function getAtag(scale_link){
-		return "<a target='_blank' href='" + scale_link + "'>" + "点击打开" + "</a>";
+		return "<a target='_blank' href='" + scale_link + "'>" + scale_link + "</a>";
 	}
 	
 	//获取缩放URL方法
