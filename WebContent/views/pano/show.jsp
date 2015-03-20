@@ -8,8 +8,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${TITLE}</title>
 
+  <style type="text/css">
+      body {
+        background-color: #000000;
+        margin: 0px;
+        overflow: hidden;
+      }
+  </style>
 </head>
 <body>
-	${panoImage.name }
-</body>
+  <div class="bg-wrapper">
+    <div id="container"  data-key="${panoImage.key}" ></div>
+    <div id="url_base" data-url = "${IP}${ROOT}"></div>
+    </if>
+  </div>
+  <script type="text/javascript" src="${RESOURCES}/js/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="${PLUGIN}/pano/js/three.min.js"></script>
+  <script type="text/javascript" src="${PLUGIN }/pano/js/pano.js"></script>
+  <script type="text/javascript">
+
+  </script>
 </html>

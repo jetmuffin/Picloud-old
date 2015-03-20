@@ -143,7 +143,15 @@ public class EncryptUtil {
 		String key = encryptBASE64(data.getBytes());
 		return key;
     }
-
+    
+    public static String hdEncryptKey(String hdImageName,String uid) throws Exception{
+    	String data = hdImageName + "_" + uid;
+    	String sha = encryptSHA(data.getBytes());
+    	String md5 = encryptMD5(sha.getBytes());
+    	String key = encryptBASE64(md5.getBytes());
+    	key = key.substring(0, 12);    	
+    	return key;
+    }
     
     public static void main(String[] args) throws Exception {
 		String str = "测试空间_chen9434";

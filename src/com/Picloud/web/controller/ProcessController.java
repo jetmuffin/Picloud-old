@@ -122,7 +122,7 @@ public class ProcessController {
 		Image image = mImageDaoImpl.find(imageKey);
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
-		byte[] buffer = imageReader.readPicture(imageKey, loginUser.getUid());
+		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width, height);
 
@@ -165,7 +165,7 @@ public class ProcessController {
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		Image image = mImageDaoImpl.find(imageKey);
-		byte[] buffer = imageReader.readPicture(imageKey, loginUser.getUid());
+		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width);
 
@@ -215,7 +215,7 @@ public class ProcessController {
 		
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
-		byte[] buffer = imageReader.readPicture(imageKey, loginUser.getUid());
+		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
 		byte[] bufferOut = gm.cropImage(width, height, startX, startY);
 		
@@ -270,7 +270,7 @@ public class ProcessController {
 		
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
-		byte[] buffer = imageReader.readPicture(imageKey, loginUser.getUid());
+		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
 		String logoSrc = systemConfig.getImagePath() + logo;
 		byte[] bufferOut = gm.imgWaterMask(logoSrc, width, height, startX, startY, optical);
@@ -324,7 +324,7 @@ public class ProcessController {
 		
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
-		byte[] buffer = imageReader.readPicture(imageKey, loginUser.getUid());
+		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
 		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY);
 		

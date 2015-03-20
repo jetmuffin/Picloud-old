@@ -137,7 +137,6 @@ public class HdfsHandler {
             byte[] buffer = new byte[Integer.parseInt(String.valueOf(stat.getLen()))];
             in.readFully(0, buffer);
             in.close();
-            fs.close();    
             return buffer;
         }
         else
@@ -160,7 +159,12 @@ public class HdfsHandler {
           fs.close();  
     }  
     
-    
+    /**
+     * 读取图片为BufferedImage
+     * @param hdfsPath
+     * @return
+     * @throws Exception
+     */
     public BufferedImage readImage(String hdfsPath) throws Exception{
         Configuration conf = new Configuration();
         Path path = new Path(hdfsPath);

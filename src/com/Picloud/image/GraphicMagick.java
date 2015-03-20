@@ -1,9 +1,13 @@
 package com.Picloud.image;
 
+import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 
 import org.im4java.core.CompositeCmd;
 import org.im4java.core.ConvertCmd;
@@ -15,6 +19,7 @@ import org.im4java.core.InfoException;
 import org.im4java.process.Pipe;
 
 import com.Picloud.config.SystemConfig;
+import com.Picloud.hdfs.HdfsHandler;
 
 public class GraphicMagick {
 	Pipe pipeIn = null;
@@ -41,6 +46,46 @@ public class GraphicMagick {
 		this.in = new ByteArrayInputStream(imageFileData);
 		this.infoIn = new ByteArrayInputStream(imageFileData);
 		this.pipeIn = new Pipe(in, null);
+		this.format = format;
+	}
+
+	public Pipe getPipeIn() {
+		return pipeIn;
+	}
+
+	public void setPipeIn(Pipe pipeIn) {
+		this.pipeIn = pipeIn;
+	}
+
+	public InputStream getIn() {
+		return in;
+	}
+
+	public void setIn(InputStream in) {
+		this.in = in;
+	}
+
+	public InputStream getInfoIn() {
+		return infoIn;
+	}
+
+	public void setInfoIn(InputStream infoIn) {
+		this.infoIn = infoIn;
+	}
+
+	public Info getInfo() {
+		return info;
+	}
+
+	public void setInfo(Info info) {
+		this.info = info;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
 		this.format = format;
 	}
 
@@ -267,4 +312,6 @@ public class GraphicMagick {
 		}
 		return imageOutData;
 	}
+	
+	
 }

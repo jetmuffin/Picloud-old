@@ -177,6 +177,16 @@ public class Image {
 	public void setVisitCount(String visitCount) {
 		this.visitCount = visitCount;
 	}
+
+	@Override
+	public String toString() {
+		return "Image [key=" + key + ", name=" + name + ", size=" + size
+				+ ", type=" + type + ", space=" + space + ", uid=" + uid
+				+ ", createTime=" + createTime + ", width=" + width
+				+ ", height=" + height + ", path=" + path + ", status="
+				+ status + ", updateTime=" + updateTime + ", visitCount="
+				+ visitCount + "]";
+	}
 	
 	
 }

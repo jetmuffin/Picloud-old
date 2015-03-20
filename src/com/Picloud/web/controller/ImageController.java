@@ -56,9 +56,8 @@ public class ImageController {
 	 */
 	@RequestMapping(value="/{imageKey}",method=RequestMethod.GET)
 	public void show(@PathVariable String imageKey,HttpSession session,HttpServletResponse response) throws Exception{
-		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
-		byte[] buffer = imageReader.readPicture(imageKey,loginUser.getUid());
+		byte[] buffer = imageReader.readPicture(imageKey);
 		
 		if (buffer != null) {
 			// 输出byte为图片

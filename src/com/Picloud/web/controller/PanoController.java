@@ -66,6 +66,7 @@ public class PanoController {
 		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
+	
 /**
  * 删除全景图片
  * @param imageName 图片名
@@ -86,6 +87,7 @@ public class PanoController {
 		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
+	
 	/**
 	 * 上传全景图片
 	 * 

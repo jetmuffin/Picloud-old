@@ -1,6 +1,10 @@
       var camera, scene, renderer;
 
       var url = $('#container').attr('data-url');
+      var url_base = $('#url_base').attr('data-url');
+      var image_key = $('#container').attr('data-key');
+      var url = url_base + '/server/' + image_key;
+      
       console.log(url);
       var fov = 70,
       texture_placeholder,

@@ -9,6 +9,7 @@
 <title>${TITLE}</title>
 <link rel="stylesheet" href="${RESOURCES}/font/css/font-awesome.min.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/bootstrap.min.css" />
+<link rel="stylesheet" href="${PLUGIN}/chosen/chosen.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/common.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/appcenter.css" />
 </head>
@@ -52,7 +53,7 @@
                     <c:forEach var="hdImage"  items="${hdImages}" > 
                     <tr>
                       <td class="project-title">
-                        <a href="${ROOT}/hd/${hdImage.key }">${hdImage.name}</a>
+                        <a href="${ROOT}/hd/${hdImage.key}">${hdImage.name}</a>
                       </td>
                       <td class="project-completion">
                         图片大小: ${hdImage.size}MB
@@ -85,18 +86,18 @@
             <h4 class="modal-title" id="myModalLabel">制作高清图片</h4>
           </div>
           <div class="modal-body">
-            <form class="picture-overview" action="{:U('Appcenter/hdcreate')}" method="post">
+            <form class="picture-overview" action="${ROOT}/hd/add" method="post">
               <div class="form-group">
                 <label class="control-label">选择空间</label>
                 <select class="form-control  jet-input" name="account" id='spaces_select'>
-                  <volist name="spaces" id="space">
-                    <option>{$space.name}</option>
-                  </volist>
+                  <c:forEach items="${spaces}" var="space">
+                    <option value="${space.key}">${space.name}</option>
+                  </c:forEach>
                </select>
               </div>
                   <div class="form-group">
                 <label class="control-label">选择图片</label>
-                <select data-placeholder="请选择图片" name='picture' class="chosen-select form-control jet-input"tabindex="-1" id='pictures_select'>
+                <select data-placeholder="请选择图片" name='imageKey' class="chosen-select form-control jet-input"tabindex="-1" id='pictures_select'>
                  </select>
               </div>
               <input name='uid' value='{:session('uid')}' style="display:none" />
@@ -110,6 +111,7 @@
         </div>
       </div>
     </div>
+<div id="url_base" style="display: none">${IP}${ROOT}</div>
   </block>
 		</div>
 		<jsp:include page="../common/footer.jsp" />
@@ -117,8 +119,9 @@
 	</div>
 	<script type="text/javascript"
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="${PLUGIN}/chosen/chosen.jquery.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
-	<script type="text/javascript" src="${RESOURCES }/js/appcenter.js"></script>
+	<script type="text/javascript" src="${RESOURCES }/js/hd.js"></script>
 </body>
 </html>

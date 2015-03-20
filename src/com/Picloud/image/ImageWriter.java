@@ -1,5 +1,6 @@
 package com.Picloud.image;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
@@ -7,6 +8,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,8 +123,11 @@ public class ImageWriter {
 			String filePath = hdfsPath + item.getName();
 			InputStream uploadedStream = item.getInputStream();
 			flag = mHdfsHandler.upLoad(uploadedStream, filePath);
+			BufferedImage bufferedImage = ImageIO.read(item.getInputStream());
+			String width = Integer.toString(bufferedImage.getWidth());
+			String height = Integer.toString(bufferedImage.getHeight());
 			//更新数据库
-			updateHbase(item, "HdfsLargeFile", hdfsPath, uid, space);
+			updateHbase(item, "HdfsLargeFile", hdfsPath, uid, space,width,height);
 			return flag;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -208,7 +214,9 @@ public class ImageWriter {
 	            }	 
 	            
 				String fileName = item.getName();
-				System.out.println(fileName);
+				BufferedImage bufferedImage = ImageIO.read(item.getInputStream());
+				String width = Integer.toString(bufferedImage.getWidth());
+				String height = Integer.toString(bufferedImage.getHeight());
 				File file = new File(LocalPath, fileName);
 				if (file.exists()) {
 					System.out.println("Local file exists!");
@@ -216,7 +224,7 @@ public class ImageWriter {
 				} else {
 					item.write(file);
 				}
-				updateHbase(item, "LocalFile", LocalPath, uid, space);
+				updateHbase(item, "LocalFile", LocalPath, uid, space,width,height);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -308,13 +316,15 @@ public class ImageWriter {
 	 * @param space
 	 * @throws Exception 
 	 */
-	public void updateHbase(FileItem item,String status, String path, String uid, String spaceKey ) throws Exception{
+	public void updateHbase(FileItem item,String status, String path, String uid, String spaceKey,String width,String height) throws Exception{
 		Image image = new Image(item);
 		image.setKey(EncryptUtil.imageEncryptKey(image.getName(), uid));
 		image.setStatus(status);
 		image.setPath(path);
 		image.setUid(uid);
 		image.setSpace(spaceKey);
+		image.setHeight(height);
+		image.setWidth(width);
 		mImageDaoImpl.add(image);
 		
 		String imageName = item.getName();

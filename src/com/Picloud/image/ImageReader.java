@@ -38,12 +38,12 @@ public class ImageReader {
 	}
 	
 	/**
-	 * 根据图片名字读取图片
+	 * 根据图片key读取图片
 	 * @param imageName
 	 * @return byte[]
 	 * @throws Exception
 	 */
-	public byte[] readPicture(String imageKey,String uid) throws Exception {
+	public byte[] readPicture(String imageKey) throws Exception {
 		Image image = mImageDaoImpl.find(imageKey);
 		if(image != null) {
 			byte[] buffer = null;
