@@ -96,7 +96,6 @@ public class Space {
 		this.number = number;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Space [key=" + key + ", name=" + name + ", desc=" + desc

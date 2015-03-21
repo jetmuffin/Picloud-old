@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Picloud.config.HdfsConfig;
-import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.JspUtil;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.MapfileDaoImpl;
@@ -161,7 +161,7 @@ public class MapfileHandler {
 		FileSystem fs = FileSystem.get(
 				URI.create(mHdfsConfig.getFileSystemPath()), conf);
 		// 重新生成mapfile的路径
-		String date = DateUtil.getCurrentDateStr();
+		String date = JspUtil.getCurrentDateStr();
 		String filePath = hdfsDir.substring(0, hdfsDir.length() - 14) + date;
 		Path path = new Path(fs.getHomeDirectory(), filePath);
 		BytesWritable value = new BytesWritable();

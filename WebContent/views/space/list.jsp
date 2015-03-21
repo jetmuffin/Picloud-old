@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<jsp:useBean id="jt" class="com.Picloud.utils.JspUtil" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,8 +47,8 @@
 											张</span>
 									</div>
 									<div class="col-xs-6">
-										<i class="fa-database fa"></i>用 量<span class="info-figure">${space.storage}
-											MB 
+										<i class="fa-database fa"></i>用 量<span class="info-figure">
+											<c:out value="${jt.cutLength(space.storage)}"></c:out>MB 
 									</div>
 								</div>
 								<div class="space-desc">

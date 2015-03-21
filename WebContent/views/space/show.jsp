@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<jsp:useBean id="jt" class="com.Picloud.utils.JspUtil" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -64,7 +65,8 @@
 													src="${ROOT}/process/${image.key}/scale[198,-]">
 											</div>
 											<div class="file-name">
-												${image.name} <br> <small> ${image.createTime }
+												${image.name} <br> <small> 
+												<c:out value="${jt.getStrTime(image.createTime)}"></c:out> 
 												</small>
 											</div>
 										</a>

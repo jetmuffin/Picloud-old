@@ -30,7 +30,7 @@ import com.Picloud.exception.ImageException;
 import com.Picloud.exception.ThreeDImageException;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.image.ImageWriter;
-import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.JspUtil;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.LogDaoImpl;
@@ -148,7 +148,7 @@ public class ThreeDController {
 				
 				//更新Hbase
 				totalSize = totalSize/1024/1024 ;
-				String createTime = DateUtil.getCurrentDateStr();
+				String createTime = JspUtil.getCurrentDateStr();
 				ThreeDImage threeDImage = new ThreeDImage(key, threeDImageName,
 						loginUser.getUid(), createTime, Double.toString(totalSize), Integer.toString(items.size()-1));
 				threeDImageDao.add(threeDImage);

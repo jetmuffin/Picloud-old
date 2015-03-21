@@ -1,6 +1,6 @@
 package com.Picloud.web.model;
 
-import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.JspUtil;
 
 public class Log {
 	//主键
@@ -23,10 +23,10 @@ public class Log {
 		this.uid = uid;
 		this.operation = operation;
 		try {
-			this.time = DateUtil.getCurrentDateStr();
+			this.time = JspUtil.getCurrentDateStr();
 			String max = "99999999999999999";
 			double d1 =   Double.parseDouble(max);
-			double d2 = Double.parseDouble(DateUtil.getCurrentDateMS());
+			double d2 = Double.parseDouble(JspUtil.getCurrentDateMS());
 			this.key = String.valueOf(d1-d2)+uid;
 		} catch (Exception e) {
 			e.printStackTrace();

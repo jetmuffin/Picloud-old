@@ -32,7 +32,7 @@ import com.Picloud.web.dao.impl.PanoImageDao;
 import com.Picloud.web.model.Log;
 import com.Picloud.web.model.PanoImage;
 import com.Picloud.web.model.User;
-import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.JspUtil;
 
 @Controller
 @RequestMapping(value = "/pano")
@@ -125,7 +125,7 @@ public class PanoController {
 
 					String key = EncryptUtil.imageEncryptKey(item.getName(),
 							loginUser.getUid());
-					String createTime = DateUtil.getCurrentDateStr();
+					String createTime = JspUtil.getCurrentDateStr();
 					PanoImage panoImage = new PanoImage(key, item.getName(),
 							loginUser.getUid(), createTime, Long.toString(item
 									.getSize()), hdfsPath);

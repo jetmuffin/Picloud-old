@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<jsp:useBean id="jt" class="com.Picloud.utils.JspUtil" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,8 +38,8 @@
 	        			<dl class="dl-horizontal">
 	        				<div class="dl-group row" id='picture_name'><dt class="col-xs-6">图片名：</dt> <dd class="col-xs-6">${image.name}</dd></div>
 	        				<div class="dl-group row"><dt class="col-xs-6">图片类型：</dt> <dd class="col-xs-6">images / ${image.type}</dd></div>
-	        				<div class="dl-group row"><dt class="col-xs-6">图片大小：</dt> <dd class="col-xs-6">${image.size}MB</dd></div>
-	        				<div class="dl-group row"><dt class="col-xs-6">上传时间：</dt> <dd class="col-xs-6">${image.createTime }</dd></div>
+	        				<div class="dl-group row"><dt class="col-xs-6">图片大小：</dt> <dd class="col-xs-6"><c:out value="${jt.cutLength(image.size)}"></c:out>MB</dd></div>
+	        				<div class="dl-group row"><dt class="col-xs-6">上传时间：</dt> <dd class="col-xs-6"><c:out value="${jt.getStrTime(image.createTime)}"></c:out></dd></div>
               	</dl>
                 	<div class="picture-button">
                 		<a class="btn btn-primary jet-button" href="{:U('Appcenter/scale/'.$image['name'])}"><i class="fa-paint-brush fa"></i>处理图片</a>
