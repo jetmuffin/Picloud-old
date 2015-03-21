@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
@@ -238,7 +239,7 @@ public class SpaceController {
 	 */
 	@RequestMapping(value = "/{spaceKey}/upload", method = RequestMethod.POST)
 	public String upload(@PathVariable String spaceKey,
-			HttpServletRequest request, HttpSession session)
+			HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws FileUploadException {
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
@@ -248,8 +249,9 @@ public class SpaceController {
 		@SuppressWarnings("rawtypes")
 		Iterator iter = items.iterator();
 		User loginUser = (User) session.getAttribute("LoginUser");
+		boolean flag = false;
 		try {
-			boolean flag = false;
+
 			while (iter.hasNext()) {
 				
 				FileItem item = (FileItem) iter.next();
@@ -258,7 +260,7 @@ public class SpaceController {
 					System.out.println(temp);
 				} else {
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-					imageWriter.write(item, loginUser.getUid(), spaceKey);					
+					flag = imageWriter.write(item, loginUser.getUid(), spaceKey);					
 				}
 
 			}
@@ -272,6 +274,13 @@ public class SpaceController {
 		SyncThread syncThread = new SyncThread(infoDaoImpl);
 		syncThread.SetProperty(LocalPath, loginUser.getUid(), spaceKey);
 		syncThread.start();
+		if(flag){
+			response.setContentType("text/html;charset=gb2312");
+			response.setStatus(200);
+			} else {
+			response.setContentType("text/html;charset=gb2312");
+			response.setStatus(302);
+			}
 		return "test";
 	}
 
