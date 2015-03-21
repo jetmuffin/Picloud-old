@@ -104,11 +104,8 @@ public class HDController {
 	@RequestMapping(value="/{hdkey}/delete",method=RequestMethod.GET)
 	public String delete(@PathVariable String hdkey,HttpSession session,Model model) throws Exception{
 		User loginUser = (User) session.getAttribute("LoginUser");
-		hdImageDao.delete(hdkey);
-		
 		HdImage hdImage=hdImageDao.find(hdkey);
-		List<HdImage> hdImages = hdImageDao.load(loginUser.getUid());
-		model.addAttribute("hdImages", hdImages);
+		hdImageDao.delete(hdkey);
 		
 		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "删除高清图片"+hdImage.getName());
 		mLogDaoImpl.add(log);
@@ -177,7 +174,6 @@ public class HDController {
 			String RealPath = HDFS_UPLOAD_ROOT + "/" + loginUser.getUid() + "/HdImage/" + fileName;
 			HdfsHandler hdfsHandler = new HdfsHandler();
 			
-			
 			try {
 				if (RealPath.toLowerCase().endsWith(".dzi")) {
 			
@@ -208,8 +204,6 @@ public class HDController {
 					response.reset();
 					OutputStream output = response.getOutputStream();// 得到输出流
 					response.setContentType("image/jpeg;charset=GB2312");  
-					response.setHeader("Access-Control-Allow-Origin",
-							"http://localhost:81");
 
 					InputStream imageIn = new ByteArrayInputStream(fileByte);
 					BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流

@@ -123,6 +123,5 @@
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
-	<script type="text/javascript" src="${RESOURCES }/js/picserver.js"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.URI;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -20,10 +21,12 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Progressable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.Picloud.config.HdfsConfig;
 import com.Picloud.config.SystemConfig;
 import com.Picloud.exception.FileException;
+import com.Picloud.exception.ImageException;
 import com.Picloud.utils.PropertiesUtil;
 
 @Service
@@ -185,4 +188,6 @@ public class HdfsHandler {
             throw new Exception("the file is not found .");
         }
     }
+    
+
 }

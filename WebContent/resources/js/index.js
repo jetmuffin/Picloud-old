@@ -1,8 +1,7 @@
 $(document).ready(function(){
     
-    var url = "http://localhost:8080/PicServer/ListSpace";
-    var uid = $('#uid').html();
-
+    var url_base = $('#url_base').attr('data-url');
+    console.log(url_base);
     var color = [
         "#1ab394",
         "#79d2c0",
@@ -11,23 +10,23 @@ $(document).ready(function(){
         "#3FB4A7",
         "#3FADB4"
     ]
-    $.getJSON(url, { uid: uid }, function(json){
-        var spaces = json.Spaces;
-        var tot_size = 0;
-        
-        console.log(json.Spaces);
-        $.each(spaces, function(i,val){      
-            tot_size += parseFloat(val.storage);
-        });
-        var data = new Array();
-        $.each(spaces, function(i,val){ 
-            var v = {
-                label: val.name,
-                data: Math.round(val.storage / tot_size * 100),
-                color: color[i]
-            };
-            data.push(v);
-        });
+//    $.getJSON(url, { uid: uid }, function(json){
+//        var spaces = json.Spaces;
+//        var tot_size = 0;
+//        
+//        console.log(json.Spaces);
+//        $.each(spaces, function(i,val){      
+//            tot_size += parseFloat(val.storage);
+//        });
+//        var data = new Array();
+//        $.each(spaces, function(i,val){ 
+//            var v = {
+//                label: val.name,
+//                data: Math.round(val.storage / tot_size * 100),
+//                color: color[i]
+//            };
+//            data.push(v);
+//        });
         // console.log(tot_size);
         // console.log(data);
         // console.log(spaces);

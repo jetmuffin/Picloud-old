@@ -68,4 +68,11 @@ public class ThreeDImage {
 			this.number = number;
 		}
 
+		@Override
+		public String toString() {
+			return "ThreeDImage [key=" + key + ", name=" + name + ", uid="
+					+ uid + ", createTime=" + createTime + ", size=" + size
+					+ ", number=" + number + "]";
+		}
+
 }

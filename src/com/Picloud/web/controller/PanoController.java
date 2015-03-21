@@ -14,11 +14,14 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.Picloud.config.SystemConfig;
+import com.Picloud.exception.FileException;
+import com.Picloud.exception.ImageException;
 import com.Picloud.exception.PanoImageException;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.image.ImageWriter;
@@ -103,7 +106,6 @@ public class PanoController {
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (!isMultipart) {
 			throw new PanoImageException("上传全景图片错误，没有文件域！");
-			
 		} else {
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
@@ -115,13 +117,11 @@ public class PanoController {
 					FileItem item = (FileItem) iter.next();
 					String hdfsPath = HDFS_UPLOAD_ROOT + "/"
 							+ loginUser.getUid() + "/Pano/";
-					//TODO 修改方法
+				
 					String filePath = hdfsPath +item.getName() ;
-
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
 					flag = imageWriter.uploadToHdfs(filePath, item,
 							loginUser.getUid());
-					
 
 					String key = EncryptUtil.imageEncryptKey(item.getName(),
 							loginUser.getUid());
@@ -130,13 +130,12 @@ public class PanoController {
 							loginUser.getUid(), createTime, Long.toString(item
 									.getSize()), hdfsPath);
 					panoImageDao.add(panoImage);
-					System.out.println("更新数据库成功！");
 					
 					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
 					mLogDaoImpl.add(log);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new PanoImageException(e.getMessage());
 			}
 		}
 		return "redirect:list";
@@ -154,9 +153,13 @@ public class PanoController {
 			User loginUser = (User) session.getAttribute("LoginUser");
 
 			PanoImage panoImage = panoImageDao.find(panokey);
-			System.out.println(panoImage.getName());
 			model.addAttribute("panoImage", panoImage);
 			return "pano/show";
 		}
 	
+		@ExceptionHandler(value=(PanoImageException.class))
+		public String handlerException(ImageException e,HttpServletRequest req){
+			req.setAttribute("e", e);
+			return "error";
+		}
 }

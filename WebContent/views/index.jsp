@@ -190,6 +190,7 @@
 						</div>
 					</div>
 				</div>
+				<div id="url_base" data-url="${IP}${ROOT}"></div>
 				</block>
 			</div>
 			<jsp:include page="common/footer.jsp" />

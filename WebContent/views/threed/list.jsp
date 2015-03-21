@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${RESOURCES}/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/common.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/appcenter.css" />
+<link rel="stylesheet" href="${PLUGIN}/dropzone/css/dropzone.css" />
 </head>
 <body>
 	<div class="wrap">
@@ -90,10 +91,9 @@
                               <form id="my-awesome-dropzone" class="dropzone dz-clickable" action="http://localhost:8080/PicServer/Write3D" method="post">
               <div class="dropzone-previews"></div>
               <div class="dropzone-group">
-                <input type="text" name="uid" value="{:session('uid')}" style="display:none" />
                 <div class="form-group">
                 <label class="control-label">物品名称</label>
-                <input type="text" name="name"/>
+                <input type="text" name="threeDImageName"/>
                 <button type="submit" class="btn btn-primary pull-right">提交</button>
               </div>        
 
@@ -112,7 +112,7 @@
         </div>
       </div>
     </div>
-
+<div id="url_base" data-url='${IP}${ROOT}'></div>
   </block>
 		</div>
 		<jsp:include page="../common/footer.jsp" />
@@ -122,6 +122,7 @@
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
-	<script type="text/javascript" src="${RESOURCES }/js/appcenter.js"></script>
+	<script type="text/javascript" src="${PLUGIN}/dropzone/dropzone.min.js"></script>
+	<script src="${RESOURCES}/js/threed.js"></script>
 </body>
 </html>

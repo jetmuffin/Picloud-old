@@ -145,7 +145,16 @@ public class EncryptUtil {
     }
     
     public static String hdEncryptKey(String hdImageName,String uid) throws Exception{
-    	String data = hdImageName + "_" + uid;
+    	String data = hdImageName + "_" + uid + "_hd";
+    	String sha = encryptSHA(data.getBytes());
+    	String md5 = encryptMD5(sha.getBytes());
+    	String key = encryptBASE64(md5.getBytes());
+    	key = key.substring(0, 12);    	
+    	return key;
+    }
+    
+    public static String tdEncryptKey(String tdImageName,String uid) throws Exception{
+    	String data = tdImageName + "_" + uid + "_td";
     	String sha = encryptSHA(data.getBytes());
     	String md5 = encryptMD5(sha.getBytes());
     	String key = encryptBASE64(md5.getBytes());
