@@ -78,5 +78,4 @@ public class SpaceDaoImpl implements ISpaceDao {
 		ResultScanner rs = mHbaseOperationImpl.queryByColumn("cloud_space", "attr", "uid",uid);
 		return mListMapping.spaceListMapping(rs);
 	}
-
 }

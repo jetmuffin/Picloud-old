@@ -251,9 +251,16 @@ public class SpaceController {
 		try {
 			boolean flag = false;
 			while (iter.hasNext()) {
+				
 				FileItem item = (FileItem) iter.next();
-				ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-				imageWriter.write(item, loginUser.getUid(), spaceKey);
+				if(item.isFormField()){
+					String temp = item.getString();
+					System.out.println(temp);
+				} else {
+					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
+					imageWriter.write(item, loginUser.getUid(), spaceKey);					
+				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -311,5 +318,17 @@ public class SpaceController {
 	public List<Image> getAllImages (@PathVariable String spaceKey){
 		List<Image> images = mImageDaoImpl.load(spaceKey); 
 		return images;
+	}
+	
+	/**
+	 * 读取用户 所有空间
+	 * @param uid
+	 * @return
+	 */
+	@RequestMapping(value="/{uid}/space.json",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Space> getAllSpace (@PathVariable String uid){
+		List<Space> spaces =  mSpaceDaoImpl.load(uid);
+		return spaces;
 	}
 }
