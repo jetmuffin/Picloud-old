@@ -333,6 +333,18 @@ public class SpaceController {
 		return images;
 	}
 	
+		/**
+	 * 读取用户 所有空间
+	 * @param uid
+	 * @return
+	 */
+	@RequestMapping(value="/{uid}/space.json",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Space> getAllSpace (@PathVariable String uid){
+		List<Space> spaces =  mSpaceDaoImpl.load(uid);
+		return spaces;
+	}
+	
 
 	@RequestMapping(value = "/{spaceKey}/test", method = RequestMethod.POST)
 	public String uploadTest(@PathVariable String spaceKey,
@@ -387,17 +399,5 @@ public class SpaceController {
 			e.printStackTrace();
 		}
 		return "test";
-	}
-	
-		/**
-	 * 读取用户 所有空间
-	 * @param uid
-	 * @return
-	 */
-	@RequestMapping(value="/{uid}/space.json",method=RequestMethod.GET)
-	@ResponseBody
-	public List<Space> getAllSpace (@PathVariable String uid){
-		List<Space> spaces =  mSpaceDaoImpl.load(uid);
-		return spaces;
 	}
 }

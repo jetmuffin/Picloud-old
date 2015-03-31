@@ -3,4 +3,5 @@
 /build/
 /bin/
 /src/com/Picloud/web/controller/TestController.java
+/src/com/Picloud/config/SytemConfig.java
 /bin/

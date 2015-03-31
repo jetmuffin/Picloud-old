@@ -1,4 +1,4 @@
-package com.Picloud.test;
+package com.Picloud.web.test;
 
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.Picloud.image.ImageWriter;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
-import com.Picloud.web.model.User;
 
 @Controller
 @RequestMapping("/test")
@@ -46,7 +45,7 @@ public class TestController {
 		return "test";
 	}
 	
-	@RequestMapping(value = "/sequencefile", method = RequestMethod.POST)
+	@RequestMapping(value = "/sequencefile", method = RequestMethod.GET)
 	public String sequencefile(){
 		return "test";
 	}
