@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:useBean id="dt" class="com.Picloud.utils.DateUtil" scope="page" />
+<jsp:useBean id="jt" class="com.Picloud.utils.JspUtil" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -62,7 +62,7 @@
 											<div>
 												<span>存储空间：</span> <small class="pull-right">
 													<!-- TODO 保留两位小数 -->
-													${LoginUser.imageTotalSize} MB
+													<c:out value="${jt.cutLength(LoginUser.imageTotalSize)}"></c:out>MB
 												</small>
 											</div>
 											<div class="progress progress-small">
@@ -124,7 +124,7 @@
 														</c:when>
 													</c:choose>
 													<a href="space/${space.key}"><span>${space.name}</span></a>
-													<small class="pull-right">${space.number}张 / ${space.storage}MB</small>
+													<small class="pull-right">${space.number}张 /<c:out value="${jt.cutLength(space.storage)}"></c:out>MB</small>
 												</div>
 												<div class="hr-line-dashed"></div>
 											</c:forEach>
@@ -152,7 +152,7 @@
 									<div class="info-item">
 										<p>${log.operation}</p>
 										<small class="block text-muted"><i
-											class="fa fa-clock-o"></i><c:out value="${dt.getStrTime(log.time)}"></c:out> </small>
+											class="fa fa-clock-o"></i><c:out value="${jt.getStrTime(log.time)}"></c:out> </small>
 									</div>
 									<div class="hr-line-dashed"></div>
 									</c:forEach>

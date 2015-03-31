@@ -3,7 +3,7 @@ package com.Picloud.utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-public class DateUtil {
+public class JspUtil {
 
 	/**
 	 * 获取年月日字符串
@@ -122,6 +122,26 @@ public class DateUtil {
 		return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 	}
 
+	/**
+	 * 保留两位小数
+	 * @param str
+	 * @return
+	 */
+	public static String cutLength(String str){
+		if((str == null)||(str.length() == 0))
+				return String.valueOf(0);
+		char[] ch = str.toCharArray();
+		for(int i = 0; i < ch.length; i++){
+			 if(ch[i] == '.'){
+				 if(i+3 <= ch.length)
+					 return str.substring(0, i+3);
+				 else
+					 	return str.substring(0, ch.length);
+			 }
+		 }
+		return String.valueOf(0);
+	}
+	
 }
 
 

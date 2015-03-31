@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import com.Picloud.config.SystemConfig;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.hdfs.MapfileHandler;
-import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.JspUtil;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
@@ -292,8 +292,7 @@ public class ImageWriter {
 			throws Exception {
 		File LocalDir = new File(LocalPath);
 		double DirSize = getDirSize(LocalDir);
-		String filePath = HDFS_UPLOAD_ROOT + "/" + uid + "/SmallFile/"
-				+ DateUtil.getCurrentDateStr();
+		String filePath =  HDFS_UPLOAD_ROOT + "/" + uid + "/SmallFile/" + JspUtil.getCurrentDateStr();
 		
 			mSystemConfig.addSyncSize();
 			File[] items = LocalDir.listFiles();
@@ -533,7 +532,7 @@ public class ImageWriter {
 		File LocalDir = new File(LocalPath);
 		double DirSize = getDirSize(LocalDir);
 		String filePath = HDFS_UPLOAD_ROOT + "/test/mapfile/"
-				+ DateUtil.getCurrentDateStr();
+				+ JspUtil.getCurrentDateStr();
 		
 			mSystemConfig.addSyncSize();
 			File[] items = LocalDir.listFiles();

@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.JspUtil;
 import com.Picloud.web.dao.impl.LogDaoImpl;
 import com.Picloud.web.dao.impl.SpaceDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
@@ -32,12 +32,12 @@ public class IndexController {
 		model.addAttribute("module",module);
 		
 		User user=(User) session.getAttribute("LoginUser");
-		String yesterday = DateUtil.getPereviousDayMS();
-		String today = DateUtil.getCurrentDateMS();
+		String yesterday = JspUtil.getPereviousDayMS();
+		String today = JspUtil.getCurrentDateMS();
 		List<Space> spaces = mSpaceDaoImpl.load(user.getUid());
 		List<Log> logs = mLogDaoImpl.getByTime(user.getUid(),yesterday ,today);
 		
-		session.setAttribute("lastLogin", DateUtil.getLastTime(user.getLastLogin()));
+		session.setAttribute("lastLogin", JspUtil.getLastTime(user.getLastLogin()));
 		model.addAttribute("spaces",spaces);
 		model.addAttribute("logs",logs);
 		return "index";

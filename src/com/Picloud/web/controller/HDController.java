@@ -35,7 +35,7 @@ import com.Picloud.image.HdCut;
 import com.Picloud.image.HdImageCut;
 import com.Picloud.image.ImageReader;
 import com.Picloud.image.ImageWriter;
-import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.JspUtil;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.IHdImageDao;
 import com.Picloud.web.dao.impl.HdImageDaoImpl;
@@ -143,7 +143,7 @@ public class HDController {
 		hdImage.setName(image.getName());
 		hdImage.setSize(String.valueOf(BLOCK_SIZE));
 		hdImage.setUid(loginUser.getUid());
-		hdImage.setCreateTime(DateUtil.getCurrentDateStr());
+		hdImage.setCreateTime(JspUtil.getCurrentDateStr());
 		hdImageDao.add(hdImage);
 		
 		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传了高清图片"+hdImage.getName());

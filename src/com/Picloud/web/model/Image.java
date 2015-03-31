@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.apache.commons.fileupload.FileItem;
 
-import com.Picloud.utils.DateUtil;
+import com.Picloud.utils.JspUtil;
 
 public class Image {
 	
@@ -59,7 +59,7 @@ public class Image {
 		this.name = item.getName();
 		this.size = Double.toString((double) item.getSize() /1024 /1024);
 		this.type = this.name.substring(this.name.lastIndexOf(".")+1);
-		this.createTime = DateUtil.getCurrentDateStr();
+		this.createTime = JspUtil.getCurrentDateStr();
 
 	}
 	
@@ -68,7 +68,7 @@ public class Image {
 		this.name = file.getName();
 		this.size = Double.toString((double)  file.length() /1024 /1024);
 		this.type = this.name.substring(this.name.lastIndexOf(".")+1);
-		this.createTime = DateUtil.getCurrentDateStr();
+		this.createTime = JspUtil.getCurrentDateStr();
 	}
 	
 	//全参数构造方法
