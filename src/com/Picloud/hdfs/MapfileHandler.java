@@ -193,4 +193,35 @@ public class MapfileHandler {
 		mMapfileDaoImpl.update(mapfile);
 		System.out.println("更新mapfile成功！");
 	}
+	
+	
+	/**
+	 *  打包测试方法
+	 * @param items
+	 * @param hdfsDir
+	 */
+	public void packageToHdfs(File[] items, String hdfsDir) throws IOException {
+		Configuration conf = new Configuration();
+		FileSystem fs = FileSystem.get(
+				URI.create(mHdfsConfig.getFileSystemPath()), conf);
+		Path path = new Path(fs.getHomeDirectory(), hdfsDir);
+
+		BytesWritable value = new BytesWritable();
+		Text key = new Text();
+
+		MapFile.Writer writer = new MapFile.Writer(conf, fs, path.toString(),
+				key.getClass(), value.getClass());
+		// 通过writer向文档中写入记录
+		for (File item : items) {
+			try {
+				String filename = item.getName();
+				byte buffer[] = getBytes(item);
+				writer.append(new Text(filename), new BytesWritable(buffer));
+				// 更新数据库
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		IOUtils.closeStream(writer);// 关闭write流
+	}
 }

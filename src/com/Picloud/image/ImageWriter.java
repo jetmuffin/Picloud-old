@@ -29,6 +29,7 @@ import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Log;
 import com.Picloud.web.model.Space;
 import com.Picloud.web.model.User;
+import com.Picloud.web.thread.SyncTestThread;
 import com.Picloud.web.thread.SyncThread;
 
 @Service
@@ -107,6 +108,7 @@ public class ImageWriter {
 				}
 		return flag;
 	}
+	
 	
 	public Image searchFile(FileItem item, String uid) throws Exception {
 		String key = EncryptUtil.imageEncryptKey(item.getName(), uid);
@@ -432,5 +434,121 @@ public class ImageWriter {
 		mImageDaoImpl.update(image);
 		System.out.println("更新图片信息成功！");
 		return true;
+	}
+	
+	/**
+	 * 供测试用的写入接口
+	 * @param item
+	 * @return
+	 */
+	public boolean write(FileItem item){
+		boolean flag;
+		final String LocalPath = SystemConfig.getSystemPath()
+				+ LOCAL_UPLOAD_ROOT + "/test/";
+		double fileLength = (double) item.getSize() / 1024 / 1024;
+		// 文件大小判断
+		if (fileLength > mSystemConfig.getMaxFileSize()) {
+			flag = uploadToHdfs(item);
+		} else {
+			flag = uploadToLocal(item);
+		}
+		//检查文件夹大小
+		double maxSyncSize = mSystemConfig.getMaxSyncSize();
+		File LocalDir = new File(LocalPath);
+		double DirSize = getDirSize(LocalDir);
+			if (DirSize > maxSyncSize) {
+				Thread thread = new Thread();
+				SyncTestThread syncTestThread = new SyncTestThread(infoDaoImpl,LocalPath);
+				syncTestThread.start();
+				}
+		return flag;
+	}
+	
+	/**
+	 * 供测试用的接口 同步到HDFS
+	 * @param item
+	 * @param uid
+	 * @param space
+	 * @return
+	 */
+	public boolean uploadToHdfs(FileItem item) {
+		try {
+			boolean flag = false;
+			// HDFS文件名
+			final String hdfsPath = HDFS_UPLOAD_ROOT + "/" + "test"
+					+ "/namenode/";
+
+			String filePath = hdfsPath + item.getName();
+			InputStream uploadedStream = item.getInputStream();
+			flag = mHdfsHandler.upLoad(uploadedStream, filePath);
+			// 更新数据库
+			return flag;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * 供测试用的接口 上传到本地
+	 * @param item
+	 * @return
+	 */
+	public boolean uploadToLocal(FileItem item) {
+		try {
+
+			// 本地目录为“根目录/用户名/时间戳"
+			final String LocalPath = SystemConfig.getSystemPath()
+					+ LOCAL_UPLOAD_ROOT + "/test/";
+
+			// 文件是否存在
+			File LocalUidDir = new File(LocalPath);
+			if (!LocalUidDir.exists()) {
+				LocalUidDir.mkdir();
+			}
+			
+			String fileName = item.getName();
+			File file = new File(LocalPath, fileName);
+			if (file.exists()) {
+				System.out.println("Local file exists!");
+				return false;
+			} else {
+				item.write(file);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**
+	 * 同步函数 供测试用
+	 * @param LocalPath
+	 * @param uid
+	 * @param spaceKey
+	 * @throws Exception
+	 */
+	public void localDirSync(String LocalPath)throws Exception {
+		File LocalDir = new File(LocalPath);
+		double DirSize = getDirSize(LocalDir);
+		String filePath = HDFS_UPLOAD_ROOT + "/test/mapfile/"
+				+ DateUtil.getCurrentDateStr();
+		
+			mSystemConfig.addSyncSize();
+			File[] items = LocalDir.listFiles();
+
+			// 文件按文件名排序
+			Arrays.sort(items, new Comparator<File>() {
+				@Override
+				public int compare(File o1, File o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+			});
+
+			// 用Mapfile处理
+			mMapfileHandler.packageToHdfs(items, filePath);
+			deleteFile(LocalDir);
+			mSystemConfig.subSyncSize();
 	}
 }
