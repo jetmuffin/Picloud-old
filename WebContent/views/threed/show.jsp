@@ -13,7 +13,7 @@
   <!--    <if condition="($picture['name'] eq 'example.jpg')">
       <div class="good" data-uid="{:session('uid')}" data-url="__PLUGIN__/3deye/images/" data-pic="{$picture.name}"  data-num='51' data-type="png"></div>
     <else />    -->
-    <div class="good" data-name="${threeDImage.name}" data-num='${threeDImage.number}' data-type="jpg"></div>
+    <div class="good" data-name="${threeDImage.name}" data-num='${threeDImage.number}' data-type="png"></div>
   </div>
   <div id="url_base" data-url='${IP}${ROOT}'></div>
   <script type="text/javascript" src="${RESOURCES}/js/jquery-1.11.1.min.js"></script>

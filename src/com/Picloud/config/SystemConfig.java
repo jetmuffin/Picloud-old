@@ -9,9 +9,51 @@ public class SystemConfig {
 	private String systemPath = "/home/jeff/workspace";
 	private String localUploadPath = "/home/jeff/workspace/upload";
 	private String imagePath = "http://localhost:8080/Picloud/server/";
+	private double maxSyncSize = 32.0;
+	private double maxFileSize = 2.0;     
+	private double syncSizeStep = 32.0;
+	
+	public void addSyncSize(){
+		this.maxSyncSize = this.maxSyncSize + this.syncSizeStep;
+	}
+	
+	public void subSyncSize(){
+		this.maxSyncSize = this.maxSyncSize - this.syncSizeStep;
+	}
+	public double getSyncSizeStep() {
+		return syncSizeStep;
+	}
+
+
+	public void setSyncSizeStep(double syncSizeStep) {
+		this.syncSizeStep = syncSizeStep;
+	}
+
+
 	public static String getSystemPath() {
 		return "/home/jeff/workspace";
 	}
+
+
+	public double getMaxSyncSize() {
+		return maxSyncSize;
+	}
+
+
+	public void setMaxSyncSize(double maxSyncSize) {
+		this.maxSyncSize = maxSyncSize;
+	}
+
+
+	public double getMaxFileSize() {
+		return maxFileSize;
+	}
+
+
+	public void setMaxFileSize(double maxFileSize) {
+		this.maxFileSize = maxFileSize;
+	}
+
 
 	public String getFileSystemPath() {
 		return fileSystemPath;

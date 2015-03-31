@@ -3,6 +3,7 @@ package com.Picloud.web.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.Picloud.config.SystemConfig;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.hdfs.MapfileHandler;
 
@@ -22,7 +23,15 @@ public class InfoDaoImpl {
 	MapfileHandler mMapfileHandler;
 	@Autowired
 	MapfileDaoImpl mMapfileDaoImpl;
+	@Autowired
+	SystemConfig mSystemConfig;
 	
+	public SystemConfig getmSystemConfig() {
+		return mSystemConfig;
+	}
+	public void setmSystemConfig(SystemConfig mSystemConfig) {
+		this.mSystemConfig = mSystemConfig;
+	}
 	public ImageDaoImpl getmImageDaoImpl() {
 		return mImageDaoImpl;
 	}

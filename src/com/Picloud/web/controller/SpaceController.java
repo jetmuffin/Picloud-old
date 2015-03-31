@@ -27,14 +27,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Picloud.config.SystemConfig;
 import com.Picloud.exception.SpaceException;
+import com.Picloud.exception.ThreeDImageException;
 import com.Picloud.image.ImageWriter;
+import com.Picloud.utils.DateUtil;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.SpaceDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
 import com.Picloud.web.model.Image;
+import com.Picloud.web.model.Log;
 import com.Picloud.web.model.Space;
+import com.Picloud.web.model.ThreeDImage;
 import com.Picloud.web.model.User;
 import com.Picloud.web.thread.SyncThread;
 
@@ -311,5 +315,61 @@ public class SpaceController {
 	public List<Image> getAllImages (@PathVariable String spaceKey){
 		List<Image> images = mImageDaoImpl.load(spaceKey); 
 		return images;
+	}
+	
+
+	@RequestMapping(value = "/{spaceKey}/test", method = RequestMethod.POST)
+	public String uploadTest(@PathVariable String spaceKey,
+			HttpServletRequest request, HttpSession session)
+			throws FileUploadException {
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		@SuppressWarnings("rawtypes")
+		List items = upload.parseRequest(request);
+		@SuppressWarnings("rawtypes")
+		Iterator iter = items.iterator();
+		User loginUser = new User("test", "1", "", "", "", "test", "123456", "0", "0", "0");
+		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
+				+ loginUser.getUid() + '/' + spaceKey + '/';
+		try {
+			boolean flag = false;
+			while (iter.hasNext()) {
+				FileItem item = (FileItem) iter.next();
+				ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
+				imageWriter.write(item, loginUser.getUid(), spaceKey,LocalPath);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+		// 同步线程
+		
+
+		return "test";
+	}
+	
+	@RequestMapping(value = "/{spaceKey}/test2", method = RequestMethod.POST)
+	public String test(@PathVariable String spaceKey,HttpSession session, HttpServletRequest request) throws FileUploadException {
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		//User loginUser = (User) session.getAttribute("LoginUser");
+		User loginUser = new User("test", "", "", "", "", "test", "123456", "0", "0", "0");
+		String hdfsPath = "/upload" + "/" + loginUser.getUid();
+		List items = upload.parseRequest(request);
+		Iterator iter = items.iterator();
+		try {
+			boolean flag = false;
+			while (iter.hasNext()) {
+				FileItem item = (FileItem) iter.next();
+				String filePath = hdfsPath + "/BigFile/";
+				ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
+				flag = imageWriter.uploadToHdfs(filePath, item,
+						loginUser.getUid());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "test";
 	}
 }
