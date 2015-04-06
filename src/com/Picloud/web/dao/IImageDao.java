@@ -25,11 +25,11 @@ public interface IImageDao {
 	public List<Image> imageNameMatching(String uid, String subStr);
 
 	public List<Image> imagePageByTime(String time, String uid,
-			String spaceId, int num);
+			String space, int num);
 
-	public List<Image> imagePageByKey(String uid, String key, String spaceId,
+	public List<Image> imagePageByKey(String uid, String key, String space,
 			int num);
 	
 	public List<Image> getOtherImages( String spaceId,String imageName,int num);
-	
+
 }

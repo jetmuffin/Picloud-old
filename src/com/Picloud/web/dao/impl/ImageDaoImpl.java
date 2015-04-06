@@ -118,9 +118,9 @@ public class ImageDaoImpl implements IImageDao {
 	 * 根据时间分页
 	 */
 	@Override
-	public List<Image> imagePageByTime(String time, String uid, String spaceId,
+	public List<Image> imagePageByTime(String time, String uid, String space,
 			int num) {
-		ResultScanner rs = mHbaseOperationImpl.imagePageByTime(time, uid, spaceId, num);
+		ResultScanner rs = mHbaseOperationImpl.imagePageByTime(time, uid, space, num);
 		return mListMapping.imageListMapping(rs);
 	}
 
@@ -128,9 +128,9 @@ public class ImageDaoImpl implements IImageDao {
 	 * 根据主键分页
 	 */
 	@Override
-	public List<Image> imagePageByKey(String uid, String key, String spaceId,
+	public List<Image> imagePageByKey(String uid, String key, String space,
 			int num) {
-		ResultScanner rs = mHbaseOperationImpl.imagePageByKey(key, uid, spaceId, num);
+		ResultScanner rs = mHbaseOperationImpl.imagePageByKey(key, uid, space, num);
 		return mListMapping.imageListMapping(rs);
 	}
 

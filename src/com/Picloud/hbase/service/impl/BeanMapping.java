@@ -1,12 +1,9 @@
 package com.Picloud.hbase.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.Result;
-import org.apache.hadoop.hbase.client.ResultScanner;
 import org.springframework.stereotype.Service;
 
 import com.Picloud.web.model.HdImage;

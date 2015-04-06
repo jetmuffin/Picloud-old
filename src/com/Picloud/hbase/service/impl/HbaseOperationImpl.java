@@ -29,8 +29,6 @@ import com.Picloud.hbase.service.IHbaseOperation;
 
 import org.apache.hadoop.hbase.filter.SubstringComparator;
 
-import com.Picloud.web.model.Image;
-
 public class HbaseOperationImpl implements IHbaseOperation{
 	
 	private Configuration mConfiguration;
@@ -335,7 +333,7 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	            filters.add(filter1); 
 	            
 	            Filter filter2 = new SingleColumnValueFilter(Bytes 
-	                    .toBytes("attr"), Bytes .toBytes("user"), 
+	                    .toBytes("attr"), Bytes .toBytes("uid"), 
 	                    CompareOp.EQUAL, Bytes .toBytes(uid)); 
 	            filters.add(filter2); 
 	            
@@ -358,7 +356,7 @@ public class HbaseOperationImpl implements IHbaseOperation{
  	 * 根据时间图片分页
  	 */
  	@Override
-	public ResultScanner imagePageByTime(String time, String uid, String spaceId,int num){
+	public ResultScanner imagePageByTime(String time, String uid, String space,int num){
 		 try { 
 		        HTable table=new HTable(mConfiguration, "cloud_image"); 
 	            List<Filter> filters = new ArrayList<Filter>(); 
@@ -375,7 +373,7 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	            
 	            Filter filter3 = new SingleColumnValueFilter(Bytes 
 	                    .toBytes("attr"), Bytes .toBytes("space"), 
-	                    CompareOp.EQUAL, Bytes .toBytes(spaceId)); 
+	                    CompareOp.EQUAL, Bytes .toBytes(space)); 
 	            filters.add(filter3); 
 	            
 	            PageFilter pf = new PageFilter(num);
@@ -397,7 +395,7 @@ public class HbaseOperationImpl implements IHbaseOperation{
  	 * 根据主键图片分页
  	 */
  	@Override
-	public ResultScanner imagePageByKey( String uid, String key,String spaceId,int num){
+	public ResultScanner imagePageByKey( String uid, String key,String space, int num){
 		 try { 
 		        HTable table=new HTable(mConfiguration, "cloud_image"); 
 	            List<Filter> filters = new ArrayList<Filter>(); 
@@ -407,7 +405,7 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	            
 	            Filter filter1 = new SingleColumnValueFilter(Bytes 
 	                    .toBytes("attr"), Bytes .toBytes("space"), 
-	                    CompareOp.EQUAL, Bytes .toBytes(spaceId)); 
+	                    CompareOp.EQUAL, Bytes .toBytes(space)); 
 	            filters.add(filter1); 
 	            
 	            Filter filter2 = new SingleColumnValueFilter(Bytes 
@@ -429,4 +427,5 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	            return null;
 	        } 
 	}
+
 }

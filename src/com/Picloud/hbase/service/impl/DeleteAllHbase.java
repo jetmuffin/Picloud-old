@@ -1,10 +1,7 @@
 package com.Picloud.hbase.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 public class DeleteAllHbase {
 
@@ -19,6 +16,7 @@ public class DeleteAllHbase {
 		hbaseOperationImpl.dropTable("cloud_pano");
 		hbaseOperationImpl.dropTable("cloud_space");
 		hbaseOperationImpl.dropTable("cloud_threeD");
+		ctx.close();
 	}
 
 }
