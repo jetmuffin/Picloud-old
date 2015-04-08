@@ -443,7 +443,7 @@ public class GraphicMagick {
 	 * @return
 	 */
 	public byte[] flip(byte[] sourceBuffer){
-		System.out.println("flop");
+		System.out.println("flip");
 		IMOperation op = new IMOperation();
 		byte[] imageOutData = null;
 			
@@ -466,6 +466,11 @@ public class GraphicMagick {
 		return imageOutData;
 	}
 	
+	/**
+	 * 这是啥，我在controller里面也写了
+	 * @param sourceBuffer
+	 * @return
+	 */
 	public byte[] autoGamma(byte[] sourceBuffer){
 		System.out.println("autoGamma");
 		IMOperation op = new IMOperation();
@@ -531,7 +536,7 @@ public class GraphicMagick {
 	 * @return
 	 */
 	public byte[] lomo(byte[] sourceBuffer,double level){
-		System.out.println("convertTwo");
+		System.out.println("lomo");
 		IMOperation op = new IMOperation();
 		byte[] imageOutData = null;
 			
@@ -594,7 +599,6 @@ public class GraphicMagick {
 	 * @return
 	 */
 	public byte[] rotate(byte[] sourceBuffer,double degrees){
-		System.out.println("charcoal");
 		IMOperation op = new IMOperation();
 		byte[] imageOutData = null;
 			

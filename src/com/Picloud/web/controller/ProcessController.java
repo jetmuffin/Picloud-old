@@ -392,7 +392,7 @@ public class ProcessController {
 	}
 	
 	/**
-	 *  图片镜面翻转
+	 *  图片旋转
 	 * @param imageKey
 	 * @param direction 水平或者竖直
 	 * @param session
@@ -407,9 +407,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		
-		//TODO 处理+输出到bufferOut
-		byte[] bufferOut = null;
+		byte[] bufferOut = gm.rotate(buffer, angle);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片
@@ -437,7 +435,7 @@ public class ProcessController {
 	/**
 	 *  图片镜面翻转
 	 * @param imageKey
-	 * @param direction 水平或者竖直
+	 * @param direction 水平或者竖直 1水平，0竖直
 	 * @param session
 	 * @param response
 	 * @throws Exception
@@ -451,8 +449,11 @@ public class ProcessController {
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
 		byte[] bufferOut = null;
-//		if(direction == )
-		
+		if(direction.equals("1")){
+			bufferOut = gm.flop(buffer);
+		}else if(direction.equals("0")){
+			bufferOut = gm.flip(buffer);
+		}
 		if (bufferOut != null) {
 			// 输出byte为图片
 			InputStream imageIn = new ByteArrayInputStream(bufferOut);
@@ -491,9 +492,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		
-		//TODO 处理+输出到bufferOut
-		byte[] bufferOut = null;
+		byte[] bufferOut = gm.lomo(buffer, 4);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片
@@ -533,9 +532,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		
-		//TODO 处理+输出到bufferOut
-		byte[] bufferOut = null;
+		byte[] bufferOut = gm.gotham(buffer);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片
@@ -575,9 +572,127 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.charcoal(buffer, 3);
 		
-		//TODO 处理+输出到bufferOut
-		byte[] bufferOut = null;
+		if (bufferOut != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	
+	/**
+	 * 这是啥我也不知道
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/{imageKey}/autoGamma", method = RequestMethod.GET)
+	public void  autoGamma(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.autoGamma(buffer);
+		
+		if (bufferOut != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	
+	/**
+	 * 锐化
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/{imageKey}/sharpen", method = RequestMethod.GET)
+	public void  sharpen(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.sharpen(buffer, 2, 1);
+		
+		if (bufferOut != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	
+	/**
+	 * 模糊
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/{imageKey}/blur", method = RequestMethod.GET)
+	public void  blur(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.blur(buffer, 2, 1);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片
