@@ -586,4 +586,34 @@ public class GraphicMagick {
 		imageOutData = out.toByteArray();
 		return imageOutData;
 	}
+	
+	/**
+	 * 旋转函数，顺时针旋转
+	 * @param sourceBuffer
+	 * @param degrees		旋转角度
+	 * @return
+	 */
+	public byte[] rotate(byte[] sourceBuffer,double degrees){
+		System.out.println("charcoal");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.rotate(degrees);
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd(true);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
 }	

@@ -323,8 +323,7 @@ public class ProcessController {
 			@PathVariable String color,HttpSession session,HttpServletResponse response) throws Exception {
 		
 		User loginUser = (User) session.getAttribute("LoginUser");
-		ImageReader imageReader = new ImageReader(infoDaoImpl);
-		byte[] buffer = imageReader.readPicture(imageKey);
+		ImageReader imageReader = new ImageReader(infoDaoImpl);		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
 		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY);
 		
@@ -367,9 +366,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		
-		//TODO 处理+输出到bufferOut
-		byte[] bufferOut = null;
+		byte[] bufferOut = gm.modulate(buffer, brightness, 100.0, 360);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片
@@ -410,9 +407,8 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		
-		//TODO 处理+输出到bufferOut
 		byte[] bufferOut = null;
+//		if(direction == )
 		
 		if (bufferOut != null) {
 			// 输出byte为图片
