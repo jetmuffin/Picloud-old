@@ -351,6 +351,218 @@ public class ProcessController {
 		}
 	}
 
+	/**
+	 * 亮度调节
+	 * @param imageKey
+	 * @param brightness
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/{imageKey}/brightness[{brightness}]", method = RequestMethod.GET)
+	public void  brightness(@PathVariable String imageKey,
+			@PathVariable double brightness,HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		
+		//TODO 处理+输出到bufferOut
+		byte[] bufferOut = null;
+		
+		if (bufferOut != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	
+	/**
+	 *  图片镜面翻转
+	 * @param imageKey
+	 * @param direction 水平或者竖直
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/{imageKey}/double[{direction}]", method = RequestMethod.GET)
+	public void  reverse(@PathVariable String imageKey,
+			@PathVariable double direction,HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		
+		//TODO 处理+输出到bufferOut
+		byte[] bufferOut = null;
+		
+		if (bufferOut != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	
+	/**
+	 * Lomo特效
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/{imageKey}/lomo", method = RequestMethod.GET)
+	public void  lomo(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		
+		//TODO 处理+输出到bufferOut
+		byte[] bufferOut = null;
+		
+		if (bufferOut != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	
+	/**
+	 * 灰度化特效
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/{imageKey}/gotham", method = RequestMethod.GET)
+	public void  gotham(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		
+		//TODO 处理+输出到bufferOut
+		byte[] bufferOut = null;
+		
+		if (bufferOut != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	
+	/**
+	 * 素碳笔
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/{imageKey}/charcoal", method = RequestMethod.GET)
+	public void  charcoal(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		
+		//TODO 处理+输出到bufferOut
+		byte[] bufferOut = null;
+		
+		if (bufferOut != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+
+			output.close();
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	
 	@ExceptionHandler(value=(ProcessException.class))
 	public String handlerException(ProcessException e,HttpServletRequest req){
 		req.setAttribute("e", e);
