@@ -61,7 +61,7 @@ public class HdfsHandler {
 
 			Progressable progress = new Progressable(){
 				public void progress() {					
-					System.out.print(".");
+					//System.out.print(".");
 				}			
 			};
 			FSDataOutputStream out = fs.create(p,progress);
@@ -130,23 +130,21 @@ public class HdfsHandler {
      * @param hadoopFile
      * @return buffer
      */
-    public  byte[] readFile(String hdfsPath) throws Exception{
-        Configuration conf = new Configuration();
-        Path path = new Path(hdfsPath);
-        if ( fs.exists(path) )
-        {
-            FSDataInputStream in = fs.open(path);
-            FileStatus stat = fs.getFileStatus(path);       
-            byte[] buffer = new byte[Integer.parseInt(String.valueOf(stat.getLen()))];
-            in.readFully(0, buffer);
-            in.close();
-            return buffer;
-        }
-        else
-        {
-            throw new Exception("the file is not found .");
-        }
-    }
+	public byte[] readFile(String hdfsPath) throws Exception {
+		Configuration conf = new Configuration();
+		Path path = new Path(hdfsPath);
+		if (fs.exists(path)) {
+			FSDataInputStream in = fs.open(path);
+			FileStatus stat = fs.getFileStatus(path);
+			byte[] buffer = new byte[Integer.parseInt(String.valueOf(stat
+					.getLen()))];
+			in.readFully(0, buffer);
+			in.close();
+			return buffer;
+		} else {
+			throw new Exception("the file is not found .");
+		}
+	}
 	
     /** 
      * create a file  创建一个文件 

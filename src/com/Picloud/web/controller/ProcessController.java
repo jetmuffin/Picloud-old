@@ -262,7 +262,7 @@ public class ProcessController {
 	 * @return
 	 * @throws Exception 
 	 */
-	@RequestMapping(value = "/{imageKey}/watermark[{startX},{startY}],[{width},{height}],[{logo},{optical}]", method = RequestMethod.GET)
+	@RequestMapping(value = "/{imageKey}/watermark[{startX},{startY},{width},{height},{logo},{optical}]", method = RequestMethod.GET)
 	public void  watermark(@PathVariable String imageKey,
 			@PathVariable int startX, @PathVariable int startY,
 			@PathVariable int width, @PathVariable int height,

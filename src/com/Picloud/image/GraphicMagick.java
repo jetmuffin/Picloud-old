@@ -313,5 +313,277 @@ public class GraphicMagick {
 		return imageOutData;
 	}
 	
+	/**
+	 * 模糊函数
+	 * 自适应像素模糊操作，在边缘处效果减弱。
+	 * 采用给定的半径（radius）和标准差（sigma）进行高斯模糊处理。如果缺少标准差则默认为1
+	 * @param sourceBuffer	源图片字节流
+	 * @param radius	模糊半径
+	 * @param sigma		标准差
+	 */
+	public byte[] blur(byte[] sourceBuffer,double radius,double sigma ){
+		System.out.println("blur");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+		
+		op.addImage("-");
+		op.blur(radius,sigma);
+		op.addImage("jpg:-");
+		ConvertCmd convert = new ConvertCmd(true);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
+	/**
+	 * 锐化函数
+	 * 自适应像素锐化操作，在边缘处增强效果。
+	 * 采用给定的半径（radius）和标准差（sigma）进行高斯锐化处理。如果缺少标准差则默认为1。 
+	 * @param sourceBuffer	源图片字节流
+	 * @param radius	锐化半径
+	 * @param sigma	标准差
+	 */
+	public byte[] sharpen(byte[] sourceBuffer,double radius,double sigma ){
+		System.out.println("sharpen");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.sharpen(radius,sigma);
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd(true);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
 	
-}
+	/**
+	 * 调节函数
+	 * 调整图片的亮度，饱和度，色调
+	 * @param sourceBuffer
+	 * @param brightness	亮度(默认值100)
+	 * @param saturation	饱和度(默认值100)
+	 * @param hue					色调(默认值0或360)
+	 * @return
+	 */
+	public byte[] modulate(byte[] sourceBuffer,double brightness,double saturation ,double hue){
+		System.out.println("brightnessContrast");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.modulate(brightness,saturation,hue);
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd(true);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
+	
+	/**
+	 * 左右翻转
+	 * @param sourceBuffer
+	 * @return
+	 */
+	public byte[] flop(byte[] sourceBuffer){
+		System.out.println("flop");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.flop();
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd(true);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
+	
+	/**
+	 * 上下翻转
+	 * @param sourceBuffer
+	 * @return
+	 */
+	public byte[] flip(byte[] sourceBuffer){
+		System.out.println("flop");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.flop();
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd(true);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
+	
+	public byte[] autoGamma(byte[] sourceBuffer){
+		System.out.println("autoGamma");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.modulate(100.0, 150.0, 100.0);
+		op.autoGamma();
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
+	
+	/**
+	 * 灰度化
+	 * @param sourceBuffer
+	 * @return
+	 */
+	public byte[] gotham(byte[] sourceBuffer){
+		System.out.println("gotham");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.modulate(120.0, 10.0, 100.0);
+		op.fill("#222b6d");
+		op.colorize(20);
+		op.gamma(0.5);
+		op.contrast();
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
+	
+	/**
+	 * Lomo 效果
+	 * @param sourceBuffer
+	 * @param level	滤镜等级从[10240.0 , 20480.0]
+	 * @return
+	 */
+	public byte[] lomo(byte[] sourceBuffer,double level){
+		System.out.println("convertTwo");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.channel("R");
+		op.level(level);
+		op.channel("G");
+		op.level(level);
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
+	
+	/**
+	 * 素描碳笔画
+	 * @param sourceBuffer
+	 * @param factor		碳笔的粗细 [2 , 10]
+	 * @return
+	 */
+	public byte[] charcoal(byte[] sourceBuffer,int factor){
+		System.out.println("charcoal");
+		IMOperation op = new IMOperation();
+		byte[] imageOutData = null;
+			
+		op.addImage("-");
+		op.charcoal(factor);
+		op.addImage("jpg:-");
+		
+		ConvertCmd convert = new ConvertCmd(true);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Pipe pipeOut = new Pipe(null, out);
+		try {
+			GraphicMagick  gm = new GraphicMagick(sourceBuffer, "jpg");
+			convert.setInputProvider(gm.getPipeIn());
+			convert.setOutputConsumer(pipeOut);
+			convert.run(op);
+		} catch (IOException | InterruptedException | IM4JavaException e) {
+			e.printStackTrace();
+		}
+		imageOutData = out.toByteArray();
+		return imageOutData;
+	}
+}	

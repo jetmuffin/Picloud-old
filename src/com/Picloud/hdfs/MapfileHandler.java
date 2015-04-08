@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import com.Picloud.config.HdfsConfig;
 import com.Picloud.utils.JspUtil;
 import com.Picloud.utils.EncryptUtil;
+import com.Picloud.utils.PropertiesUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.MapfileDaoImpl;
 import com.Picloud.web.model.Image;
@@ -73,7 +75,7 @@ public class MapfileHandler {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
+			
 			Mapfile mapfile = new Mapfile();
 			mapfile.setUid(uid);
 			mapfile.setPicNum(Integer.toString(items.length));
@@ -83,6 +85,7 @@ public class MapfileHandler {
 			mapfile.setKey(name + uid);
 			mapfile.setName(name);
 			mMapfileDaoImpl.add(mapfile);
+			item.delete();
 		}
 		IOUtils.closeStream(writer);// 关闭write流
 	}
@@ -99,15 +102,20 @@ public class MapfileHandler {
 	 */
 	public byte[] readFromHdfs(String hdfsDir, String image) throws IOException {
 		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(
-				URI.create(mHdfsConfig.getFileSystemPath()), conf);
+		FileSystem fs = FileSystem.newInstance(URI.create(PropertiesUtil.getValue("FileSystemPath")),conf);
 		Path path = new Path(fs.getHomeDirectory(), hdfsDir);
 		Text key = new Text(image);
 		BytesWritable value = new BytesWritable();
 		byte[] data = null;
+		System.out.println("new instance");
 		try {
 			MapFile.Reader reader = new MapFile.Reader(fs, path.toString(),
 					conf);
+			long start = new Date().getTime();
+			reader.seek(key);
+			long end = new Date().getTime();
+			long time = end-start;
+			System.out.println(time + "s");
 			if (reader.seek(key)) {
 				reader.get(key, value);
 				data = value.get();
@@ -115,6 +123,7 @@ public class MapfileHandler {
 			} else {
 				return null;
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -221,6 +230,7 @@ public class MapfileHandler {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			item.delete();
 		}
 		IOUtils.closeStream(writer);// 关闭write流
 	}

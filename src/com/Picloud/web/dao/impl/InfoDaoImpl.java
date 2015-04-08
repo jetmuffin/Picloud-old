@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.Picloud.config.SystemConfig;
+import com.Picloud.hdfs.HarfileHandler;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.hdfs.MapfileHandler;
+import com.Picloud.hdfs.SequencefileHandler;
 
 @Repository
 public class InfoDaoImpl {
@@ -25,7 +27,24 @@ public class InfoDaoImpl {
 	MapfileDaoImpl mMapfileDaoImpl;
 	@Autowired
 	SystemConfig mSystemConfig;
+	@Autowired
+	SequencefileHandler mSequencefileHandler;
+	@Autowired
+	HarfileHandler mHarfileHandler;
 	
+	
+	public HarfileHandler getmHarfileHandler() {
+		return mHarfileHandler;
+	}
+	public void setmHarfileHandler(HarfileHandler mHarfileHandler) {
+		this.mHarfileHandler = mHarfileHandler;
+	}
+	public SequencefileHandler getmSequencefileHandler() {
+		return mSequencefileHandler;
+	}
+	public void setmSequencefileHandler(SequencefileHandler mSequencefileHandler) {
+		this.mSequencefileHandler = mSequencefileHandler;
+	}
 	public SystemConfig getmSystemConfig() {
 		return mSystemConfig;
 	}

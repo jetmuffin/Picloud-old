@@ -9,9 +9,9 @@ public class SystemConfig {
 	private String systemPath = "/home/jeff/workspace";
 	private String localUploadPath = "/home/jeff/workspace/upload";
 	private String imagePath = "http://localhost:8080/Picloud/server/";
-	private double maxSyncSize = 32.0;
+	private double maxSyncSize = 128.0;
 	private double maxFileSize = 2.0;     
-	private double syncSizeStep = 32.0;
+	private double syncSizeStep = 128.0;
 	
 	public void addSyncSize(){
 		this.maxSyncSize = this.maxSyncSize + this.syncSizeStep;
@@ -31,7 +31,7 @@ public class SystemConfig {
 
 
 	public static String getSystemPath() {
-		return "/home/hadoop/workspace";
+		return "/home/jeff/workspace";
 	}
 
 
