@@ -65,8 +65,7 @@ public class MapfileHandler {
 				byte buffer[] = getBytes(item);
 				writer.append(new Text(filename), new BytesWritable(buffer));
 				// 更新数据库
-				Image image = new Image(item);
-				image.setKey(EncryptUtil.imageEncryptKey(item.getName(), uid));
+				Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(item.getName(), uid));
 				image.setStatus("HdfsSmallFile");
 				image.setPath(path.toString());
 				image.setUid(uid);
@@ -107,15 +106,10 @@ public class MapfileHandler {
 		Text key = new Text(image);
 		BytesWritable value = new BytesWritable();
 		byte[] data = null;
-		System.out.println("new instance");
 		try {
 			MapFile.Reader reader = new MapFile.Reader(fs, path.toString(),
 					conf);
-			long start = new Date().getTime();
 			reader.seek(key);
-			long end = new Date().getTime();
-			long time = end-start;
-			System.out.println(time + "s");
 			if (reader.seek(key)) {
 				reader.get(key, value);
 				data = value.get();

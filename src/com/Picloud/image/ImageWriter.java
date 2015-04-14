@@ -101,7 +101,6 @@ public class ImageWriter {
 		File LocalDir = new File(LocalPath);
 		double DirSize = getDirSize(LocalDir);
 			if (DirSize > maxSyncSize) {
-				System.out.println("线程建立时:" + infoDaoImpl.getmSystemConfig().getMaxSyncSize());
 				SyncThread syncThread = new SyncThread(infoDaoImpl);
 				syncThread.SetProperty(LocalPath, uid, space);
 				syncThread.start();
@@ -260,12 +259,10 @@ public class ImageWriter {
 			}
 			String fileName = item.getName();
 			BufferedImage bufferedImage = ImageIO.read(item.getInputStream());
-			// String width = Integer.toString(bufferedImage.getWidth());
-			// String height = Integer.toString(bufferedImage.getHeight());
+			String width = Integer.toString(bufferedImage.getWidth());
+			String height = Integer.toString(bufferedImage.getHeight());
 			// 测试
-			String width = "400";
-			String height = "400";
-			System.out.println(fileName);
+			System.out.println(width);
 			File file = new File(LocalPath, fileName);
 			if (file.exists()) {
 				System.out.println("Local file exists!");
@@ -296,7 +293,6 @@ public class ImageWriter {
 		
 			mSystemConfig.addSyncSize();
 			File[] items = LocalDir.listFiles();
-
 			// 文件按文件名排序
 			Arrays.sort(items, new Comparator<File>() {
 				@Override

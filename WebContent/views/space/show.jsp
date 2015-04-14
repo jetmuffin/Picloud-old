@@ -62,7 +62,7 @@
 											class="corner"></span>
 											<div class="image">
 												<img alt="image" class="img-responsive"
-													src="${ROOT}/process/${image.key}/scale[198,-]">
+													src="${ROOT}/process/${image.key}/scale[198,-]" width=198>
 											</div>
 											<div class="file-name">
 												${image.name} <br> <small> 
@@ -107,6 +107,5 @@
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
-	<script type="text/javascript" src="${RESOURCES }/js/picserver.js"></script>
 </body>
 </html>

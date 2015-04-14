@@ -163,3 +163,108 @@ overflow: hidden;
 .view-picture {
 	height:267px;
 }
+@-webkit-keyframes bounceInRight {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(2000px);
+        transform: translateX(2000px);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: translateX(-30px);
+        transform: translateX(-30px);
+    }
+
+    80% {
+        -webkit-transform: translateX(10px);
+        transform: translateX(10px);
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounceInRight {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(2000px);
+        -ms-transform: translateX(2000px);
+        transform: translateX(2000px);
+    }
+
+    60% {
+        opacity: 1;
+        -webkit-transform: translateX(-30px);
+        -ms-transform: translateX(-30px);
+        transform: translateX(-30px);
+    }
+
+    80% {
+        -webkit-transform: translateX(10px);
+        -ms-transform: translateX(10px);
+        transform: translateX(10px);
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+.bounceInRight {
+    -webkit-animation-name: bounceInRight;
+    animation-name: bounceInRight;
+}
+.animated {
+		-webkit-animation-duration: 1s;
+		animation-duration: 1s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+		z-index: 100;
+}
+#imageEditor .modal-dialog {
+	width:70%;
+	height:600px;
+}
+.green-editor .picloud-container .picloud-controls-container{
+	background: #1AB394;
+}
+.green-editor .picloud-container .picloud-top-controls{
+	background: #1AB394;
+}
+.green-editor .picloud-drop-area-container{
+	background-image: url(../plugins/imageEditor/img/grid3.png);
+}
+.green-editor .picloud-container .picloud-controls li{
+	border-left: 1px solid #ccc;
+}
+.green-editor .picloud-container .picloud-controls li:last-child {
+	border-right: 1px solid #ccc;
+}
+.green-editor .picloud-controls-item-group{
+	border-right: 1px solid #ccc;
+}
+.green-editor .picloud-top-controls-center input{
+	background-color: #FFF;
+background-image: none;
+border: 1px solid #E5E6E7;
+border-radius: 1px;
+color: inherit;
+display: block;
+padding: 6px 12px;
+transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+color:#000;
+}
+.green-editor i{
+	margin-right: 5px;
+}
+.green-editor .picloud-container .picloud-new{
+	border-right: 1px solid #ccc;
+}
+.green-editor .picloud-save{
+		border-left: 1px solid #ccc;
+}

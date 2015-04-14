@@ -24,12 +24,12 @@ public interface IImageDao {
 
 	public List<Image> imageNameMatching(String uid, String subStr);
 
-	public List<Image> imagePageByTime(String time, String uid,
-			String space, int num);
+	public List<Image> imagePageByTime(String time, String uid, int num);
 
-	public List<Image> imagePageByKey(String uid, String key, String space,
-			int num);
+	public List<Image> imagePageByKey(String uid, String key, String space, int num);
 	
 	public List<Image> getOtherImages( String spaceId,String imageName,int num);
+
+	
 
 }

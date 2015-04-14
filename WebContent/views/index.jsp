@@ -82,7 +82,7 @@
 									<div class="use-chart col-md-4">
 										<div class="info-header">云空间使用：</div>
 										<div class="flot-chart">
-											<notpresent name="spaces">还未创建空间</notpresent>
+											<c:if test="${empty spaces}">还未创建空间</c:if>
 											<div class="flot-chart-content" id="flot-pie-chart"
 												style="width: 300px; height: 180px"></div>
 										</div>
@@ -171,20 +171,20 @@
 							</div>
 							<div class="ibox-content" style="display: block;">
 								<div class="row upload-gallery">
-									<volist name="pic_recent" id="pic">
+									<c:forEach items="${recentImages}" var="image">
 									<div class="file-box col-md-3">
 										<div class="file">
 											<a href="#"><span class="corner"></span>
 												<div class="image">
-													<img alt="image" class="img-responsive"
-														src="http://localhost:8080/PicServer/ScaleImage?image={$pic.name}&uid={:session('uid')}&width=194">
+													<img  class="img-responsive"
+													src="${ROOT}/process/${image.key}/scale[198,-]" width=198/>
 												</div>
 												<div class="file-name">
-													{$pic.name} <br> <small>{$pic.space}</small>
+													${image.name} <br> <small>${image.space}</small>
 												</div> </a>
 										</div>
 									</div>
-									</volist>
+									</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -200,6 +200,9 @@
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
+		<script type="text/javascript" src="${PLUGIN}/flot/jquery.flot.min.js"></script>
+		<script type="text/javascript" src="${PLUGIN}/flot/jquery.flot.pie.min.js"></script>
+		<script type="text/javascript" src="${PLUGIN}/flot/jquery.flot.tooltip.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/index.js"></script>
 </body>
 </html>

@@ -105,6 +105,7 @@ public class ImageController {
 		if(otherImages!=null){
 			model.addAttribute("otherImages",otherImages);
 		}
+		System.out.println(image.toString());
 		model.addAttribute("image",image);
 		model.addAttribute("space",space);
 		model.addAttribute("activeSpace", space);

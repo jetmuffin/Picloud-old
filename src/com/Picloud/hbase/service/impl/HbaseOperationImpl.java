@@ -356,7 +356,7 @@ public class HbaseOperationImpl implements IHbaseOperation{
  	 * 根据时间图片分页
  	 */
  	@Override
-	public ResultScanner imagePageByTime(String time, String uid, String space,int num){
+	public ResultScanner imagePageByTime(String time, String uid,int num){
 		 try { 
 		        HTable table=new HTable(mConfiguration, "cloud_image"); 
 	            List<Filter> filters = new ArrayList<Filter>(); 
@@ -370,11 +370,6 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	                    .toBytes("attr"), Bytes .toBytes("uid"), 
 	                    CompareOp.EQUAL, Bytes .toBytes(uid)); 
 	            filters.add(filter2); 
-	            
-	            Filter filter3 = new SingleColumnValueFilter(Bytes 
-	                    .toBytes("attr"), Bytes .toBytes("space"), 
-	                    CompareOp.EQUAL, Bytes .toBytes(space)); 
-	            filters.add(filter3); 
 	            
 	            PageFilter pf = new PageFilter(num);
 	            filters.add(pf);
@@ -399,8 +394,9 @@ public class HbaseOperationImpl implements IHbaseOperation{
 		 try { 
 		        HTable table=new HTable(mConfiguration, "cloud_image"); 
 	            List<Filter> filters = new ArrayList<Filter>(); 
-	            
-	            Filter rf = new RowFilter(CompareOp.GREATER_OR_EQUAL, new BinaryComparator(key.getBytes()));
+	            					
+	            					System.out.println(key);
+	            Filter rf = new RowFilter(CompareOp.GREATER, new BinaryComparator(key.getBytes()));
 	            filters.add(rf);
 	            
 	            Filter filter1 = new SingleColumnValueFilter(Bytes 
@@ -408,10 +404,10 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	                    CompareOp.EQUAL, Bytes .toBytes(space)); 
 	            filters.add(filter1); 
 	            
-	            Filter filter2 = new SingleColumnValueFilter(Bytes 
-	                    .toBytes("attr"), Bytes .toBytes("uid"), 
-	                    CompareOp.EQUAL, Bytes .toBytes(uid)); 
-	            filters.add(filter2); 
+	             Filter filter3 = new SingleColumnValueFilter(Bytes 
+	                     .toBytes("var"), Bytes .toBytes("status"), 
+	                     CompareOp.NOT_EQUAL, Bytes .toBytes("deleted")); 
+	             filters.add(filter3); 
 	            
 	            PageFilter pf = new PageFilter(num);
 	            filters.add(pf);

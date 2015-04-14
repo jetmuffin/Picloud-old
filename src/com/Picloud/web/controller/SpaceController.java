@@ -132,8 +132,8 @@ public class SpaceController {
 		User loginUser = (User) session.getAttribute("LoginUser");
 		Space space = mSpaceDaoImpl.find(spaceKey);
 		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
-		
-		List<Image> images = mImageDaoImpl.load(spaceKey);
+//		List<Image> images = mImageDaoImpl.imagePageByKey(loginUser.getUid(), " ", spaceKey, 6);
+				List<Image> images = mImageDaoImpl.load(spaceKey);
 		if (images != null) {
 			model.addAttribute("images", images);
 		}
@@ -175,17 +175,15 @@ public class SpaceController {
 		String spaceKey = null;
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		@SuppressWarnings("rawtypes")
 		List items = upload.parseRequest(request);
-		@SuppressWarnings("rawtypes")
 		Iterator iter = items.iterator();
 		User loginUser = (User) session.getAttribute("LoginUser");
-
+		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
+				+ loginUser.getUid() + '/' + spaceKey + '/';
 		try {
 			boolean flag = false;
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
-				System.out.println(item);
 				
 				if (item.isFormField()) { // 若为普通表单
 					String name = item.getFieldName();
@@ -198,19 +196,12 @@ public class SpaceController {
 					}
 				} else {
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-					imageWriter.write(item, loginUser.getUid(), spaceKey);					
+					imageWriter.write(item, loginUser.getUid(), spaceKey,LocalPath);					
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
-				+ loginUser.getUid() + '/' + spaceKey + '/';
-		// 同步线程
-		SyncThread syncThread = new SyncThread(infoDaoImpl);
-		syncThread.SetProperty(LocalPath, loginUser.getUid(), spaceKey);
-		syncThread.start();
 		return "test";
 	}
 
@@ -247,12 +238,11 @@ public class SpaceController {
 			throws FileUploadException {
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		@SuppressWarnings("rawtypes")
 		List items = upload.parseRequest(request);
-		System.out.println("我的"+items);
-		@SuppressWarnings("rawtypes")
 		Iterator iter = items.iterator();
 		User loginUser = (User) session.getAttribute("LoginUser");
+		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
+				+ loginUser.getUid() + '/' + spaceKey + '/';
 		boolean flag = false;
 		try {
 
@@ -264,20 +254,13 @@ public class SpaceController {
 					System.out.println(temp);
 				} else {
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-					flag = imageWriter.write(item, loginUser.getUid(), spaceKey);					
+					flag = imageWriter.write(item, loginUser.getUid(), spaceKey,LocalPath);					
 				}
 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
-				+ loginUser.getUid() + '/' + spaceKey + '/';
-		// 同步线程
-		SyncThread syncThread = new SyncThread(infoDaoImpl);
-		syncThread.SetProperty(LocalPath, loginUser.getUid(), spaceKey);
-		syncThread.start();
 		if(flag){
 			response.setContentType("text/html;charset=gb2312");
 			response.setStatus(200);
@@ -338,10 +321,11 @@ public class SpaceController {
 	 * @param uid
 	 * @return
 	 */
-	@RequestMapping(value="/{uid}/space.json",method=RequestMethod.GET)
+	@RequestMapping(value="/spaces.json",method=RequestMethod.GET)
 	@ResponseBody
-	public List<Space> getAllSpace (@PathVariable String uid){
-		List<Space> spaces =  mSpaceDaoImpl.load(uid);
+	public List<Space> getAllSpace (HttpSession session){
+		User LoginUser = (User) session.getAttribute("LoginUser");
+		List<Space> spaces =  mSpaceDaoImpl.load(LoginUser.getUid());
 		return spaces;
 	}
 	
@@ -369,11 +353,7 @@ public class SpaceController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
 		// 同步线程
-		
-
 		return "test";
 	}
 	
