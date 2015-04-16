@@ -1,0 +1,130 @@
+@CHARSET "UTF-8";
+
+body {
+	background-color: #000000;
+	margin: 0px;
+	overflow: hidden;
+}
+
+.toolbar {
+	position: absolute;
+	width: 100%;
+	bottom: 15%;
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 10px 10px;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+.toolbar a {
+	color: #fff;
+	font-size: 20px;
+}
+
+.toolbar-button {
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+}
+.toolbar-left{
+	width:20%;
+	height:32px;
+	text-align:left;
+	float:left;
+}
+.toolbar-right{
+	width:20%;
+	height:32px;
+	text-align:right;
+	float:left;
+}
+.toolbar-center{
+	width:60%;
+	height:32px;
+	text-align:center;
+	float:left;
+}
+.toolbar-left .toolbar-button,.toolbar-right .toolbar-button{
+	margin-right:15px;
+}
+.toolbar .left {
+	background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: 0px -96px;
+}
+
+.toolbar .right {
+	background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: -32px -96px;
+}
+
+.toolbar .top {
+	background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: 0 -128px;
+}
+
+.toolbar .bottom {
+	background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: -32px -128px;
+}
+
+.toolbar .forward {
+	background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: 0 -160px;
+}
+
+.toolbar .backward {
+	background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: -32px -160px;
+}
+
+.toolbar .previous {
+	background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: 0px -32px;
+}
+.toolbar .preview{
+	background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: 0 -64px;
+}
+.toolbar .music-off {
+	width:25px;
+	height:25px;
+	background-size: 25px 50px;
+	background-image: url(../images/soundonoff.png);
+	background-position: 0px -25px;
+	opacity: 0.25;
+	margin-top:3px;
+}
+.toolbar .music-off:hover{
+	opacity: 1;
+}
+.toolbar .music-on {
+		width:25px;
+	height:25px;
+	background-size: 25px 50px;
+	background-image: url(../images/soundonoff.png);
+	background-position: 0px 0px;
+	margin-top:3px;
+	opacity: 0.25;
+}
+.toolbar .music-on:hover{
+	opacity: 1;
+}
+.toolbar .hide{
+			background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: 0 -224px;
+}
+.toolbar .next{
+		background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: -32px -32px;
+}

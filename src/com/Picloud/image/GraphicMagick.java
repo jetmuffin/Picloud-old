@@ -448,7 +448,7 @@ public class GraphicMagick {
 		byte[] imageOutData = null;
 			
 		op.addImage("-");
-		op.flop();
+		op.flip();
 		op.addImage("jpg:-");
 		
 		ConvertCmd convert = new ConvertCmd(true);

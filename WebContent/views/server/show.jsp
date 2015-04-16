@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="${RESOURCES}/font/css/font-awesome.min.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/common.css" />
+<link rel="stylesheet" href="${PLUGIN}/imageEditor/css/editor.css" />
+<link rel="stylesheet" href="${PLUGIN}/imageEditor/css/spectrum.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/picserver.css" />
 </head>
 <body>
@@ -25,13 +27,13 @@
 			<div class="col-lg-9">
 				<div class="ibox float-e-margins">
     			<div class="ibox-title">
-        			<h5>${image.name}</h5>
+        			<h5>${image.name} ${image.height}</h5>
     			</div>
           <div class="ibox-content" style="display: block;">
 	      		<div class="row">
 	        		<div class="view-picture col-md-7">
-	        			<a href="${ROOT}/server/${image.key}">
-	        			<img src='${ROOT}/process/${image.key}/scale[400,-]' >
+	        			<a href="${ROOT}/server/${image.key}" target="_blank">
+	        			<img src='${ROOT}/process/${image.key}/scale[400,-]' width=400>
 						</a>
 	        		</div>	
 	        		<div class="view-profile col-md-5">
@@ -42,7 +44,7 @@
 	        				<div class="dl-group row"><dt class="col-xs-6">上传时间：</dt> <dd class="col-xs-6"><c:out value="${jt.getStrTime(image.createTime)}"></c:out></dd></div>
               	</dl>
                 	<div class="picture-button">
-                		<a class="btn btn-primary jet-button" href="{:U('Appcenter/scale/'.$image['name'])}"><i class="fa-paint-brush fa"></i>处理图片</a>
+                		<a class="btn btn-primary jet-button"  data-toggle="modal" data-target="#imageEditor" id="openEditor"><i class="fa-paint-brush fa"></i>处理图片</a>
                 		<a  href="${ROOT}/server/${image.key}/delete" class="btn btn-default"><i class="fa-trash fa"></i>删除图片</a>
                 	</div>
             		</div>		                          			
@@ -78,15 +80,34 @@
 				</div>	
 			</div>
 		</div>
+		
+
 	</block>
 			</div>
 			<jsp:include page="../common/footer.jsp" />
 		</div>
 	</div>
-	<script type="text/javascript"
+
+		<div class="green-editor modal inmodal in " id="imageEditor" tabindex="-1" role="dialog"
+			aria-hidden="false" data-image="${IP}${ROOT}/server/${image.key}" data-visit="${IP}${ROOT}/process" >
+			
+			<div class="modal-dialog animated bounceInRight">
+
+				<div class='picloud-container' id='picloud-container' ></div>
+				
+			</div>
+		</div>
+
+		<script type="text/javascript"
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
-	<script type="text/javascript" src="${RESOURCES }/js/picserver.js"></script>
+	<script type="text/javascript" src="${RESOURCES }/js/imageshow.js"></script>
+	<script type="text/javascript" src="${PLUGIN}/imageEditor/js/spectrum.js"></script>
+	<script type="text/javascript" src="${PLUGIN}/imageEditor/js/jquery.nstSlider.js"></script>
+	<script type="text/javascript" src="${PLUGIN}/imageEditor/js/fabric.js"></script>
+	<script type="text/javascript" src="${PLUGIN}/imageEditor/js/crop.js"></script>
+	<script type="text/javascript" src="${PLUGIN}/imageEditor/js/editor.js"></script>
+	<script type="text/javascript" src="${PLUGIN}/zclip/jquery.zclip.min.js"></script>
 </body>
 </html>

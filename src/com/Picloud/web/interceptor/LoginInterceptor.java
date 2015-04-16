@@ -42,17 +42,16 @@ public class LoginInterceptor implements Filter {
                 break;  
             }  
         }  
-//        
-//        if(doFilter){
-//        	HttpSession session =  req.getSession();
-//        	Object obj = session.getAttribute("LoginUser");  
-//        	if(obj == null)
-//        	{
-//        		String message = "请先登录";
-//        		session.setAttribute("LOGIN_MSG", message);
-//        		res.sendRedirect("/Picloud/login.jsp");
-//        	}
-//        }
+        if(doFilter){
+        	HttpSession session =  req.getSession();
+        	Object obj = session.getAttribute("LoginUser");  
+        	if(obj == null)
+        	{
+        		String message = "请先登录";
+        		session.setAttribute("LOGIN_MSG", message);
+        		res.sendRedirect("/Picloud/login.jsp");
+        	}
+        }
 		chain.doFilter(request, response);
 	}
 

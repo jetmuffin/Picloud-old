@@ -492,7 +492,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		byte[] bufferOut = gm.lomo(buffer, 4);
+		byte[] bufferOut = gm.lomo(buffer, 20480.0);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片
@@ -580,7 +580,7 @@ public class ProcessController {
 			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
 			OutputStream output = response.getOutputStream();
 			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
-			byte data[] = new byte[4096];// 缓冲字节数
+			byte data[] = new byte[4096];// 缓冲字节数autoGamma
 			int size = 0;
 			size = bis.read(data);
 			while (size != -1) {
@@ -692,7 +692,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		byte[] bufferOut = gm.blur(buffer, 2, 1);
+		byte[] bufferOut = gm.blur(buffer, 25, 5);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片

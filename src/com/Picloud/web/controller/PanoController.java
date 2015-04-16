@@ -1,10 +1,15 @@
 package com.Picloud.web.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
@@ -23,6 +28,7 @@ import com.Picloud.config.SystemConfig;
 import com.Picloud.exception.FileException;
 import com.Picloud.exception.ImageException;
 import com.Picloud.exception.PanoImageException;
+import com.Picloud.exception.ThreeDImageException;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.image.ImageWriter;
 import com.Picloud.utils.EncryptUtil;
@@ -118,7 +124,7 @@ public class PanoController {
 					String hdfsPath = HDFS_UPLOAD_ROOT + "/"
 							+ loginUser.getUid() + "/Pano/";
 				
-					String filePath = hdfsPath +item.getName() ;
+					String filePath = hdfsPath ;
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
 					flag = imageWriter.uploadToHdfs(filePath, item,
 							loginUser.getUid());
@@ -155,6 +161,46 @@ public class PanoController {
 			return "pano/show";
 		}
 	
+		/**
+		 * 查看全景图片
+		 * @param imageName 图片名
+		 * @param session
+		 * @return
+		 * @throws Exception
+		 */
+			@RequestMapping(value="/read/{panokey}",method=RequestMethod.GET)
+			public void read(@PathVariable String panokey,HttpSession session,HttpServletResponse response) throws Exception{
+				User loginUser = (User) session.getAttribute("LoginUser");
+				PanoImage panoImage = panoImageDao.find(panokey);
+				String imageName = panoImage.getName();
+				
+				try{
+					String RealPath = HDFS_UPLOAD_ROOT + "/" + loginUser.getUid() + "/Pano/" + imageName;
+					HdfsHandler hdfsHandler = new HdfsHandler();
+					byte[] fileByte =  hdfsHandler.readFile(RealPath);
+					response.reset();
+					OutputStream output = response.getOutputStream();// 得到输出流
+					response.setContentType("image/jpeg;charset=GB2312");  
+
+					InputStream imageIn = new ByteArrayInputStream(fileByte);
+					BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+					BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+					byte data[] = new byte[4096];// 缓冲字节数
+					int size = 0;
+					size = bis.read(data);
+					while (size != -1) {
+						bos.write(data, 0, size);
+						size = bis.read(data);
+					}				
+					bis.close();
+					bos.flush();// 清空输出缓冲流
+					bos.close();
+					output.close();
+				}catch(Exception e){
+					throw new PanoImageException(e.getMessage());
+				}
+			}	
+			
 		@ExceptionHandler(value=(PanoImageException.class))
 		public String handlerException(ImageException e,HttpServletRequest req){
 			req.setAttribute("e", e);

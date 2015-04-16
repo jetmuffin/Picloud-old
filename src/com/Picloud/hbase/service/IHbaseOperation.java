@@ -94,11 +94,10 @@ public interface IHbaseOperation {
  	 * 根据时间图片分页
  	 * @param time
  	 * @param uid
- 	 * @param spaceId
  	 * @param num
  	 * @return
  	 */
- 	public ResultScanner imagePageByTime(String time, String uid, String spaceId,int num);
+ 	public ResultScanner imagePageByTime(String time, String uid,int num);
  	
  	/**
  	 * 根据主键图片分页

@@ -3,143 +3,183 @@
       var url = $('#container').attr('data-url');
       var url_base = $('#url_base').attr('data-url');
       var image_key = $('#container').attr('data-key');
-      var url = url_base + '/server/' + image_key;
+      var url = url_base + '/pano/read/' + image_key;
       
-      console.log(url);
-      var fov = 70,
-      texture_placeholder,
-      isUserInteracting = false,
-      onMouseDownMouseX = 0, onMouseDownMouseY = 0,
-      lon = 0, onMouseDownLon = 0,
-      lat = 0, onMouseDownLat = 0,
-      phi = 0, theta = 0;
+		var fov = 70,
+		texture_placeholder,
+		isUserInteracting = false,
+		ButtonClicked = false,
+		rotateStep = 0.3,
+		fovStep = 0.5,
+		onMouseDownMouseX = 0, onMouseDownMouseY = 0,
+		lon = 0, onMouseDownLon = 0,
+		lat = 0, onMouseDownLat = 0,
+		phi = 0, theta = 0;
+
 
       init();
       animate();
 
-      function init() {
+     	function init() {
 
-        var container, mesh;
+				var container, mesh;
+				var rotateInterval;
+				var leftButton = document.getElementById('leftButton');
+				var rightButton = document.getElementById('rightButton');
+				var directionButton = document.getElementsByClassName('directionButton');
 
-        container = document.getElementById( 'container' );
+				container = document.getElementById( 'container' );
 
-        camera = new THREE.PerspectiveCamera( fov, window.innerWidth / window.innerHeight, 1, 1100 );
-        camera.target = new THREE.Vector3( 0, 0, 0 );
+				camera = new THREE.PerspectiveCamera( fov, window.innerWidth / window.innerHeight, 1, 1100 );
+				camera.target = new THREE.Vector3( 0, 0, 0 );
 
-        scene = new THREE.Scene();
+				scene = new THREE.Scene();
 
-        var geometry = new THREE.SphereGeometry( 500, 60, 40 );
-        geometry.applyMatrix( new THREE.Matrix4().makeScale( -1, 1, 1 ) );
+				var geometry = new THREE.SphereGeometry( 500, 60, 40 );
+				geometry.applyMatrix( new THREE.Matrix4().makeScale( -1, 1, 1 ) );
 
-        var material = new THREE.MeshBasicMaterial( {
-          map: THREE.ImageUtils.loadTexture( url )
-        } );
+				var material = new THREE.MeshBasicMaterial( {
+					map: THREE.ImageUtils.loadTexture( url )
+				} );
 
-        mesh = new THREE.Mesh( geometry, material );
-        
-        scene.add( mesh );
+				mesh = new THREE.Mesh( geometry, material );
+				
+				scene.add( mesh );
 
-        renderer = new THREE.WebGLRenderer();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        container.appendChild( renderer.domElement );
+				renderer = new THREE.WebGLRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
 
-        document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-        document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-        document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-        document.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
-        document.addEventListener( 'DOMMouseScroll', onDocumentMouseWheel, false);
+				container.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				container.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				container.addEventListener( 'mouseup', onDocumentMouseUp, false );
+				container.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
+				container.addEventListener( 'DOMMouseScroll', onDocumentMouseWheel, false);
 
-        //
+				for (var i = 0; i < directionButton.length; i++) {
+					directionButton[i].addEventListener( 'mousedown', onRotateMouseDown, false);
+					directionButton[i].addEventListener( 'mouseup', onRotateMouseUp, false);
+				};
 
-        window.addEventListener( 'resize', onWindowResize, false );
+				window.addEventListener( 'resize', onWindowResize, false );
 
-      }
+			}
 
-      function onWindowResize() {
+			function onWindowResize() {
 
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
 
-        renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( window.innerWidth, window.innerHeight );
 
-      }
+			}
 
-      function onDocumentMouseDown( event ) {
+			function onDocumentMouseDown( event ) {
 
-        event.preventDefault();
+				event.preventDefault();
 
-        isUserInteracting = true;
+				isUserInteracting = true;
 
-        onPointerDownPointerX = event.clientX;
-        onPointerDownPointerY = event.clientY;
+				onPointerDownPointerX = event.clientX;
+				onPointerDownPointerY = event.clientY;
 
-        onPointerDownLon = lon;
-        onPointerDownLat = lat;
+				onPointerDownLon = lon;
+				onPointerDownLat = lat;
 
-      }
+			}
 
-      function onDocumentMouseMove( event ) {
+			function onDocumentMouseMove( event ) {
 
-        if ( isUserInteracting ) {
+				if ( isUserInteracting ) {
 
-          lon = ( onPointerDownPointerX - event.clientX ) * 0.1 + onPointerDownLon;
-          lat = ( event.clientY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
+					lon = ( onPointerDownPointerX - event.clientX ) * 0.1 + onPointerDownLon;
+					lat = ( event.clientY - onPointerDownPointerY ) * 0.1 + onPointerDownLat;
 
-        }
-      }
+				}
+			}
 
-      function onDocumentMouseUp( event ) {
+			function rotate( direction ){
+				console.log(direction);
+				if(ButtonClicked){
+					switch(direction){
+						case 'left': lon = lon - rotateStep;break;
+						case 'right': lon = lon + rotateStep;break;
+						case 'top': lat = lat - rotateStep;break;
+						case 'bottom': lat = lat + rotateStep;break;
+						case 'forward': fov = fov - rotateStep;	camera.projectionMatrix.makePerspective( fov, window.innerWidth / window.innerHeight, 1, 1100 );
+						render();break;
+						case 'backward': fov = fov + rotateStep;				camera.projectionMatrix.makePerspective( fov, window.innerWidth / window.innerHeight, 1, 1100 );
+				render();break;
+						default: break;
+					}					
+				}
+			}
 
-        isUserInteracting = false;
+			function onRotateMouseDown( event ){
+				ButtonClicked = true;
+				var rotateButton = event.target;
+				var direction = rotateButton.getAttribute('data-dir');
+				rotateInterval = setInterval(rotate,100,direction);
+			}
 
-      }
 
-      function onDocumentMouseWheel( event ) {
+			function onRotateMouseUp( event ){
+				ButtonClicked = false;
+				clearInterval(rotateInterval);
+			}
 
-        // WebKit
+			function onDocumentMouseUp( event ) {
 
-        if ( event.wheelDeltaY ) {
+				isUserInteracting = false;
 
-          fov -= event.wheelDeltaY * 0.05;
+			}
 
-        // Opera / Explorer 9
+			function onDocumentMouseWheel( event ) {
 
-        } else if ( event.wheelDelta ) {
+				// WebKit
 
-          fov -= event.wheelDelta * 0.05;
+				if ( event.wheelDeltaY ) {
 
-        // Firefox
+					fov -= event.wheelDeltaY * 0.05;
 
-        } else if ( event.detail ) {
+				// Opera / Explorer 9
 
-          fov += event.detail * 1.0;
+				} else if ( event.wheelDelta ) {
 
-        }
+					fov -= event.wheelDelta * 0.05;
 
-        camera.projectionMatrix.makePerspective( fov, window.innerWidth / window.innerHeight, 1, 1100 );
-        render();
+				// Firefox
 
-      }
+				} else if ( event.detail ) {
 
-      function animate() {
+					fov += event.detail * 1.0;
 
-        requestAnimationFrame( animate );
-        render();
+				}
 
-      }
+				camera.projectionMatrix.makePerspective( fov, window.innerWidth / window.innerHeight, 1, 1100 );
+				render();
 
-      function render() {
+			}
 
-        lat = Math.max( - 85, Math.min( 85, lat ) );
-        phi = THREE.Math.degToRad( 90 - lat );
-        theta = THREE.Math.degToRad( lon );
+			function animate() {
 
-        camera.target.x = 500 * Math.sin( phi ) * Math.cos( theta );
-        camera.target.y = 500 * Math.cos( phi );
-        camera.target.z = 500 * Math.sin( phi ) * Math.sin( theta );
+				requestAnimationFrame( animate );
+				render();
 
-        camera.lookAt( camera.target );
+			}
 
-        renderer.render( scene, camera );
+			function render() {
 
-      }
+				lat = Math.max( - 85, Math.min( 85, lat ) );
+				phi = THREE.Math.degToRad( 90 - lat );
+				theta = THREE.Math.degToRad( lon );
+				camera.target.x = 500 * Math.sin( phi ) * Math.cos( theta );
+				camera.target.y = 500 * Math.cos( phi );
+				camera.target.z = 500 * Math.sin( phi ) * Math.sin( theta );
+
+				camera.lookAt( camera.target );
+
+				renderer.render( scene, camera );
+
+			}
+
