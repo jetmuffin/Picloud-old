@@ -40,7 +40,9 @@ public class DustbinDaoImpl implements IDustbinDao{
 		List<String> list = get(mapfileName);
 		if(list == null)
 				return;
-		for(int i = )
+		for(int i = 0; i < list.size(); i++){
+			mHbaseOperationImpl.deleteRow("cloud_dustbin", mapfileName+list.get(i));
+		}
 	}
 
 	@Override
