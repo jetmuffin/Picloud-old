@@ -9,10 +9,13 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.springframework.stereotype.Service;
 
+import com.Picloud.utils.StringSplit;
+import com.Picloud.web.model.Dustbin;
 import com.Picloud.web.model.HdImage;
 import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Log;
 import com.Picloud.web.model.PanoImage;
+import com.Picloud.web.model.PanoScene;
 import com.Picloud.web.model.Space;
 import com.Picloud.web.model.ThreeDImage;
 
@@ -250,11 +253,17 @@ public class ListMapping {
 				if (v.equals("createTime")) {
 					panoImage.setCreateTime(val);
 				}
-				if (v.equals("size")) {
-					panoImage.setSize(val);
+				if (v.equals("number")) {
+					panoImage.setNumber(val);
 				}
 				if(v.equals("path")){
 					panoImage.setPath(val);
+				}
+				if(v.equals("info")){
+					panoImage.setInfo(val);
+				}
+				if(v.equals("desc")){
+					panoImage.setDesc(val);
 				}
 			}
 			list.add(panoImage);
@@ -266,5 +275,56 @@ public class ListMapping {
 		return list;
 	}
 
+	/**
+	 * 将数据库读出的数据映射到Dustbin的List
+	 * @param rs
+	 * @return
+	 */
+	public List<Dustbin> dustbinListMapping(ResultScanner rs){
+		List<Dustbin> list = new ArrayList<Dustbin>();
+		for (Result r : rs) {
+			Dustbin dustbin = new Dustbin();
+			dustbin.setKey(new String(r.getRow()));
+			for(Cell cell:r.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("picName")) {
+					dustbin.setPicName(val);
+				}
+				if (v.equals("mapfileName")) {
+					dustbin.setMapfileName(val);
+				}
+			}
+			list.add(dustbin);
+		}
+		rs.close();
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到Dustbin图片名字的List
+	 * @param rs
+	 * @return
+	 */
+	public List<String> dustbinPicNameListMapping(ResultScanner rs){
+		List<String> list = new ArrayList<String>();
+		for (Result r : rs) {
+			for(Cell cell:r.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("picName")) {
+					list.add(val);
+				}
+			}
+		}
+		rs.close();
+		if (list.size() == 0) {
+			return null;
+		}
+		return list;
+	}
 
 }

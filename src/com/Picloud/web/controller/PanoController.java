@@ -126,9 +126,7 @@ public class PanoController {
 					String key = EncryptUtil.imageEncryptKey(item.getName(),
 							loginUser.getUid());
 					String createTime = JspUtil.getCurrentDateStr();
-					PanoImage panoImage = new PanoImage(key, item.getName(),
-							loginUser.getUid(), createTime, Long.toString(item
-									.getSize()), hdfsPath);
+					PanoImage panoImage = new PanoImage();//这句会报错，为了运行所以修改一些，反正也得重新写
 					panoImageDao.add(panoImage);
 					
 					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
@@ -162,4 +160,13 @@ public class PanoController {
 			req.setAttribute("e", e);
 			return "error";
 		}
+		
+		@RequestMapping(value="/test",method=RequestMethod.GET)
+		public String test() throws Exception{
+			
+//			PanoImage = new PanoImage(key, name, number, uid, createTime, info, path, scene)
+			
+			return "pano/show";
+		}
+	
 }
