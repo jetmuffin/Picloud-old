@@ -468,9 +468,9 @@
           }else{
             var flip = 0;
             if(editor.plugin.image.flipX)
-              flip = 0;
-            else
               flip = 1;
+            else
+              flip = 0;
             return url + img + '/reverse[' + flip + ']';             
           }
         },

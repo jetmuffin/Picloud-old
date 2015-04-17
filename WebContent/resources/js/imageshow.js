@@ -202,5 +202,6 @@
 		$('.picloud-new').click(function(){
 			var visitLink = editor.getVisitLink();
 			console.log(visitLink);
+			window.open(visitLink);     
 		});
     });

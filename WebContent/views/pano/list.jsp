@@ -53,8 +53,7 @@
 											<c:forEach var="pano"  items="${panoImages}" > 
 											<td class="project-title"><a target="_blank" href="${ROOT}/pano/${pano.key }">${pano.name}</a>
 											</td>
-											<td class="project-completion">图片大小:${pano.size } /1024/1024)MB	
-											</td>
+									
 											<td class="project-create">创建时间：${pano.createTime } 
 											</td>
 											<td class="project-actions"><a
@@ -67,8 +66,9 @@
 											</c:forEach>
 										</tbody>
 									</table>
-									<button type="button" class="btn btn-info " data-toggle="modal"
-										data-target="#myModal">制作全景图片</button>
+								<!--  <a type="button" class="btn btn-info " data-toggle="modal"
+										data-target="#myModal">制作全景图片</button>-->	
+										<a href="${ROOT}/pano/add" class="btn btn-info">制作全景图片</a>
 								</div>
 							</div>
 						</div>
