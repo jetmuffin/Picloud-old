@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 public class SystemConfig {
 	private String fileSystemPath = "localhost:9000";
 	private String uploadPath = "hdfs://localhost:9000/upload";
+
 	private static  String systemPath = "/Users/MPJ/workspace";
 	private String localUploadPath = "/Users/MPJ/workspace/upload";
+
 	private String imagePath = "http://localhost:8080/Picloud/server/";
 	private double maxSyncSize = 2.0;
 	private double maxFileSize = 2.0;     
