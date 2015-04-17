@@ -3,6 +3,11 @@
 /build/
 /bin/
 /src/com/Picloud/web/controller/TestController.java
-/src/com/Picloud/config/SytemConfig.java
+/src/com/Picloud/config/SystemConfig.java
 /bin/
 /bin/
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 725a2a307af4513d5f7eb027146e2784ee29d018
