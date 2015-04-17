@@ -517,6 +517,21 @@
         }
       }
 
+      this.getUpdateLink = function(){
+          var image = this.getImage(editor.image);
+          
+          //TODO get the key
+          switch(this.type){
+            case 'scale': return this.link.scale(editor.updateUrl,image);break;
+            case 'crop': return this.link.crop(editor.updateUrl,image);break;
+            case 'textmark': return this.link.textmark(editor.updateUrl,image);break;
+            case 'watermark': var logo = this.getImage(editor.logo);return this.link.watermark(editor.updateUrl,image,logo);break;
+            case 'rotate': return this.link.rotate(editor.updateUrl,image);break;
+            case 'brightness': return this.link.brightness(editor.updateUrl,image);break;
+            default: return;
+          }
+        }
+      
       this.render = function(){
         this.appendHtml();
         document.getElementById("canvas-zone").innerHTML = "";

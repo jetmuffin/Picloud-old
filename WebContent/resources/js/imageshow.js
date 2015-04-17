@@ -7,14 +7,16 @@
  		var image = imageEditor.attr('data-image');
  		var imageUrl = imageEditor.attr('data-imageUrl');
  		var visitUrl = imageEditor.attr('data-visit');
-
+ 		var updateUrl = imageEditor.attr('data-update');
+ 		
  		var  editor = new Editor({
     type:'scale',
     image:imageUrl,
     imageName:image,
    // logo:'img/logo.png',
     backgroundImage:imageUrl,
-    visitUrl:visitUrl
+    visitUrl:visitUrl,
+    	updateUrl:updateUrl
   		});
  		editor.render();
 
@@ -203,5 +205,10 @@
 			var visitLink = editor.getVisitLink();
 			console.log(visitLink);
 			window.open(visitLink);     
+		});
+		
+		$('.picloud-save').click(function(){
+			var updateLink = editor.getUpdateLink();
+			console.log(updateLink);
 		});
     });
