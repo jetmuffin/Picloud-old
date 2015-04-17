@@ -266,8 +266,9 @@ public class GraphicMagick {
 			convert.setInputProvider(pipeIn);
 			convert.setOutputConsumer(pipeOut);
 
-			convert.run(op);
 			System.out.println(op);
+			convert.run(op);
+			
 			imageOutData = out.toByteArray();
 
 		} catch (Exception e) {

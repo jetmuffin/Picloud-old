@@ -2,6 +2,8 @@ package com.Picloud.hdfs;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -187,5 +189,18 @@ public class HdfsHandler {
         }
     }
     
+    public void writeByteImage(byte[]imageByte,String localPath,String imageName){
+    	try {
+			DataOutputStream d=new DataOutputStream(new FileOutputStream(localPath+imageName));
+			d.write(imageByte);
+			d.flush();
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+    }
 
+    
 }
