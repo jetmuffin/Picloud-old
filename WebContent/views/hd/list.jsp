@@ -100,8 +100,6 @@
                 <select data-placeholder="请选择图片" name='imageKey' class="chosen-select form-control jet-input"tabindex="-1" id='pictures_select'>
                  </select>
               </div>
-              <input name='uid' value='{:session('uid')}' style="display:none" />
-            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

@@ -97,17 +97,21 @@ public class ImageController {
 		model.addAttribute("module",module);
 		model.addAttribute("action", "图片空间");
 		
+		User LoginUser = (User) session.getAttribute("LoginUser");
 		Image image = imageDaoImpl.find(imageKey);
 		Space space = spaceDaoImpl.find(image.getSpace());
 		
+		
 		//其他图片
 		List<Image> otherImages = imageDaoImpl.getOtherImages(image.getSpace(), image.getName(),6);
+		//所有空间
+		List<Space> spaces = spaceDaoImpl.load(LoginUser.getUid());
 		if(otherImages!=null){
 			model.addAttribute("otherImages",otherImages);
 		}
-		System.out.println(image.toString());
 		model.addAttribute("image",image);
 		model.addAttribute("space",space);
+		model.addAttribute("spaces",spaces);
 		model.addAttribute("activeSpace", space);
 		model.addAttribute("activeImage",image);
 		return "server/show";

@@ -27,10 +27,15 @@
       this.getImage = function(){
         return this.image;
       }
-
+      this.setLogo = function(_logo){
+    	  this.logo = _logo;
+      }
+      this.getLogo = function(){
+    	  return this.logo;
+      }
     var editor = this;
     this.appendHtml = function(){
-      var insertText = "<div class='picloud-header'>      图片编辑器</div><div class='picloud-top-controls picloud-header-padding'><div class='picloud-top-controls-left'><div class='picloud-new'><i class='fa fa-link'></i>链接</div></div><div class='picloud-top-controls-center'><div class='picloud-controls-scale picloud-controls-process'><div class='picloud-controls-input-group'><input type='text' id='picloud-input-scale-width'><label   class='picloud-controls-input-label'>宽度</label></div><div class='picloud-controls-input-group'><input type='text' id='picloud-input-scale-height'><label  class='picloud-controls-input-label'>高度</label></div></div><div class='picloud-controls-crop picloud-controls-process' style='display:none'><div class='picloud-controls-item-group active' data-size='custom'><div class='picloud-controls-item-input'><input type='text' id='picloud-input-crop-width'><label   class='picloud-controls-input-label'>宽度</label></div><div class='picloud-controls-item-input'><input type='text' id='picloud-input-crop-height'><label  class='picloud-controls-input-label'>高度</label></div><div class='picloud-controls-item-input'><div class='picloud-controls-item-custom picloud-controls-button-item'></div><label   class='picloud-controls-input-label'>自定义</label></div></div><div class='picloud-controls-item-group' data-size='square'><div class='picloud-controls-item-square picloud-controls-button-item'></div><label   class='picloud-controls-input-label'>正方形</label></div><div class='picloud-controls-item-group' data-size='4:3'><div class='picloud-controls-item-4-3 picloud-controls-button-item'></div><label   class='picloud-controls-input-label'>4:3</label></div><div class=' picloud-controls-item-group' data-size='16:9'><div class='picloud-controls-item-16-9 picloud-controls-button-item'></div><label   class='picloud-controls-input-label'>16:9</label></div></div><div class='picloud-controls-textmark picloud-controls-process' style='display:none'><div class='picloud-controls-input-group'><div class='picloud-controls-text-color' id='color-control'></div><label  class='picloud-controls-input-label'>颜色</label></div><div class='picloud-controls-input-group'><input type='text' id='picloud-input-textmark-text' placeholder='请输入水印文字'><label  class='picloud-controls-input-label' >文字内容</label></div></div><div class='picloud-controls-watermark picloud-controls-process' style='display:none'><div class='picloud-controls-input-group'><div class='leftLabel'>0</div><div class='opacity-slider editor-slider' data-range_min='0' data-range_max='100' data-cur_min='100' data-cur_max='100'><div class='dot dot-right'></div><div class='bar'></div><div class='picloud-slider-label leftGrip'></div></div><div class='picloud-slider-label rightLabel'>1</div><label  class='picloud-controls-input-label' >透明度</label></div></div><div class='picloud-controls-rotate picloud-controls-process' style='display:none'><div class=' picloud-controls-item-group' data-rotate='right'><div class='picloud-controls-item-rotate-r picloud-controls-button-item' id='rotate-r'></div><label   class='picloud-controls-input-label'>顺时针</label></div><div class=' picloud-controls-item-group' data-rotate='left'><div class='picloud-controls-item-rotate-l picloud-controls-button-item' id='rotate-l'></div><label   class='picloud-controls-input-label'>逆时针</label></div><div class=' picloud-controls-item-group' data-rotate='left'><div class='picloud-controls-item-flip-v picloud-controls-button-item' id='flip-v'></div><label   class='picloud-controls-input-label'>竖直</label></div><div class=' picloud-controls-item-group' data-rotate='left'><div class='picloud-controls-item-flip-h picloud-controls-button-item' id='flip-h'></div><label   class='picloud-controls-input-label'>水平</label></div></div><div class='picloud-controls-brightness picloud-controls-process' style='display:none'><div class='picloud-controls-input-group'><div class='brightness-slider editor-slider' data-range_min='-100' data-range_max='100' data-cur_min='0' data-cur_max='0'><div class='dot dot-center'></div><div class='bar'></div><div class='picloud-slider-label leftGrip'></div></div><div class='picloud-controls-slider-plus'></div><div class='picloud-controls-slider-minus'></div><label  class='picloud-controls-input-label' >亮度</label></div></div><div class='picloud-controls-filters picloud-controls-process' style='display:none'><div class='picloud-controls-item-group active ' data-filter='default'><div class='picloud-controls-preview-default picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='lomo'><div class='picloud-controls-preview-lomo picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='gotham'><div class='picloud-controls-preview-gotham picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='blur'><div class='picloud-controls-preview-blur picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='sharpen'><div class='picloud-controls-preview-blur picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='autoGamma'><div class='picloud-controls-preview-autoGamma picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='charcoal'><div class='picloud-controls-preview-charcoal picloud-controls-button-item'></div></div></div></div><div class='picloud-top-controls-right'><div class='picloud-save'> <i class='fa fa-save'></i> 保存</div></div></div><div class='picloud-canvas-container picloud-header-padding'><div class='picloud-drop-area-container picloud-header-padding'><div class='picloud-drop-area' id='canvas-zone'></div></div></div><div class='picloud-controls-container'><div class='picloud-controls'><div><div class='picloud-controls-overview'><ul class='picloud-controls-list'><li data-identifier='scale'><img src='/Picloud/resources/plugins/imageEditor/img/radial-blur.png' /></li><li data-identifier='crop'><img src='/Picloud/resources/plugins/imageEditor/img/crop.png' /></li><li data-identifier='watermark'><img src='/Picloud/resources/plugins/imageEditor/img/stickers.png' /></li><li data-identifier='textmark'><img src='/Picloud/resources/plugins/imageEditor/img/text.png' /></li><li data-identifier='filters'><img src='/Picloud/resources/plugins/imageEditor/img/filters.png' /></li><li data-identifier='rotate'><img src='/Picloud/resources/plugins/imageEditor/img/rotation.png' /></li><li data-identifier='brightness'><img src='/Picloud/resources/plugins/imageEditor/img/brightness.png' /></li></ul></div></div></div> ";
+      var insertText = "<div class='picloud-header'>      图片编辑器</div><div class='picloud-top-controls picloud-header-padding'><div class='picloud-top-controls-left'><div class='picloud-new'><i class='fa fa-link'></i>链接</div></div><div class='picloud-top-controls-center'><div class='picloud-controls-scale picloud-controls-process'><div class='picloud-controls-input-group'><input type='text' id='picloud-input-scale-width'><label   class='picloud-controls-input-label'>宽度</label></div><div class='picloud-controls-input-group'><input type='text' id='picloud-input-scale-height'><label  class='picloud-controls-input-label'>高度</label></div></div><div class='picloud-controls-crop picloud-controls-process' style='display:none'><div class='picloud-controls-item-group active' data-size='custom'><div class='picloud-controls-item-input'><input type='text' id='picloud-input-crop-width'><label   class='picloud-controls-input-label'>宽度</label></div><div class='picloud-controls-item-input'><input type='text' id='picloud-input-crop-height'><label  class='picloud-controls-input-label'>高度</label></div><div class='picloud-controls-item-input'><div class='picloud-controls-item-custom picloud-controls-button-item'></div><label   class='picloud-controls-input-label'>自定义</label></div></div><div class='picloud-controls-item-group' data-size='square'><div class='picloud-controls-item-square picloud-controls-button-item'></div><label   class='picloud-controls-input-label'>正方形</label></div><div class='picloud-controls-item-group' data-size='4:3'><div class='picloud-controls-item-4-3 picloud-controls-button-item'></div><label   class='picloud-controls-input-label'>4:3</label></div><div class=' picloud-controls-item-group' data-size='16:9'><div class='picloud-controls-item-16-9 picloud-controls-button-item'></div><label   class='picloud-controls-input-label'>16:9</label></div></div><div class='picloud-controls-textmark picloud-controls-process' style='display:none'><div class='picloud-controls-input-group'><div class='picloud-controls-text-color' id='color-control'></div><label  class='picloud-controls-input-label'>颜色</label></div><div class='picloud-controls-input-group'><input type='text' id='picloud-input-textmark-text' placeholder='请输入水印文字'><label  class='picloud-controls-input-label' >文字内容</label></div></div><div class='picloud-controls-watermark picloud-controls-process' style='display:none'><div class='picloud-controls-input-float'><button id='addLogo' class='btn btn-default' data-toggle='modal' data-target='#logoModal'>选择Logo</button><label class='picloud-controls-input-label'>logo</label></div><div class='picloud-controls-input-float'><div class='leftLabel'>0</div><div class='opacity-slider editor-slider' data-range_min='0' data-range_max='100' data-cur_min='100' data-cur_max='100'><div class='dot dot-right'></div><div class='bar'></div><div class='picloud-slider-label leftGrip'></div></div><div class='picloud-slider-label rightLabel'>1</div><label  class='picloud-controls-input-label' >透明度</label></div></div><div class='picloud-controls-rotate picloud-controls-process' style='display:none'><div class=' picloud-controls-item-group' data-rotate='right'><div class='picloud-controls-item-rotate-r picloud-controls-button-item' id='rotate-r'></div><label   class='picloud-controls-input-label'>顺时针</label></div><div class=' picloud-controls-item-group' data-rotate='left'><div class='picloud-controls-item-rotate-l picloud-controls-button-item' id='rotate-l'></div><label   class='picloud-controls-input-label'>逆时针</label></div><div class=' picloud-controls-item-group' data-rotate='left'><div class='picloud-controls-item-flip-v picloud-controls-button-item' id='flip-v'></div><label   class='picloud-controls-input-label'>竖直</label></div><div class=' picloud-controls-item-group' data-rotate='left'><div class='picloud-controls-item-flip-h picloud-controls-button-item' id='flip-h'></div><label   class='picloud-controls-input-label'>水平</label></div></div><div class='picloud-controls-brightness picloud-controls-process' style='display:none'><div class='picloud-controls-input-group'><div class='brightness-slider editor-slider' data-range_min='-100' data-range_max='100' data-cur_min='0' data-cur_max='0'><div class='dot dot-center'></div><div class='bar'></div><div class='picloud-slider-label leftGrip'></div></div><div class='picloud-controls-slider-plus'></div><div class='picloud-controls-slider-minus'></div><label  class='picloud-controls-input-label' >亮度</label></div></div><div class='picloud-controls-filters picloud-controls-process' style='display:none'><div class='picloud-controls-item-group active ' data-filter='default'><div class='picloud-controls-preview-default picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='lomo'><div class='picloud-controls-preview-lomo picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='gotham'><div class='picloud-controls-preview-gotham picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='blur'><div class='picloud-controls-preview-blur picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='sharpen'><div class='picloud-controls-preview-blur picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='autoGamma'><div class='picloud-controls-preview-autoGamma picloud-controls-button-item'></div></div><div class=' picloud-controls-item-group' data-filter='charcoal'><div class='picloud-controls-preview-charcoal picloud-controls-button-item'></div></div></div></div><div class='picloud-top-controls-right'><div class='picloud-save'> <i class='fa fa-save'></i> 保存</div></div></div><div class='picloud-canvas-container picloud-header-padding'><div id='infoTag' class='picloud-imageinfo'></div><div class='picloud-drop-area-container picloud-header-padding'><div class='picloud-drop-area' id='canvas-zone'></div></div></div><div class='picloud-controls-container'><div class='picloud-controls'><div><div class='picloud-controls-overview'><ul class='picloud-controls-list'><li data-identifier='scale'><img src='/Picloud/resources/plugins/imageEditor/img/radial-blur.png' /></li><li data-identifier='crop'><img src='/Picloud/resources/plugins/imageEditor/img/crop.png' /></li><li data-identifier='watermark'><img src='/Picloud/resources/plugins/imageEditor/img/stickers.png' /></li><li data-identifier='textmark'><img src='/Picloud/resources/plugins/imageEditor/img/text.png' /></li><li data-identifier='filters'><img src='/Picloud/resources/plugins/imageEditor/img/filters.png' /></li><li data-identifier='rotate'><img src='/Picloud/resources/plugins/imageEditor/img/rotation.png' /></li><li data-identifier='brightness'><img src='/Picloud/resources/plugins/imageEditor/img/brightness.png' /></li></ul></div></div></div> ";
       var container = document.getElementById('picloud-container');
       container.innerHTML = insertText;
     }
@@ -43,6 +48,8 @@
           canvasDom.height = canvasZone.offsetHeight; 
           canvasDom.id = 'canvas';
           canvasZone.appendChild(canvasDom);
+          var infoTag = document.getElementById('infoTag');
+          infoTag.innerHTML = editor.imageName;
         },
 
         //缩放构造方法
@@ -131,6 +138,7 @@
 
         //裁剪构造方法
         crop: function(imageUrl){
+        	
           var img = document.createElement("img");
           var canvasZone = document.getElementById('canvas-zone');
           var widthInput = document.getElementById('picloud-input-crop-width');
@@ -272,16 +280,19 @@
             });
             plugin.canvas.add(plugin.backgroundImage);
           }
-          var logoImage = new Image();
-          logoImage.src = logoUrl;
-          logoImage.onload = function(){
-            plugin.logo = new fabric.Image(logoImage,{
-              left: plugin.canvas.width/2-logoImage.width*0.5/2,
-              top: plugin.canvas.height/2-logoImage.height*0.5/2,
-            });
-            plugin.logo.scale(0.5).setCoords();
-            plugin.canvas.add(plugin.logo);
-          }
+          	if(logoUrl != null){
+                var logoImage = new Image();
+                logoImage.src = logoUrl;
+                logoImage.onload = function(){
+                  plugin.logo = new fabric.Image(logoImage,{
+                    left: plugin.canvas.width/2-logoImage.width*0.5/2,
+                    top: plugin.canvas.height/2-logoImage.height*0.5/2,
+                  });
+                  plugin.logo.scale(0.5).setCoords();
+                  plugin.canvas.add(plugin.logo);
+                }
+          	}
+  
           return this;
         },
 
@@ -423,17 +434,18 @@
 
         textmark: function(url,img){
           var textmark = editor.plugin.text;
-          var height = Math.round(textmark.height*textmark.scaleY);
-          var width = Math.round(textmark.width*textmark.scaleX);
-          var left = Math.round(textmark.left - editor.plugin.backgroundImage.left);
-          var top = Math.round(textmark.top - editor.plugin.backgroundImage.top);
+          var scale = editor.plugin.size.scale;
+          var left = Math.round((textmark.left - editor.plugin.backgroundImage.left)/scale);
+          var top = Math.round((textmark.top - editor.plugin.backgroundImage.top)/scale);
+          var text = textmark.text;
           var opacity = textmark.opacity;
           var fontSize = textmark.fontSize;
           var color = textmark.fill;
           if(color == 'rgb(0,0,0)')
             color = '#000000';
           //TODO add opacity
-          return url + img + '/watermark[' + left + ',' + top + ',' + width + ',' + height + ',' + fontSize + ',' + color +']';
+          color = color.substr(1);
+          return url + img + '/textmark[' + left + ',' + top + ',' + text + ',' + fontSize + ',' + color +']';
         },
 
         watermark: function(url,img,logo){
@@ -456,9 +468,9 @@
           }else{
             var flip = 0;
             if(editor.plugin.image.flipX)
-              flip = 0;
-            else
               flip = 1;
+            else
+              flip = 0;
             return url + img + '/reverse[' + flip + ']';             
           }
         },
@@ -505,6 +517,21 @@
         }
       }
 
+      this.getUpdateLink = function(){
+          var image = this.getImage(editor.image);
+          
+          //TODO get the key
+          switch(this.type){
+            case 'scale': return this.link.scale(editor.updateUrl,image);break;
+            case 'crop': return this.link.crop(editor.updateUrl,image);break;
+            case 'textmark': return this.link.textmark(editor.updateUrl,image);break;
+            case 'watermark': var logo = this.getImage(editor.logo);return this.link.watermark(editor.updateUrl,image,logo);break;
+            case 'rotate': return this.link.rotate(editor.updateUrl,image);break;
+            case 'brightness': return this.link.brightness(editor.updateUrl,image);break;
+            default: return;
+          }
+        }
+      
       this.render = function(){
         this.appendHtml();
         document.getElementById("canvas-zone").innerHTML = "";
