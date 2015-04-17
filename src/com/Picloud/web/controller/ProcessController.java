@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -182,8 +183,11 @@ public class ProcessController {
 			
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
-//			Log log=new Log(loginUser.getUid(),"用户"+loginUser.getUid());
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "按照宽度："+width+"高度："+
+			height+"缩放了图片"+image.getName());
+			mLogDaoImpl.add(log);
 			
+			response.setStatus(200);
 			
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -254,6 +258,11 @@ public class ProcessController {
 		if (bufferOut != null) {
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "按照宽度："+width+"缩放了图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -341,6 +350,12 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "起始坐标："+startX+"，"+
+			startY+"按照宽度："+width+"高度："+height+"裁剪了图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -440,6 +455,12 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"按照Logo坐标："+startX+"，"+startY+ 
+					"Logo宽度："+width+"Logo高度："+height+"透明度"+optical+"添加了水印图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -531,6 +552,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"按照坐标："+startX+"，"+startY+ "大小："+fontSize+"颜色："+color+"添加了水印文字"+text);
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -599,6 +625,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"按照亮度："+brightness+"调节图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -667,6 +698,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"按照角度："+angle+"旋转图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -743,6 +779,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"镜面翻转图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -810,6 +851,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"Lomo处理了图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -875,6 +921,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"灰化图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -941,6 +992,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"使用素炭笔处理了图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -1008,6 +1064,8 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -1074,6 +1132,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"锐化了图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -1140,6 +1203,11 @@ public class ProcessController {
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"模糊了图片"+image.getName());
+			mLogDaoImpl.add(log);
+			
+			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
