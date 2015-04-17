@@ -1,15 +1,21 @@
 package com.Picloud.hbase.service.impl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
 import org.apache.hadoop.hbase.client.Result;
 import org.springframework.stereotype.Service;
 
+import com.Picloud.utils.StringSplit;
+import com.Picloud.web.model.Dustbin;
 import com.Picloud.web.model.HdImage;
 import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Mapfile;
 import com.Picloud.web.model.PanoImage;
+import com.Picloud.web.model.PanoScene;
 import com.Picloud.web.model.Space;
 import com.Picloud.web.model.ThreeDImage;
 import com.Picloud.web.model.User;
@@ -232,11 +238,17 @@ public class BeanMapping {
 				if (v.equals("createTime")) {
 					panoImage.setCreateTime(val);
 				}
-				if (v.equals("size")) {
-					panoImage.setSize(val);
+				if (v.equals("number")) {
+					panoImage.setNumber(val);
 				}
 				if(v.equals("path")){
 					panoImage.setPath(val);
+				}
+				if(v.equals("info")){
+					panoImage.setInfo(val);
+				}
+				if(v.equals("desc")){
+					panoImage.setDesc(val);
 				}
 			}
 		}
@@ -284,7 +296,7 @@ public class BeanMapping {
 	 * @param rs
 	 * @return
 	 */
-	public HdImage hdImageListMapping(Result rs, String rowkey){
+	public HdImage hdImageMapping(Result rs, String rowkey){
 		HdImage hdImage = new HdImage();
 		if (rs.isEmpty()) {
 			// 没有检索到，说明数据库中没有该图片，返回错误信息
@@ -309,5 +321,31 @@ public class BeanMapping {
 			}
 		}
 		return hdImage;
+	}
+	
+	/**
+	 * 将数据库读出的数据映射到Dustbin
+	 * @param rs
+	 * @return
+	 */
+	public Dustbin dustbinMapping(Result rs, String rowkey){
+		Dustbin dustbin = new Dustbin();
+		if (rs.isEmpty()) {
+			// 没有检索到，说明数据库中没有该图片，返回错误信息
+			return null;
+		} else {
+			dustbin.setKey(rowkey);
+			for(Cell cell:rs.rawCells()){
+				String v = new String(CellUtil.cloneQualifier(cell));
+				String val = new String(CellUtil.cloneValue(cell));
+				if (v.equals("picName")) {
+					dustbin.setPicName(val);
+				}
+				if (v.equals("mapfileName")) {
+					dustbin.setMapfileName(val);
+				}
+			}
+		}
+		return dustbin;
 	}
 }

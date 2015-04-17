@@ -54,6 +54,7 @@
 		<value>cloud_pano</value>
 		<value>cloud_space</value>
 		<value>cloud_threeD</value>
+		<value>cloud_dustbin</value>
 	</util:list>
 
 	<!-- 列族名配置 -->

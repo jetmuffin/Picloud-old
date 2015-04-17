@@ -1,35 +1,52 @@
 package com.Picloud.web.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.Picloud.utils.StringSplit;
+
 public class PanoImage {
 	//主键
 	String key="";
-	
 	//图片名称
 	String name = "";
+	//场景数量
+	String  number;
 	//所属用户
 	String uid = "";
 	//上传时间
 	String createTime = "";
-	//图片大小
-	String size = "";
+	//介绍信息
+	String info = "";
 	//路径
 	String path="";
-	
+	//场景描述
+	String desc="";
+	//场景
+	List<PanoScene> scene ;
 	public PanoImage() {
 		super();
 	}
-
-	public PanoImage(String key, String name, String uid, String createTime,
-			String size, String path) {
+	public PanoImage(String key, String name, String number, String uid,
+			String createTime, String info, String path, String desc) {
 		super();
 		this.key = key;
 		this.name = name;
+		this.number = number;
 		this.uid = uid;
 		this.createTime = createTime;
-		this.size = size;
+		this.info = info;
 		this.path = path;
+		this.desc = desc;
+		for(int i = 0; i < Integer.valueOf(number); i++){
+			PanoScene sc = new PanoScene();
+			sc.setName(name+String.valueOf(i+1));
+			sc.setPath(path+"/"+name+"/"+sc.getName());
+			sc.setDesc(StringSplit.descSplit(desc, i));
+			this.scene.add(sc);
+		}
+		
 	}
-	
 	public String getKey() {
 		return key;
 	}
@@ -41,6 +58,12 @@ public class PanoImage {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
 	}
 	public String getUid() {
 		return uid;
@@ -54,11 +77,11 @@ public class PanoImage {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-	public String getSize() {
-		return size;
+	public String getInfo() {
+		return info;
 	}
-	public void setSize(String size) {
-		this.size = size;
+	public void setInfo(String info) {
+		this.info = info;
 	}
 	public String getPath() {
 		return path;
@@ -66,7 +89,25 @@ public class PanoImage {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	
-	
+	public List<PanoScene> getScene() {
+		return scene;
+	}
+	public void setScene(List<PanoScene> scene) {
+		this.scene = scene;
+	}
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+		//需要修改
+		for(int i = 0; i < Integer.valueOf(number); i++){
+			PanoScene sc = new PanoScene();
+			sc.setName(name+String.valueOf(i+1));
+			sc.setPath(path+"/"+name+"/"+sc.getName());
+			sc.setDesc(StringSplit.descSplit(desc, i));
+			this.scene.add(sc);
+		}
+	}
+
 }

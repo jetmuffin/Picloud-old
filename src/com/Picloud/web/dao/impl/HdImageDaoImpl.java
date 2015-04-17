@@ -57,7 +57,7 @@ public class HdImageDaoImpl implements IHdImageDao {
 		if (key == null)
 			return null;
 		Result rs = mHbaseOperationImpl.queryByRowKey("cloud_hd", key);
-		return mBeanMapping.hdImageListMapping(rs, key);
+		return mBeanMapping.hdImageMapping(rs, key);
 	}
 	
 	/**
