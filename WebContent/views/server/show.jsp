@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${RESOURCES}/font/css/font-awesome.min.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/common.css" />
+<link rel="stylesheet" href="${PLUGIN}/chosen/chosen.css" />
 <link rel="stylesheet" href="${PLUGIN}/imageEditor/css/editor.css" />
 <link rel="stylesheet" href="${PLUGIN}/imageEditor/css/spectrum.css" />
 <link rel="stylesheet" href="${RESOURCES}/css/picserver.css" />
@@ -27,7 +28,7 @@
 			<div class="col-lg-9">
 				<div class="ibox float-e-margins">
     			<div class="ibox-title">
-        			<h5>${image.name} ${image.height}</h5>
+        			<h5>${image.name}</h5>
     			</div>
           <div class="ibox-content" style="display: block;">
 	      		<div class="row">
@@ -80,8 +81,7 @@
 				</div>	
 			</div>
 		</div>
-		
-
+		<div id="url_base" style="display: none">${IP}${ROOT}</div>
 	</block>
 			</div>
 			<jsp:include page="../common/footer.jsp" />
@@ -89,19 +89,44 @@
 	</div>
 
 		<div class="green-editor modal inmodal in " id="imageEditor" tabindex="-1" role="dialog"
-			aria-hidden="false" data-image="${IP}${ROOT}/server/${image.key}" data-visit="${IP}${ROOT}/process" >
-			
+			aria-hidden="false" data-image="${image.name}" data-imageUrl="${IP}${ROOT}/server/${image.key}" data-visit="${IP}${ROOT}/process/" >
 			<div class="modal-dialog animated bounceInRight">
-
 				<div class='picloud-container' id='picloud-container' ></div>
-				
 			</div>
 		</div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="logoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog hd-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">取消</span></button>
+            <h4 class="modal-title" id="logoModalLabel">选择Logo</h4>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                <label class="control-label">选择空间</label>
+                <select class="form-control  jet-input" name="account" id='spaces_select'>
+                  <c:forEach items="${spaces}" var="space">
+                    <option value="${space.key}">${space.name}</option>
+                  </c:forEach>
+               </select>
+              </div>
+                  <div class="form-group">
+                <label class="control-label">选择Logo</label>
+                <select data-placeholder="请选择图片" name='imageKey' class="chosen-select form-control jet-input"tabindex="-1" id='pictures_select'>
+                 </select>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 		<script type="text/javascript"
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
+	<script type="text/javascript" src="${PLUGIN}/chosen/chosen.jquery.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/imageshow.js"></script>
 	<script type="text/javascript" src="${PLUGIN}/imageEditor/js/spectrum.js"></script>
 	<script type="text/javascript" src="${PLUGIN}/imageEditor/js/jquery.nstSlider.js"></script>
