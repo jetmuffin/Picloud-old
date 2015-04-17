@@ -64,22 +64,21 @@ public class ImageUpdate {
  * @param space
  * @param imageName
  */
-	public void updateImage(byte[] imagebyte, String uid, String space) {
+	public void updateImage(byte[] imagebyte, String uid, String space,String imageKey) {
 		try {
 			FileItem item = ByteToObject(imagebyte);
 			ImageDeleter deleter=new ImageDeleter(infoDaoImpl);
-			Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(item.getName(),
-					uid));
+			Image image = mImageDaoImpl.find(imageKey);
 			deleteUpPicture(image);
 			
 			double fileLength = (double) item.getSize() / 1024 / 1024;
 			boolean flag;
 			if (fileLength > mSystemConfig.getMaxFileSize()) {
 
-				flag=updateBigImage(item, uid, space);
+				flag=updateBigImage(item, uid, space,image);
 			}
 			else{
-				flag=updateSmallImage(item, uid, space);
+				flag=updateSmallImage(item, uid, space,image);
 	
 			}
 
@@ -96,7 +95,7 @@ public class ImageUpdate {
  * @param space
  * @return
  */
-	public boolean updateBigImage(FileItem item, String uid, String space) {
+	public boolean updateBigImage(FileItem item, String uid, String space,Image image) {
 		try {
 			boolean flag = false;
 			// HDFS文件名
@@ -108,8 +107,6 @@ public class ImageUpdate {
 			BufferedImage bufferedImage = ImageIO.read(item.getInputStream());
 			String width = Integer.toString(bufferedImage.getWidth());
 			String height = Integer.toString(bufferedImage.getHeight());
-			Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(item.getName(),
-					uid));
 			image.setPath(filePath);
 			image.setHeight(height);
 			image.setWidth(width);
@@ -132,7 +129,7 @@ public class ImageUpdate {
 	 * @param space
 	 * @return
 	 */
-	public boolean updateSmallImage(FileItem item, String uid, String space) {
+	public boolean updateSmallImage(FileItem item, String uid, String space,Image image) {
 		try {
 		// 本地目录为“根目录/用户名/时间戳"
 		final String LocalUidPath = SystemConfig.getSystemPath()
@@ -145,8 +142,6 @@ public class ImageUpdate {
 		String imageName=item.getName();
 		File file = new File(LocalPath, imageName);
 		ImageWriter writer = new ImageWriter(infoDaoImpl);
-		Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(imageName,
-				uid));
 		item.write(file);
 		if (image.getStatus().equals("LocalFile")) {
 				

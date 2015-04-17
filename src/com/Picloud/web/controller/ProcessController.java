@@ -181,7 +181,7 @@ public class ProcessController {
 			
 			
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 //			Log log=new Log(loginUser.getUid(),"用户"+loginUser.getUid());
 			
 			
@@ -253,7 +253,7 @@ public class ProcessController {
 
 		if (bufferOut != null) {
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -340,7 +340,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -439,7 +439,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -530,7 +530,7 @@ public class ProcessController {
 
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -598,7 +598,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -666,7 +666,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -742,7 +742,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -809,7 +809,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -874,7 +874,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -940,7 +940,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -1007,7 +1007,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
@@ -1073,7 +1073,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
