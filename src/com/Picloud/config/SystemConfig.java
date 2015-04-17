@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 public class SystemConfig {
 	private String fileSystemPath = "localhost:9000";
 	private String uploadPath = "hdfs://localhost:9000/upload";
+	
 	private String systemPath = "/home/hadoop/workspace";
 	private String localUploadPath = "/home/hadoop/workspace/upload";
 	private String imagePath = "http://localhost:8080/Picloud/server/";
