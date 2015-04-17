@@ -2,6 +2,7 @@ package com.Picloud.image;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,19 +67,19 @@ public class ImageUpdate {
  */
 	public void updateImage(byte[] imagebyte, String uid, String space,String imageKey) {
 		try {
-			FileItem item = ByteToObject(imagebyte);
+			
 			ImageDeleter deleter=new ImageDeleter(infoDaoImpl);
 			Image image = mImageDaoImpl.find(imageKey);
 			deleteUpPicture(image);
 			
-			double fileLength = (double) item.getSize() / 1024 / 1024;
+			double fileLength = (double) imagebyte.length/ 1024 / 1024;
 			boolean flag;
 			if (fileLength > mSystemConfig.getMaxFileSize()) {
 
-				flag=updateBigImage(item, uid, space,image);
+				flag=updateBigImage(imagebyte, uid, space,image);
 			}
 			else{
-				flag=updateSmallImage(item, uid, space,image);
+				flag=updateSmallImage(imagebyte, uid, space,image);
 	
 			}
 
@@ -95,16 +96,18 @@ public class ImageUpdate {
  * @param space
  * @return
  */
-	public boolean updateBigImage(FileItem item, String uid, String space,Image image) {
+	public boolean updateBigImage(byte[] imagebyte, String uid, String space,Image image) {
 		try {
 			boolean flag = false;
 			// HDFS文件名
 			final String hdfsPath = HDFS_UPLOAD_ROOT + "/" + uid
 					+ "/LargeFile/" + space + '/';
-			String filePath = hdfsPath + item.getName();
-			InputStream uploadedStream = item.getInputStream();
-			flag = mHdfsHandler.upLoad(uploadedStream, filePath);
-			BufferedImage bufferedImage = ImageIO.read(item.getInputStream());
+			
+			String filePath = hdfsPath + image.getName();		
+			ByteArrayInputStream input = new ByteArrayInputStream(imagebyte);
+			HdfsHandler hdfsHandler=new HdfsHandler();
+			hdfsHandler.upLoad(input, hdfsPath);
+			BufferedImage bufferedImage = ImageIO.read(input);
 			String width = Integer.toString(bufferedImage.getWidth());
 			String height = Integer.toString(bufferedImage.getHeight());
 			image.setPath(filePath);
@@ -129,20 +132,23 @@ public class ImageUpdate {
 	 * @param space
 	 * @return
 	 */
-	public boolean updateSmallImage(FileItem item, String uid, String space,Image image) {
+	public boolean updateSmallImage(byte[] imagebyte, String uid, String space,Image image) {
 		try {
 		// 本地目录为“根目录/用户名/时间戳"
 		final String LocalUidPath = SystemConfig.getSystemPath()
 				+ LOCAL_UPLOAD_ROOT + "/" + uid + '/';
 		final String LocalPath = LocalUidPath + '/' + space + '/';
-		BufferedImage bufferedImage = ImageIO.read(item.getInputStream());
+		ByteArrayInputStream input = new ByteArrayInputStream(imagebyte);
+		BufferedImage bufferedImage = ImageIO.read(input);
 		String width = Integer.toString(bufferedImage.getWidth());
 		String height = Integer.toString(bufferedImage.getHeight());
 		
-		String imageName=item.getName();
+		String imageName=image.getName();
 		File file = new File(LocalPath, imageName);
 		ImageWriter writer = new ImageWriter(infoDaoImpl);
-		item.write(file);
+		
+		HdfsHandler hdfsHandler=new HdfsHandler();
+		hdfsHandler.writeByteImage(imagebyte, LocalPath, imageName);
 		if (image.getStatus().equals("LocalFile")) {
 				
 		} else {
@@ -181,28 +187,7 @@ public class ImageUpdate {
 		return true;
 	}
 
-	/**
-	 * 将byte数组转化成FileItem对象
-	 * 
-	 * @param bytes
-	 * @return
-	 */
-	public static FileItem ByteToObject(byte[] bytes) {
-		FileItem obj = null;
-		try {
-			// bytearray to object
-			ByteArrayInputStream bi = new ByteArrayInputStream(bytes);
-			ObjectInputStream oi = new ObjectInputStream(bi);
 
-			obj = (FileItem) oi.readObject();
-			bi.close();
-			oi.close();
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-		return obj;
-	}
 
 	/**
 	 * 删除图片
