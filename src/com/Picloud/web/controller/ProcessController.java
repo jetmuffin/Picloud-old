@@ -176,10 +176,8 @@ public class ProcessController {
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width, height);
-
+		System.out.println(bufferOut.length);
 		if (bufferOut != null) {
-			
-			
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 //			Log log=new Log(loginUser.getUid(),"用户"+loginUser.getUid());
@@ -206,6 +204,8 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		Image image = mImageDaoImpl.find(imageKey);
 		byte[] buffer = imageReader.readPicture(imageKey);
+		System.out.println(buffer.length);
+		System.out.println(image);
 		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width);
 
@@ -1139,7 +1139,7 @@ public class ProcessController {
 			
 			Image image = mImageDaoImpl.find(imageKey);
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
-			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}

@@ -7,8 +7,8 @@ public class SystemConfig {
 	private String fileSystemPath = "localhost:9000";
 	private String uploadPath = "hdfs://localhost:9000/upload";
 
-	private static  String systemPath = "/Users/MPJ/workspace";
-	private String localUploadPath = "/Users/MPJ/workspace/upload";
+	private static  String systemPath = "/home/jeff/workspace";
+	private String localUploadPath = "/home/jeff/workspace/upload";
 
 	private String imagePath = "http://localhost:8080/Picloud/server/";
 	private double maxSyncSize = 2.0;

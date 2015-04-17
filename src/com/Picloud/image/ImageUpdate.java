@@ -69,7 +69,7 @@ public class ImageUpdate {
 			FileItem item = ByteToObject(imagebyte);
 			ImageDeleter deleter=new ImageDeleter(infoDaoImpl);
 			Image image = mImageDaoImpl.find(imageKey);
-			deleteUpPicture(image);
+			//deleteUpPicture(image);
 			
 			double fileLength = (double) item.getSize() / 1024 / 1024;
 			boolean flag;
@@ -188,6 +188,7 @@ public class ImageUpdate {
 	 * @return
 	 */
 	public static FileItem ByteToObject(byte[] bytes) {
+		System.out.println(bytes.length);
 		FileItem obj = null;
 		try {
 			// bytearray to object
@@ -195,6 +196,7 @@ public class ImageUpdate {
 			ObjectInputStream oi = new ObjectInputStream(bi);
 
 			obj = (FileItem) oi.readObject();
+			System.out.println(obj);
 			bi.close();
 			oi.close();
 		} catch (Exception e) {
