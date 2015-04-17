@@ -316,16 +316,16 @@ public class ProcessController {
 	 * @return
 	 * @throws Exception 
 	 */
-	@RequestMapping(value = "/{imageKey}/textmark[{startX},{startY},{text},{fontSize},{color}]", method = RequestMethod.GET)
+	@RequestMapping(value = "/{imageKey}/textmark[{startX},{startY},{text},{fontSize},{color},{dissolve}]", method = RequestMethod.GET)
 	public void  textmark(@PathVariable String imageKey,
 			@PathVariable int startX, @PathVariable int startY,
 			@PathVariable int fontSize, @PathVariable String text,
-			@PathVariable String color,HttpSession session,HttpServletResponse response) throws Exception {
+			@PathVariable String color,@PathVariable int dissolve,HttpSession session,HttpServletResponse response) throws Exception {
 		
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY);
+		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY,dissolve);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片
