@@ -27,11 +27,14 @@ import com.Picloud.exception.ProcessException;
 import com.Picloud.exception.UserException;
 import com.Picloud.image.GraphicMagick;
 import com.Picloud.image.ImageReader;
+import com.Picloud.image.ImageUpdate;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
+import com.Picloud.web.dao.impl.LogDaoImpl;
 import com.Picloud.web.dao.impl.SpaceDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
 import com.Picloud.web.model.Image;
+import com.Picloud.web.model.Log;
 import com.Picloud.web.model.Space;
 import com.Picloud.web.model.User;
 
@@ -48,6 +51,8 @@ public class ProcessController {
 	private UserDaoImpl mUserDaoImpl;
 	@Autowired
 	private SpaceDaoImpl  mSpaceDaoImpl;
+	@Autowired
+	private LogDaoImpl mLogDaoImpl;
 	private String module = "应用中心";
 	
 	
@@ -104,7 +109,7 @@ public class ProcessController {
 		return "process/watermark";
 	}
 	/**
-	 * 缩放图片
+	 * 缩放图片查看
 	 * 
 	 * @param width
 	 *            缩放宽度
@@ -142,15 +147,50 @@ public class ProcessController {
 			bis.close();
 			bos.flush();// 清空输出缓冲流
 			bos.close();
-
+			
 			output.close();
+
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
-
 	/**
-	 * 按宽度等比例缩放图片
+	 * 缩放图片保存
+	 * 
+	 * @param width
+	 *            缩放宽度
+	 * @param height
+	 *            缩放高度
+	 * @param imageKey
+	 *            图片key
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/scale[{width},{height}]", method = RequestMethod.GET)
+	public void scaleUpdate(@PathVariable String imageKey, @PathVariable int width,
+			@PathVariable int height, HttpSession session,
+			HttpServletResponse response) throws Exception {
+
+		Image image = mImageDaoImpl.find(imageKey);
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
+		byte[] bufferOut = gm.scaleImage(width, height);
+
+		if (bufferOut != null) {
+			
+			
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+//			Log log=new Log(loginUser.getUid(),"用户"+loginUser.getUid());
+			
+			
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 按宽度等比例缩放图片查看
 	 * 
 	 * @param imageKey
 	 *            图片key
@@ -191,9 +231,36 @@ public class ProcessController {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
+	/**
+	 * 按宽度等比例缩放图片保存
+	 * 
+	 * @param imageKey
+	 *            图片key
+	 * @param width
+	 *            缩放宽度
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/update/{imageKey}/scale[{width},-]", method = RequestMethod.GET)
+	public void  scaleUpdate(@PathVariable String imageKey, @PathVariable int width,
+			HttpSession session, HttpServletResponse response) throws Exception {
+
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		Image image = mImageDaoImpl.find(imageKey);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
+		byte[] bufferOut = gm.scaleImage(width);
+
+		if (bufferOut != null) {
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
 
 	/**
-	 * 裁剪图片
+	 * 裁剪图片查看
 	 * 
 	 * @param imageKey
 	 *            图片key
@@ -237,13 +304,50 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 裁剪图片保存
+	 * 
+	 * @param imageKey
+	 *            图片key
+	 * @param startX
+	 *            裁剪偏移坐标x
+	 * @param startY
+	 *            裁剪偏移坐标y
+	 * @param width
+	 *            裁剪宽度
+	 * @param height
+	 *            裁剪高度
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/update/{imageKey}/crop[{startX},{startY},{width},{height}]", method = RequestMethod.GET)
+	public void cropUpdate(@PathVariable String imageKey, @PathVariable int startX,
+			@PathVariable int startY, @PathVariable int width,
+			@PathVariable int height,HttpServletResponse response,HttpSession session) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.cropImage(width, height, startX, startY);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
 
 	/**
-	 * 图片水印
+	 * 图片水印查看
 	 * 
 	 * @param imageKey
 	 *            图片key
@@ -293,13 +397,56 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 图片水印保存
+	 * 
+	 * @param imageKey
+	 *            图片key
+	 * @param startX
+	 *            水印起始坐标x
+	 * @param startY
+	 *            水印起始坐标y
+	 * @param width
+	 *            水印宽度
+	 * @param height
+	 *            水印高度
+	 * @param logo
+	 *            水印Logo
+	 * @param optical
+	 *            水印透明度
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/update/{imageKey}/watermark[{startX},{startY},{width},{height},{logo},{optical}]", method = RequestMethod.GET)
+	public void  watermarkUpdate(@PathVariable String imageKey,
+			@PathVariable int startX, @PathVariable int startY,
+			@PathVariable int width, @PathVariable int height,
+			@PathVariable String logo, @PathVariable int optical,HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		String logoSrc = systemConfig.getImagePath() + logo;
+		byte[] bufferOut = gm.imgWaterMask(logoSrc, width, height, startX, startY, optical);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
 
 	/**
-	 * 文字水印
+	 * 文字水印查看
 	 * 
 	 * @param imageKey
 	 *            图片key
@@ -345,13 +492,51 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
-
 	/**
-	 * 亮度调节
+	 * 文字水印保存
+	 * 
+	 * @param imageKey
+	 *            图片key
+	 * @param startX
+	 *            水印起始坐标x
+	 * @param startY
+	 *            水印起始坐标y
+	 * @param fontSize
+	 *            水印文字大小
+	 * @param text
+	 *            水印文字内容
+	 * @param color
+	 *            水印文字颜色
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "/update/{imageKey}/textmark[{startX},{startY},{text},{fontSize},{color}]", method = RequestMethod.GET)
+	public void  textmarkUpdate(@PathVariable String imageKey,
+			@PathVariable int startX, @PathVariable int startY,
+			@PathVariable int fontSize, @PathVariable String text,
+			@PathVariable String color,HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 亮度调节查看
 	 * @param imageKey
 	 * @param brightness
 	 * @param session
@@ -386,13 +571,40 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
-	
 	/**
-	 *  图片旋转
+	 * 亮度调节保存
+	 * @param imageKey
+	 * @param brightness
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/brightness[{brightness}]", method = RequestMethod.GET)
+	public void  brightnessUpdate(@PathVariable String imageKey,
+			@PathVariable double brightness,HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.modulate(buffer, brightness, 100.0, 360);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 *  图片旋转查看
 	 * @param imageKey
 	 * @param direction 水平或者竖直
 	 * @param session
@@ -427,13 +639,40 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
-	
 	/**
-	 *  图片镜面翻转
+	 *  图片旋转保存
+	 * @param imageKey
+	 * @param direction 水平或者竖直
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/rotate[{angle}]", method = RequestMethod.GET)
+	public void  rotateUpdate(@PathVariable String imageKey,
+			@PathVariable int angle,HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.rotate(buffer, angle);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 *  图片镜面翻转查看
 	 * @param imageKey
 	 * @param direction 水平或者竖直 1水平，0竖直
 	 * @param session
@@ -472,13 +711,45 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 *  图片镜面翻转保存
+	 * @param imageKey
+	 * @param direction 水平或者竖直 1水平，0竖直
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/reverse[{direction}]", method = RequestMethod.GET)
+	public void  reverseUpdate(@PathVariable String imageKey,
+			@PathVariable String direction,HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = null;
+		if(direction.equals("1")){
+			bufferOut = gm.flop(buffer);
+		}else if(direction.equals("0")){
+			bufferOut = gm.flip(buffer);
+		}
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
 	
 	/**
-	 * Lomo特效
+	 * Lomo特效查看
 	 * @param imageKey
 	 * @param session
 	 * @param response
@@ -512,13 +783,39 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
-	
 	/**
-	 * 灰度化特效
+	 * Lomo特效保存
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/lomo", method = RequestMethod.GET)
+	public void  lomoUpdate(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.lomo(buffer, 20480.0);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 灰度化特效查看
 	 * @param imageKey
 	 * @param session
 	 * @param response
@@ -556,9 +853,34 @@ public class ProcessController {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
-	
 	/**
-	 * 素碳笔
+	 * 灰度化特效保存
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/gotham", method = RequestMethod.GET)
+	public void  gothamUpdate(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.gotham(buffer);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 素碳笔查看
 	 * @param imageKey
 	 * @param session
 	 * @param response
@@ -592,13 +914,40 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 素碳笔保存
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/charcoal", method = RequestMethod.GET)
+	public void  charcoalUpdate(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.charcoal(buffer, 3);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
 	
 	/**
-	 * 这是啥我也不知道
+	 * 这是啥我也不知道查看
 	 * @param imageKey
 	 * @param session
 	 * @param response
@@ -632,13 +981,40 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 这是啥我也不知道保存
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/autoGamma", method = RequestMethod.GET)
+	public void  autoGammaUpdate(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.autoGamma(buffer);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
 	
 	/**
-	 * 锐化
+	 * 锐化查看
 	 * @param imageKey
 	 * @param session
 	 * @param response
@@ -676,9 +1052,34 @@ public class ProcessController {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
-	
 	/**
-	 * 模糊
+	 * 锐化保存
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/sharpen", method = RequestMethod.GET)
+	public void  sharpenUpdate(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.sharpen(buffer, 2, 1);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+	/**
+	 * 模糊查看
 	 * @param imageKey
 	 * @param session
 	 * @param response
@@ -712,11 +1113,37 @@ public class ProcessController {
 			bos.close();
 
 			output.close();
+			
 		} else {
 			throw new ProcessException("请输入正确的参数！");
 		}
 	}
-	
+	/**
+	 * 模糊保存
+	 * @param imageKey
+	 * @param session
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update/{imageKey}/blur", method = RequestMethod.GET)
+	public void  blurUpdate(@PathVariable String imageKey,
+			HttpSession session,HttpServletResponse response) throws Exception {
+		
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		byte[] bufferOut = gm.blur(buffer, 25, 5);
+		
+		if (bufferOut != null) {
+			
+			Image image = mImageDaoImpl.find(imageKey);
+			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
+			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace());
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
 	@ExceptionHandler(value=(ProcessException.class))
 	public String handlerException(ProcessException e,HttpServletRequest req){
 		req.setAttribute("e", e);

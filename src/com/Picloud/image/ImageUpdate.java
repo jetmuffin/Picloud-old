@@ -16,9 +16,11 @@ import com.Picloud.config.SystemConfig;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.hdfs.MapfileHandler;
 import com.Picloud.utils.EncryptUtil;
+import com.Picloud.web.dao.impl.DustbinDaoImpl;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.MapfileDaoImpl;
+import com.Picloud.web.model.Dustbin;
 import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Mapfile;
 import com.Picloud.web.model.User;
@@ -32,6 +34,7 @@ public class ImageUpdate {
 	private HdfsHandler mHdfsHandler;
 	private MapfileDaoImpl mMapfileDaoImpl;
 	private SystemConfig mSystemConfig;
+	private DustbinDaoImpl mDustbinDaoImpl;
 	private static final String LOCAL_UPLOAD_ROOT = "/upload";
 	private static final String HDFS_UPLOAD_ROOT = "/upload";
 	private static final String BigFile = "HdfsLargeFile";
@@ -50,6 +53,7 @@ public class ImageUpdate {
 		this.mSystemConfig = infoDaoImpl.getmSystemConfig();
 		this.mHdfsHandler = infoDaoImpl.getmHdfsHandler();
 		this.mMapfileDaoImpl = infoDaoImpl.getmMapfileDaoImpl();
+		this.mDustbinDaoImpl=infoDaoImpl.getmDustbinDaoImpl();
 	}
 /**
  * 先进行删除。如果是小图片
@@ -60,15 +64,14 @@ public class ImageUpdate {
  * @param space
  * @param imageName
  */
-	public void updateImage(byte[] imagebyte, String uid, String space,
-			String imageName) {
+	public void updateImage(byte[] imagebyte, String uid, String space) {
 		try {
+			FileItem item = ByteToObject(imagebyte);
 			ImageDeleter deleter=new ImageDeleter(infoDaoImpl);
-			Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(imageName,
+			Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(item.getName(),
 					uid));
 			deleteUpPicture(image);
 			
-			FileItem item = ByteToObject(imagebyte);
 			double fileLength = (double) item.getSize() / 1024 / 1024;
 			boolean flag;
 			if (fileLength > mSystemConfig.getMaxFileSize()) {
@@ -150,10 +153,15 @@ public class ImageUpdate {
 		} else {
 			
 			String path=image.getPath();
+			String map_key = path.substring(path.length() - 14,path.length()) + image.getUid();
+			Mapfile mapfile = mMapfileDaoImpl.find(map_key);
 			//将图片名+path写入垃圾表中
-	
+			Dustbin dustbin=new Dustbin(image.getName(),mapfile.getName());
+			mDustbinDaoImpl.add(dustbin);
 			//建立线程检查mapfile文件是否需要重写
-	
+			MergeThread mergeThread = new MergeThread(infoDaoImpl);
+			mergeThread.setProperty(mapfile, image);
+			mergeThread.start();
 		}
 		image.setPath(LocalPath);
 		image.setStatus("LocalFile");

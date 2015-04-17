@@ -85,6 +85,7 @@ public class ImageDeleter {
 
 				// 创建线程检查mapfile是否需要重写
 				MergeThread mergeThread = new MergeThread(infoDaoImpl);
+				mergeThread.setProperty(mapfile, image);
 				mergeThread.start();
 				
 				//本地缓存
