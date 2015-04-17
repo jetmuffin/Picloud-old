@@ -14,6 +14,7 @@ import org.im4java.core.ConvertCmd;
 import org.im4java.core.GMOperation;
 import org.im4java.core.IM4JavaException;
 import org.im4java.core.IMOperation;
+import org.im4java.core.IMOps;
 import org.im4java.core.Info;
 import org.im4java.core.InfoException;
 import org.im4java.process.Pipe;
@@ -237,9 +238,9 @@ public class GraphicMagick {
 	 * @throws IM4JavaException
 	 */
 	public byte[] textWaterMask(String text, int fontsize, String color,
-			int offsetX, int offsetY) throws IOException, InterruptedException,
+			int offsetX, int offsetY, int dissolve) throws IOException, InterruptedException,
 			IM4JavaException {
-		GMOperation op = new GMOperation();
+		IMOperation op = new IMOperation();
 		String option = " text " + offsetX + "," + offsetY + " \'" + text
 				+ "\'";
 		String fontpath = SystemConfig.getSystemPath() + "/font/msyh.ttf";
@@ -249,7 +250,7 @@ public class GraphicMagick {
 
 		try {
 			op.font(fontpath).gravity("northwest").pointsize(fontsize)
-					.fill(color).draw(option);
+					.fill(color).draw(option).dissolve(dissolve);;
 			op.addImage("-");
 			op.addImage(formatOp);
 
