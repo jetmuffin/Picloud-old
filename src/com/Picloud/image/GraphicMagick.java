@@ -3,7 +3,9 @@ package com.Picloud.image;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -264,7 +266,9 @@ public class GraphicMagick {
 			convert.setInputProvider(pipeIn);
 			convert.setOutputConsumer(pipeOut);
 
+			System.out.println(op);
 			convert.run(op);
+			
 			imageOutData = out.toByteArray();
 
 		} catch (Exception e) {
@@ -286,9 +290,8 @@ public class GraphicMagick {
 		IMOperation op = new IMOperation();
 		String formatOp = format + ":-";
 		byte[] imageOutData = null;
-
 		try {
-			op.dissolve(dissolve);
+			op.dissolve(dissolve*100);
 			op.gravity("northwest");
 			op.geometry(width, height, offsetX, offsetY);
 			op.addImage(logoSrc);
@@ -304,10 +307,9 @@ public class GraphicMagick {
 			CompositeCmd convert = new CompositeCmd(true);
 			convert.setInputProvider(pipeIn);
 			convert.setOutputConsumer(pipeOut);
-
 			convert.run(op);
 			imageOutData = out.toByteArray();
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

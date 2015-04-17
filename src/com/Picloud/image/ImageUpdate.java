@@ -70,7 +70,7 @@ public class ImageUpdate {
 			
 			ImageDeleter deleter=new ImageDeleter(infoDaoImpl);
 			Image image = mImageDaoImpl.find(imageKey);
-			deleteUpPicture(image);
+			//deleteUpPicture(image);
 			
 			double fileLength = (double) imagebyte.length/ 1024 / 1024;
 			boolean flag;
@@ -186,6 +186,7 @@ public class ImageUpdate {
 		}
 		return true;
 	}
+
 
 
 

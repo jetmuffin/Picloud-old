@@ -177,10 +177,8 @@ public class ProcessController {
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width, height);
-
+		System.out.println(bufferOut.length);
 		if (bufferOut != null) {
-			
-			
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "按照宽度："+width+"高度："+
@@ -210,6 +208,8 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		Image image = mImageDaoImpl.find(imageKey);
 		byte[] buffer = imageReader.readPicture(imageKey);
+		System.out.println(buffer.length);
+		System.out.println(image);
 		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width);
 
