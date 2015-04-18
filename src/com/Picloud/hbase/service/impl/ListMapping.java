@@ -268,7 +268,11 @@ public class ListMapping {
 				if(v.equals("mus_path")){
 					panoImage.setMus_path(val);
 				}
+				if(v.equals("sceneName")){
+					panoImage.setSceneName(val);
+				}
 			}
+			panoImage.init();
 			list.add(panoImage);
 		}
 		rs.close();

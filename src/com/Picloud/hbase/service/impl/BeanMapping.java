@@ -253,7 +253,11 @@ public class BeanMapping {
 				if(v.equals("mus_path")){
 					panoImage.setMus_path(val);
 				}
+				if(v.equals("sceneName")){
+					panoImage.setSceneName(val);
+				}
 			}
+			panoImage.init();
 		}
 		return panoImage;
 	}
