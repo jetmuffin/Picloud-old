@@ -75,6 +75,14 @@ public class PanoController {
 		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
+	
+	/**
+	 * 上传music 
+	 * @param panoKey
+	 * @param session
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/{panoKey}/music", method = RequestMethod.POST)
 	public String music(@PathVariable String panoKey,HttpSession session,HttpServletRequest request){
 		
