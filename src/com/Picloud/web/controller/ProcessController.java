@@ -204,8 +204,6 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		Image image = mImageDaoImpl.find(imageKey);
 		byte[] buffer = imageReader.readPicture(imageKey);
-		System.out.println(buffer.length);
-		System.out.println(image);
 		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		byte[] bufferOut = gm.scaleImage(width);
 

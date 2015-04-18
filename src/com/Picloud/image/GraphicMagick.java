@@ -247,12 +247,15 @@ public class GraphicMagick {
 				+ "\'";
 		String fontpath = SystemConfig.getSystemPath() + "/font/msyh.ttf";
 		color = "#" + color;
+		color = "rgba\\(0,0,0,0.4\\)";
 		String formatOp = format + ":-";
 		byte[] imageOutData = null;
 
+		//TODO 文字透明度
+		
 		try {
 			op.font(fontpath).gravity("northwest").pointsize(fontsize)
-					.fill(color).draw(option).dissolve(dissolve);;
+					.fill(color).annotate(20,20,offsetX,offsetY,text);
 			op.addImage("-");
 			op.addImage(formatOp);
 

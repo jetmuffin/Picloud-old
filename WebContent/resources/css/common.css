@@ -456,3 +456,7 @@ body.mini-navbar .nav-second-level li a:hover{
 .clear{
 	clear: both;
 }
+.ibox-content h1, .ibox-content h2, .ibox-content h3, .ibox-content h4, .ibox-content h5, .ibox-title h1, .ibox-title h2, .ibox-title h3, .ibox-title h4, .ibox-title h5 {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
