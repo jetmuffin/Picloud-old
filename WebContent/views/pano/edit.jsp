@@ -40,16 +40,14 @@
 											<div class="col-md-5">
 												<dl class="dl-horizontal">
 													<dt>项目名称:</dt>
-													<dd>项目名称</dd>
+													<dd>${panoImage.name}</dd>
 													<dt>项目描述:</dt>
-													<dd>项目描述</dd>
+													<dd>${panoImage.info}</dd>
 												</dl>
 											</div>
 											<div class="col-md-7">
 												<dl class="dl-horizontal">
 													<dt>项目创建时间:</dt>
-													<dd>time</dd>
-													<dt>更新时间:</dt>
 													<dd>time</dd>
 												</dl>
 											</div>

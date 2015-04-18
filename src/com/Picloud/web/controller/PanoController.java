@@ -116,7 +116,8 @@ public class PanoController {
 			} catch (Exception e) {
 				throw new PanoImageException(e.getMessage());
 			}
-			return "redirect:"+panoKey+"/edit";
+
+			return "redirect:edit";
 	}
  }
 	

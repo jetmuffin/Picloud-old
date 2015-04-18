@@ -1,5 +1,6 @@
 package com.Picloud.web.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PageInfo {
@@ -7,7 +8,7 @@ public class PageInfo {
 	private int num;
 	private int page;
 	private boolean ifHaveNext;
-	private List<String> startKeys;
+	private List<String> startKeys = new ArrayList<String>();
 	public PageInfo() {
 		super();
 		// TODO Auto-generated constructor stub

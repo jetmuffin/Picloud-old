@@ -396,7 +396,7 @@ public class HbaseOperationImpl implements IHbaseOperation{
 	            List<Filter> filters = new ArrayList<Filter>(); 
 	            					
 	            					System.out.println(key);
-	            Filter rf = new RowFilter(CompareOp.GREATER, new BinaryComparator(key.getBytes()));
+	            Filter rf = new RowFilter(CompareOp.GREATER_OR_EQUAL, new BinaryComparator(key.getBytes()));
 	            filters.add(rf);
 	            
 	            Filter filter1 = new SingleColumnValueFilter(Bytes 
