@@ -22,7 +22,14 @@
 			<jsp:include page="../common/breadcrumb.jsp" />
 			<div class="wrapper wrapper-content animated fadeInDown">
   <block name="content">
-   				<div class="row">
+  				<c:if test="${not empty editMsg}">
+	    			<div class="alert alert-info alert-dismissable">
+						<button aria-hidden="true" data-dismiss="alert" class="close"
+							type="button">×</button>
+								${editMsg}
+					</div>					
+  				</c:if>
+   		<div class="row">
 					<div class="col-md-12">
 						<div class="ibox ">
 							<div class="ibox-title">
@@ -48,7 +55,7 @@
 											<div class="col-md-7">
 												<dl class="dl-horizontal">
 													<dt>项目创建时间:</dt>
-													<dd>time</dd>
+													<dd>${panoImage.createTime }</dd>
 												</dl>
 											</div>
 											<div class="col-lg-12">
@@ -106,7 +113,8 @@
 												<div class="form-group">
 													<label class="col-sm-2 control-label">背景音乐</label>
 													<div class="col-sm-10">
-														${pano.mus_path}
+													<label class="col-sm-2 control-label">${panoImage.mus_path}</label>
+														
 													</div>
 												</div>
 												<div class="form-group">
@@ -164,7 +172,7 @@
 								<h4 class="modal-title" id="myModalLabel">添加场景</h4>
 							</div>
 							<div class="modal-body">
-								<form action="${ROOT}/pano/add" method="POST"
+								<form action="${ROOT}/pano/${panoImage.key}/scene" method="POST"
 									enctype="multipart/form-data">
 									<div class="form-group">
 										<label class="control-label">场景名称</label> <input

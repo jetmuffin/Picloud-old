@@ -250,7 +250,7 @@ public class PanoController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:edit";
+		return "redirect:" + key + "edit";
 	}
 	
 	/**
