@@ -75,7 +75,26 @@ public class PanoController {
 		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
-	
+	/**
+	 *  全景图片编辑
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/{panoKey}/edit", method = RequestMethod.GET)
+	public String edit(@PathVariable String key,Model model, HttpSession session) {
+		model.addAttribute("module", module);
+		model.addAttribute("action", "全景图片编辑");
+
+		User loginUser = (User) session.getAttribute("LoginUser");
+		PanoImage panoImage = panoImageDao.find(key);
+		model.addAttribute("panoImages", panoImage);
+		
+		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "编辑全景图片");
+		mLogDaoImpl.add(log);
+		return "pano/edit";
+	}
 /**
  * 删除全景图片
  * @param imageName 图片名
@@ -104,54 +123,84 @@ public class PanoController {
 		
 		return "pano/add";
 	}
+//	/**
+//	 * 上传全景图片
+//	 * 
+//	 * @param session
+//	 * @param request
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/add", method = RequestMethod.POST)
+//	public String add(HttpSession session, HttpServletRequest request) {
+//		
+//
+//		User loginUser = (User) session.getAttribute("LoginUser");
+//		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+//		if (!isMultipart) {
+//			throw new PanoImageException("上传全景图片错误，没有文件域！");
+//		} else {
+//			FileItemFactory factory = new DiskFileItemFactory();
+//			ServletFileUpload upload = new ServletFileUpload(factory);
+//			try {
+//				List items = upload.parseRequest(request);
+//				Iterator iter = items.iterator();
+//				boolean flag = false;
+//				while (iter.hasNext()) {
+//					FileItem item = (FileItem) iter.next();
+//					String hdfsPath = HDFS_UPLOAD_ROOT + "/"
+//							+ loginUser.getUid() + "/Pano/";
+//				
+//					String filePath = hdfsPath ;
+//					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
+//					flag = imageWriter.uploadToHdfs(filePath, item,
+//							loginUser.getUid());
+//
+//					String key = EncryptUtil.imageEncryptKey(item.getName(),
+//							loginUser.getUid());
+//					String createTime = JspUtil.getCurrentDateStr();
+//					PanoImage panoImage = new PanoImage();//这句会报错，为了运行所以修改一些，反正也得重新写
+//					panoImageDao.add(panoImage);
+//					
+//					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
+//					mLogDaoImpl.add(log);
+//				}
+//			} catch (Exception e) {
+//				throw new PanoImageException(e.getMessage());
+//			}
+//		}
+//		return "redirect:list";
+//	}
 	/**
-	 * 上传全景图片
-	 * 
+	 * 添加全景的信息
+	 * @param panoName 全景图片的名字
+	 * @param info 全景图片的信息
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String add(HttpSession session, HttpServletRequest request) {
-		
-
+	
+		String panoName=request.getParameter("panoName");
+		String info=request.getParameter("panoDesc");
 		User loginUser = (User) session.getAttribute("LoginUser");
-		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		if (!isMultipart) {
-			throw new PanoImageException("上传全景图片错误，没有文件域！");
-		} else {
-			FileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
-			try {
-				List items = upload.parseRequest(request);
-				Iterator iter = items.iterator();
-				boolean flag = false;
-				while (iter.hasNext()) {
-					FileItem item = (FileItem) iter.next();
-					String hdfsPath = HDFS_UPLOAD_ROOT + "/"
-							+ loginUser.getUid() + "/Pano/";
-				
-					String filePath = hdfsPath ;
-					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-					flag = imageWriter.uploadToHdfs(filePath, item,
-							loginUser.getUid());
-
-					String key = EncryptUtil.imageEncryptKey(item.getName(),
-							loginUser.getUid());
-					String createTime = JspUtil.getCurrentDateStr();
-					PanoImage panoImage = new PanoImage();//这句会报错，为了运行所以修改一些，反正也得重新写
-					panoImageDao.add(panoImage);
-					
-					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
-					mLogDaoImpl.add(log);
-				}
-			} catch (Exception e) {
-				throw new PanoImageException(e.getMessage());
-			}
+		String key=" ";
+		try {
+			//使用图片名加用户昵称加密
+			key=EncryptUtil.panoEncryptKey(panoName, loginUser.getNickname());
+			PanoImage panoImage=new PanoImage ();
+			panoImage.setKey(key);
+			panoImage.setInfo(info);
+			panoImage.setName(panoName);
+			panoImageDao.add(panoImage);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return "redirect:list";
+       System.out.println(key);
+		return "redirect:"+key+"/edit";
 	}
-
 	/**
 	 * 查看全景图片
 	 * @param imageName 图片名

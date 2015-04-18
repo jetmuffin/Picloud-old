@@ -35,20 +35,24 @@
 							<div class="ibox-content" style="display: block;">
 								<h2>制作全景项目</h2>
 								<p>注意:上传图片需要为标准的鱼眼图片，否则无法得到效果完美的全景图片。</p>
-								<form id="form" action="#" class="wizard-big">
+								<form id="form" action="#" class="wizard-big" method="post" enctype="multipart/form-data">
 									<h1>填写全景信息</h1>
 									<fieldset>
 										<h2>项目信息</h2>
 										<div class="row">
 											<div class="col-lg-8">
 												<div class="form-group">
-													<label>项目名称</label> <input id="panoName"
+													<label>项目名称 *</label> <input id="panoName"
 														name="panoName" type="text" class="form-control required">
 												</div>
 												<div class="form-group">
-													<label>项目描述</label> <textarea id="panoDesc"
+													<label>项目描述 *</label> <textarea id="panoDesc"
 														name="panoDesc" type="text" class="form-control required"></textarea>
 												</div>
+												<div class="form-group">
+													<label>背景音乐</label> <input id="panoMusic"
+														name="panoMusic" type="file" class="form-control "/>
+												</div>												
 											</div>
 											<div class="col-lg-4">
 												<div class="text-center">
@@ -59,31 +63,40 @@
 												</div>
 											</div>
 										</div>
-
 									</fieldset>
-									<h1>Profile</h1>
+									<h1>编辑场景</h1>
 									<fieldset>
-										<h2>Profile Information</h2>
+										<h2>场景信息</h2>
 										<div class="row">
-											<div class="col-lg-6">
-												<div class="form-group">
-													<label>First name *</label> <input id="name" name="name"
-														type="text" class="form-control required">
+											<div class="col-lg-12">
+												<div class="row">
+													<div class="scene-item col-md-4">
+														<div class="ibox">
+															<div class="ibox-title">添加场景</div>
+															<div class="ibox-content">
+																场景图片
+																<input type="file" name="sceneImage_1" id="sceneImage_1"/>
+																场景描述
+																<textarea name="sceneDesc_1" id="sceneDesc_1" ></textarea>
+															</div>
+															<div class="ibox-content">
+																<div class="row">
+																	<div class="col-md-6">
+																		<button type="submit"
+																			class="btn btn-primary btn-block jet-button">
+																			<i class="fa fa-plus"></i> 添加
+																		</button>
+																	</div>
+																	<div class="col-md-6">
+																		<a type="reset" class="btn btn-default btn-block"><i
+																			class="fa fa-reply"></i> 取消</a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>												
 												</div>
-												<div class="form-group">
-													<label>Last name *</label> <input id="surname"
-														name="surname" type="text" class="form-control required">
-												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="form-group">
-													<label>Email *</label> <input id="email" name="email"
-														type="text" class="form-control required email">
-												</div>
-												<div class="form-group">
-													<label>Address *</label> <input id="address" name="address"
-														type="text" class="form-control">
-												</div>
+
 											</div>
 										</div>
 									</fieldset>

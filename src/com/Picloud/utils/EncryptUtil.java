@@ -161,7 +161,14 @@ public class EncryptUtil {
     	key = key.substring(0, 12);    	
     	return key;
     }
-    
+    public static String panoEncryptKey(String panoImageName,String uid) throws Exception{
+    	String data = panoImageName + "_" + uid + "_pano";
+    	String sha = encryptSHA(data.getBytes());
+    	String md5 = encryptMD5(sha.getBytes());
+    	String key = encryptBASE64(md5.getBytes());
+    	key = key.substring(0, 12);    	
+    	return key;
+    }
     public static void main(String[] args) throws Exception {
 		String str = "测试空间_chen9434";
 		byte[] data = str.getBytes();
