@@ -29,7 +29,7 @@
 								<h5>${space.name}</h5>
 							</div>
 							<div class="ibox-content  space-pic">
-								<a href="${space.key }">
+								<a href="${space.key}/0">
 									<c:choose>
 										<c:when test="${space.cover=='' }">
 										<img src="${RESOURCES}/images/p3.jpg">

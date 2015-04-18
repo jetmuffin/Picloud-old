@@ -30,13 +30,13 @@
 									<h5 class="space-desc">${space.desc}</h5>
 									<div class="hr-line-dashed"></div>
 									<a class="jet-button btn btn-primary btn-block"
-										href="${space.key }/upload">上传图片</a>
+										href="${ROOT}/space/${space.key}/upload">上传图片</a>
 									<div class="hr-line-dashed"></div>
 									<label class="control-label">其他空间</label>
 									<ul class="folder-list" style="padding: 0">
 										<c:forEach items="${spaces}" var="otherspace">
 											<c:if test="${space.name ne otherspace.name}">
-												<li><a href="${ROOT}/space/${otherspace.key}">${otherspace.name }</a></li>
+												<li><a href="${ROOT}/space/${otherspace.key}/0">${otherspace.name }</a></li>
 											</c:if>
 										</c:forEach>
 									</ul>

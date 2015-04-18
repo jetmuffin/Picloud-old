@@ -10,7 +10,7 @@
 				<li class="active">${action}</li>
 			</c:if>
 			<c:if test="${activeSpace!=null}">
-				<li class="active"><a href="${ROOT}/space/${activeSpace.key}">${activeSpace.name}</a></li>
+				<li class="active"><a href="${ROOT}/space/${activeSpace.key}/0">${activeSpace.name}</a></li>
 			</c:if>
 			<c:if test="${activeImage!=null}">
 				<li class="active">${activeImage.name}</li>
