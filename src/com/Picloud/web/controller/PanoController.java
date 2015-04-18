@@ -92,7 +92,7 @@ public class PanoController {
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
 					String musicPath = HDFS_UPLOAD_ROOT + "/"
-							+ loginUser.getUid() + "/Pano/Music";
+							+ loginUser.getUid() + "/Pano/Music/";
 
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
 					flag = imageWriter.uploadToHdfs(musicPath, item,
@@ -108,7 +108,7 @@ public class PanoController {
 			} catch (Exception e) {
 				throw new PanoImageException(e.getMessage());
 			}
-		 return "pano/edit";
+			return "redirect:edit";
 	}
  }
 	/**

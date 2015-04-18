@@ -58,7 +58,7 @@
 											</td>
 											<td class="project-actions">
 											<a href="${ROOT}/pano/${pano.key}/edit"
-												class="btn btn-default btn-sm" target="_blank"><i
+												class="btn btn-default btn-sm" ><i
 													class="fa fa-folder"></i> 编辑 </a>
 											<a href="${ROOT}/pano/${pano.key}"
 												class="btn btn-default btn-sm" target="_blank"><i
@@ -86,10 +86,10 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">&times;</span><span class="sr-only">取消</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">制作高清图片</h4>
+								<h4 class="modal-title" id="myModalLabel">制作全景项目</h4>
 							</div>
 							<div class="modal-body">
-								<form action="${ROOT}/pano/add" method="POST"
+								<form action="${ROOT}/pano/${panoImage.key}/add" method="POST"
 									enctype="multipart/form-data">
 									<div class="form-group">
 										<label class="control-label">项目名称</label> <input
