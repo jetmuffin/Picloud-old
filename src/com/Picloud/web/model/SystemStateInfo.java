@@ -1,5 +1,8 @@
 package com.Picloud.web.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SystemStateInfo {
 
 	private String dfsUsed;
@@ -13,6 +16,7 @@ public class SystemStateInfo {
 	private String nodeUsageMedian;
 	private String nodeUsageMax;
 	private String nodeUsageStdDev;
+	private List<DataNodeState> datanodes = new ArrayList<DataNodeState>();
 	
 	
 	public String getNodeUsageMin() {
@@ -81,17 +85,11 @@ public class SystemStateInfo {
 	public void setBlockPoolUsedPercent(String blockPoolUsedPercent) {
 		this.blockPoolUsedPercent = blockPoolUsedPercent;
 	}
-	@Override
-	public String toString() {
-		return "SystemStateInfo [dfsUsed=" + dfsUsed + ", nonDFSUsed="
-				+ nonDFSUsed + ", dfsRemaining=" + dfsRemaining
-				+ ", dfsUsedPercent=" + dfsUsedPercent
-				+ ", dfsRemainingPercent=" + dfsRemainingPercent
-				+ ", blockPoolUsed=" + blockPoolUsed
-				+ ", blockPoolUsedPercent=" + blockPoolUsedPercent
-				+ ", nodeUsageMin=" + nodeUsageMin + ", nodeUsageMedian="
-				+ nodeUsageMedian + ", nodeUsageMax=" + nodeUsageMax
-				+ ", nodeUsageStdDev=" + nodeUsageStdDev + "]";
+	public List<DataNodeState> getDatanodes() {
+		return datanodes;
+	}
+	public void setDatanodes(List<DataNodeState> datanodes) {
+		this.datanodes = datanodes;
 	}
 	
 }

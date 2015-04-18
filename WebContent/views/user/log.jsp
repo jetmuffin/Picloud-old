@@ -26,7 +26,7 @@
 					<c:out value="${log.time}" /> <br />
 				</c:forEach>
 				
-				
+			
 				<c:if test="${sessionScope.logPageInfo.page < 1 }">
 					<li class="disabled"><a href="">&laquo;</a></li>
 				</c:if>
