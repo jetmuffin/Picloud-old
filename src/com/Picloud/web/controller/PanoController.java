@@ -70,6 +70,7 @@ public class PanoController {
 		model.addAttribute("action", "全景图片");
 
 		User loginUser = (User) session.getAttribute("LoginUser");
+		System.out.println("user"+loginUser);
 		List<PanoImage> panoImages = panoImageDao.load(loginUser.getUid());
 		model.addAttribute("panoImages", panoImages);
 		
@@ -181,7 +182,6 @@ public class PanoController {
 	@RequestMapping(value = "/{panoKey}/scene", method = RequestMethod.POST)
 	public String scene(@PathVariable String panoKey,HttpSession session, RedirectAttributes attr,HttpServletRequest request) {
 		
-System.out.println("dadadadsdadadasdad");
 		User loginUser = (User) session.getAttribute("LoginUser");
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		if (!isMultipart) {
@@ -195,8 +195,8 @@ System.out.println("dadadadsdadadasdad");
 
 				String hdfsPath = HDFS_UPLOAD_ROOT + "/"
 						+ loginUser.getUid() + "/Pano/"+panoKey+"/scene";
-				String sceneName=" ";
-				String sceneDesc=" ";
+				String sceneName="";
+				String sceneDesc="";
 				PanoImage panoImage=panoImageDao.find(panoKey);
 				int number=Integer.parseInt(panoImage.getNumber())+1;
 
@@ -211,24 +211,22 @@ System.out.println("dadadadsdadadasdad");
 							 sceneName = item.getString();
 						} else if(name.equals("sceneDesc")) {
 							 sceneDesc = item.getString();
+							 System.out.println(sceneDesc);
 						}
 
 					} else {
-						System.out.println(item.getContentType());
 						String fileName=number+"."+item.getContentType();
 						String filePath = hdfsPath+fileName;
 						ImageWriter imageWriter=new ImageWriter(infoDaoImpl);
-						System.out.println(filePath);
 					    imageWriter.uploadToHdfs(filePath, item,loginUser.getUid());
 					}
-					
-					panoImage.append(sceneName, sceneDesc);
-					panoImage.init();
-					panoImageDao.add(panoImage);
-					
-					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
-					mLogDaoImpl.add(log);
 				}
+				panoImage.append(sceneName, sceneDesc);
+				panoImage.init();
+				panoImageDao.add(panoImage);
+				
+				Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
+				mLogDaoImpl.add(log);
 			} catch (Exception e) {
 				throw new PanoImageException(e.getMessage());
 			}

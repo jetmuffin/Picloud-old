@@ -256,6 +256,9 @@ public class BeanMapping {
 				if(v.equals("sceneName")){
 					panoImage.setSceneName(val);
 				}
+				if(v.equals("type")){
+					panoImage.setType(val);
+				}
 			}
 			panoImage.init();
 		}

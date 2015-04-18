@@ -43,6 +43,7 @@ public class PanoImageDao implements IPanoImageDao{
 		mHbaseOperationImpl.insertData("cloud_pano", panoImage.getKey(), "attr", "desc", panoImage.getDesc());
 		mHbaseOperationImpl.insertData("cloud_pano", panoImage.getKey(), "attr", "sceneName", panoImage.getSceneName());
 		mHbaseOperationImpl.insertData("cloud_pano", panoImage.getKey(), "attr", "mus_path", panoImage.getMus_path());
+		mHbaseOperationImpl.insertData("cloud_pano", panoImage.getKey(), "attr", "type", panoImage.getType());
 	}
 
 	/**

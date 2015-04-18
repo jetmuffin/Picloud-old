@@ -271,6 +271,9 @@ public class ListMapping {
 				if(v.equals("sceneName")){
 					panoImage.setSceneName(val);
 				}
+				if(v.equals("type")){
+					panoImage.setType(val);
+				}
 			}
 			panoImage.init();
 			list.add(panoImage);

@@ -1,5 +1,6 @@
 package com.Picloud.web.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.Picloud.utils.StringSplit;
@@ -23,7 +24,9 @@ public class PanoImage {
 	//场景描述
 	String desc="";
 	//场景
-	List<PanoScene> scene ;
+	List<PanoScene> scene = new ArrayList<PanoScene>();
+	//
+	private String type;
 	
 	String mus_path="";
 	
@@ -31,7 +34,7 @@ public class PanoImage {
 		super();
 	}
 	public PanoImage(String key, String name, String number, String uid,
-			String createTime, String info, String path, String desc, String mus_path, String sceneName) {
+			String createTime, String info, String path, String desc, String mus_path, String sceneName, String type) {
 		super();
 		this.key = key;
 		this.name = name;
@@ -42,6 +45,14 @@ public class PanoImage {
 		this.path = path;
 		this.desc = desc;
 		this.mus_path = mus_path;
+		this.type = type;
+	}
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getKey() {
 		return key;
@@ -95,6 +106,7 @@ public class PanoImage {
 		return desc;
 	}
 	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 	public String getMus_path() {
 		return mus_path;
@@ -116,13 +128,21 @@ public class PanoImage {
 	}
 	
 	public void init(){
-		for(int i = 0; i < Integer.valueOf(number); i++){
+		for(int i = 1; i <= Integer.parseInt(number); i++){
 			PanoScene sc = new PanoScene();
 			sc.setName(StringSplit.descSplit(sceneName, i));
 			sc.setPath(path+"/"+name+"/"+sc.getName());
-			sc.setDesc(StringSplit.descSplit(desc, i));
+			sc.setDesc(StringSplit.descSplit(this.desc, i));
 			this.scene.add(sc);
 		}
+	}
+	@Override
+	public String toString() {
+		return "PanoImage [key=" + key + ", name=" + name + ", sceneName="
+				+ sceneName + ", number=" + number + ", uid=" + uid
+				+ ", createTime=" + createTime + ", info=" + info + ", path="
+				+ path + ", desc=" + desc + ", scene=" + scene + ", mus_path="
+				+ mus_path + "]";
 	}
 
 }
