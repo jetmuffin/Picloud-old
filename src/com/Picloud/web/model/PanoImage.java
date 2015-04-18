@@ -1,6 +1,5 @@
 package com.Picloud.web.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.Picloud.utils.StringSplit;
@@ -24,11 +23,14 @@ public class PanoImage {
 	String desc="";
 	//场景
 	List<PanoScene> scene ;
+	
+	String mus_path="";
+	
 	public PanoImage() {
 		super();
 	}
 	public PanoImage(String key, String name, String number, String uid,
-			String createTime, String info, String path, String desc) {
+			String createTime, String info, String path, String desc, String mus_path) {
 		super();
 		this.key = key;
 		this.name = name;
@@ -38,6 +40,7 @@ public class PanoImage {
 		this.info = info;
 		this.path = path;
 		this.desc = desc;
+		this.mus_path = mus_path;
 		for(int i = 0; i < Integer.valueOf(number); i++){
 			PanoScene sc = new PanoScene();
 			sc.setName(name+String.valueOf(i+1));
@@ -108,6 +111,12 @@ public class PanoImage {
 			sc.setDesc(StringSplit.descSplit(desc, i));
 			this.scene.add(sc);
 		}
+	}
+	public String getMus_path() {
+		return mus_path;
+	}
+	public void setMus_path(String mus_path) {
+		this.mus_path = mus_path;
 	}
 
 }

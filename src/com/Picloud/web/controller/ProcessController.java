@@ -366,7 +366,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		byte[] bufferOut = gm.modulate(buffer, brightness, 100.0, 360);
+		byte[] bufferOut = gm.modulate(buffer, brightness);
 		
 		if (bufferOut != null) {
 			// 输出byte为图片

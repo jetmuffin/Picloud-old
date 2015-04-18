@@ -250,6 +250,9 @@ public class BeanMapping {
 				if(v.equals("desc")){
 					panoImage.setDesc(val);
 				}
+				if(v.equals("mus_path")){
+					panoImage.setMus_path(val);
+				}
 			}
 		}
 		return panoImage;
