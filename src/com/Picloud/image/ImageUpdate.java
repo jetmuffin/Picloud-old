@@ -2,6 +2,7 @@ package com.Picloud.image;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,9 +17,11 @@ import com.Picloud.config.SystemConfig;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.hdfs.MapfileHandler;
 import com.Picloud.utils.EncryptUtil;
+import com.Picloud.web.dao.impl.DustbinDaoImpl;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.MapfileDaoImpl;
+import com.Picloud.web.model.Dustbin;
 import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Mapfile;
 import com.Picloud.web.model.User;
@@ -32,6 +35,7 @@ public class ImageUpdate {
 	private HdfsHandler mHdfsHandler;
 	private MapfileDaoImpl mMapfileDaoImpl;
 	private SystemConfig mSystemConfig;
+	private DustbinDaoImpl mDustbinDaoImpl;
 	private static final String LOCAL_UPLOAD_ROOT = "/upload";
 	private static final String HDFS_UPLOAD_ROOT = "/upload";
 	private static final String BigFile = "HdfsLargeFile";
@@ -50,6 +54,7 @@ public class ImageUpdate {
 		this.mSystemConfig = infoDaoImpl.getmSystemConfig();
 		this.mHdfsHandler = infoDaoImpl.getmHdfsHandler();
 		this.mMapfileDaoImpl = infoDaoImpl.getmMapfileDaoImpl();
+		this.mDustbinDaoImpl=infoDaoImpl.getmDustbinDaoImpl();
 	}
 /**
  * 先进行删除。如果是小图片
@@ -60,23 +65,21 @@ public class ImageUpdate {
  * @param space
  * @param imageName
  */
-	public void updateImage(byte[] imagebyte, String uid, String space,
-			String imageName) {
+	public void updateImage(byte[] imagebyte, String uid, String space,String imageKey) {
 		try {
-			ImageDeleter deleter=new ImageDeleter(infoDaoImpl);
-			Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(imageName,
-					uid));
-			deleteUpPicture(image);
 			
-			FileItem item = ByteToObject(imagebyte);
-			double fileLength = (double) item.getSize() / 1024 / 1024;
+			ImageDeleter deleter=new ImageDeleter(infoDaoImpl);
+			Image image = mImageDaoImpl.find(imageKey);
+			//deleteUpPicture(image);
+			
+			double fileLength = (double) imagebyte.length/ 1024 / 1024;
 			boolean flag;
 			if (fileLength > mSystemConfig.getMaxFileSize()) {
 
-				flag=updateBigImage(item, uid, space);
+				flag=updateBigImage(imagebyte, uid, space,image);
 			}
 			else{
-				flag=updateSmallImage(item, uid, space);
+				flag=updateSmallImage(imagebyte, uid, space,image);
 	
 			}
 
@@ -93,20 +96,20 @@ public class ImageUpdate {
  * @param space
  * @return
  */
-	public boolean updateBigImage(FileItem item, String uid, String space) {
+	public boolean updateBigImage(byte[] imagebyte, String uid, String space,Image image) {
 		try {
 			boolean flag = false;
 			// HDFS文件名
 			final String hdfsPath = HDFS_UPLOAD_ROOT + "/" + uid
 					+ "/LargeFile/" + space + '/';
-			String filePath = hdfsPath + item.getName();
-			InputStream uploadedStream = item.getInputStream();
-			flag = mHdfsHandler.upLoad(uploadedStream, filePath);
-			BufferedImage bufferedImage = ImageIO.read(item.getInputStream());
+			
+			String filePath = hdfsPath + image.getName();		
+			ByteArrayInputStream input = new ByteArrayInputStream(imagebyte);
+			HdfsHandler hdfsHandler=new HdfsHandler();
+			hdfsHandler.upLoad(input, hdfsPath);
+			BufferedImage bufferedImage = ImageIO.read(input);
 			String width = Integer.toString(bufferedImage.getWidth());
 			String height = Integer.toString(bufferedImage.getHeight());
-			Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(item.getName(),
-					uid));
 			image.setPath(filePath);
 			image.setHeight(height);
 			image.setWidth(width);
@@ -129,31 +132,37 @@ public class ImageUpdate {
 	 * @param space
 	 * @return
 	 */
-	public boolean updateSmallImage(FileItem item, String uid, String space) {
+	public boolean updateSmallImage(byte[] imagebyte, String uid, String space,Image image) {
 		try {
 		// 本地目录为“根目录/用户名/时间戳"
 		final String LocalUidPath = SystemConfig.getSystemPath()
 				+ LOCAL_UPLOAD_ROOT + "/" + uid + '/';
 		final String LocalPath = LocalUidPath + '/' + space + '/';
-		BufferedImage bufferedImage = ImageIO.read(item.getInputStream());
+		ByteArrayInputStream input = new ByteArrayInputStream(imagebyte);
+		BufferedImage bufferedImage = ImageIO.read(input);
 		String width = Integer.toString(bufferedImage.getWidth());
 		String height = Integer.toString(bufferedImage.getHeight());
 		
-		String imageName=item.getName();
+		String imageName=image.getName();
 		File file = new File(LocalPath, imageName);
 		ImageWriter writer = new ImageWriter(infoDaoImpl);
-		Image image = mImageDaoImpl.find(EncryptUtil.imageEncryptKey(imageName,
-				uid));
-		item.write(file);
+		
+		HdfsHandler hdfsHandler=new HdfsHandler();
+		hdfsHandler.writeByteImage(imagebyte, LocalPath, imageName);
 		if (image.getStatus().equals("LocalFile")) {
 				
 		} else {
 			
 			String path=image.getPath();
+			String map_key = path.substring(path.length() - 14,path.length()) + image.getUid();
+			Mapfile mapfile = mMapfileDaoImpl.find(map_key);
 			//将图片名+path写入垃圾表中
-	
+			Dustbin dustbin=new Dustbin(image.getName(),mapfile.getName());
+			mDustbinDaoImpl.add(dustbin);
 			//建立线程检查mapfile文件是否需要重写
-	
+			MergeThread mergeThread = new MergeThread(infoDaoImpl);
+			mergeThread.setProperty(mapfile, image);
+			mergeThread.start();
 		}
 		image.setPath(LocalPath);
 		image.setStatus("LocalFile");
@@ -178,28 +187,8 @@ public class ImageUpdate {
 		return true;
 	}
 
-	/**
-	 * 将byte数组转化成FileItem对象
-	 * 
-	 * @param bytes
-	 * @return
-	 */
-	public static FileItem ByteToObject(byte[] bytes) {
-		FileItem obj = null;
-		try {
-			// bytearray to object
-			ByteArrayInputStream bi = new ByteArrayInputStream(bytes);
-			ObjectInputStream oi = new ObjectInputStream(bi);
 
-			obj = (FileItem) oi.readObject();
-			bi.close();
-			oi.close();
-		} catch (Exception e) {
 
-			e.printStackTrace();
-		}
-		return obj;
-	}
 
 	/**
 	 * 删除图片

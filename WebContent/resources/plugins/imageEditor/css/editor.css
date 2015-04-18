@@ -627,3 +627,28 @@ background: #A1C0FF;
 .picloud-controls-item-input{
   display: inline-block;
 }
+.picloud-imageinfo{
+	    position: absolute;
+    z-index: 200;
+    right: 20px;
+    top: 120px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 5px;
+    color: #fff;
+    padding: 5px;
+}
+.picloud-controls-input-float{
+	float:left;
+	margin: 10px;
+}
+#addLogo{
+	height:25px;
+	line-height:15px;
+	font-size:12px;
+}
+#logoModal .modal-dialog{
+	width:400px;
+}
+.hd-dialog .chosen-container {
+width: 360px !important;
+}

@@ -97,6 +97,11 @@ public class PanoController {
 		return "pano/list";
 	}
 	
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(Model model) {
+		
+		return "pano/add";
+	}
 	/**
 	 * 上传全景图片
 	 * 

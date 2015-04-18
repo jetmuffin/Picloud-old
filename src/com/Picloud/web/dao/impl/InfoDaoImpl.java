@@ -31,8 +31,16 @@ public class InfoDaoImpl {
 	SequencefileHandler mSequencefileHandler;
 	@Autowired
 	HarfileHandler mHarfileHandler;
+	@Autowired
+	DustbinDaoImpl mDustbinDaoImpl;
 	
 	
+	public DustbinDaoImpl getmDustbinDaoImpl() {
+		return mDustbinDaoImpl;
+	}
+	public void setmDustbinDaoImpl(DustbinDaoImpl mDustbinDaoImpl) {
+		this.mDustbinDaoImpl = mDustbinDaoImpl;
+	}
 	public HarfileHandler getmHarfileHandler() {
 		return mHarfileHandler;
 	}
