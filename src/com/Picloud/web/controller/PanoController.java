@@ -29,6 +29,7 @@ import com.Picloud.exception.FileException;
 import com.Picloud.exception.ImageException;
 import com.Picloud.exception.PanoImageException;
 import com.Picloud.exception.ThreeDImageException;
+import com.Picloud.exception.UserException;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.image.ImageWriter;
 import com.Picloud.utils.EncryptUtil;
@@ -248,7 +249,7 @@ public class PanoController {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new PanoImageException(e.getMessage());
 		}
 		return "redirect:edit";
 	}
@@ -279,7 +280,7 @@ public class PanoController {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new PanoImageException(e.getMessage());
 		}
 		return "redirect:edit";
 	}
@@ -340,7 +341,7 @@ public class PanoController {
 			}	
 			
 		@ExceptionHandler(value=(PanoImageException.class))
-		public String handlerException(ImageException e,HttpServletRequest req){
+		public String handlerException(Exception e,HttpServletRequest req){
 			req.setAttribute("e", e);
 			return "error";
 		}
@@ -352,5 +353,7 @@ public class PanoController {
 			
 			return "pano/show";
 		}
+		
+		
 	
 }
