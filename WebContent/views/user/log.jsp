@@ -78,8 +78,6 @@
 					</div>
 				</div>
 				
-				<br />
-				
 			</block>
 			</div>
 			<jsp:include page="../common/footer.jsp" />
@@ -89,6 +87,5 @@
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
-	<script type="text/javascript" src="${RESOURCES }/js/index.js"></script>
 </body>
 </html>

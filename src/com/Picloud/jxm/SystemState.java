@@ -6,6 +6,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.Picloud.config.SystemConfig;
+import com.Picloud.web.model.DataNodeState;
 import com.Picloud.web.model.SystemStateInfo;
 
 public class SystemState {
@@ -76,13 +77,44 @@ public class SystemState {
 
 		String nodeUsageStdDev = jsonNode.getString("stdDev");
 		info.setNodeUsageStdDev(nodeUsageStdDev);
+		
+		//////////////////////////////
 
+		JSONObject datanode = jsonInfo.getJSONObject("LiveNodes");
+	
+		JSONObject node = datanode.getJSONObject("localhost");
+		
+		DataNodeState dns = new DataNodeState();
+		dns.setNode(node.getString("xferaddr"));
+		
+		Double datanodecapacity =Double.valueOf( node.getString("capacity"))/ (1024 * 1024 * 1024);
+		dns.setCapacity(df.format(datanodecapacity)+"GB");
+		
+		Double datanodeused =Double.valueOf( node.getString("used"))/ (1024 * 1024);
+		dns.setUsed(df.format(datanodeused)+"MB");
+		
+		Double nonDfsUsedSpace =Double.valueOf( node.getString("nonDfsUsedSpace"))/ (1024 * 1024*1024);
+		dns.setNonDFSUsed(df.format(nonDfsUsedSpace)+"GB");
+		
+		Double datanoderemaining =Double.valueOf( node.getString("remaining"))/ (1024 * 1024*1024);
+		dns.setRemaining(df.format(datanoderemaining)+"GB");
+		
+		dns.setBlocks(node.getString("numBlocks"));
+		
+		Double datanodeblockPoolUsed =Double.valueOf( node.getString("blockPoolUsed"))/ (1024 * 1024);
+		dns.setBlockPoolUsed((df.format(datanodeblockPoolUsed)+"MB"));
+		
+		dns.setFailedVolumes(node.getString("volfails"));
+		
+		dns.setVersion(node.getString("version"));
+		
+		info.getDatanodes().add(dns);
+		
 		System.out.println(info);
 		return info;
 	}
 //
 //	public static void main(String[] args) {
-//		getSystemState();
+//		System.out.println(getSystemState());
 //	}
-
 }
