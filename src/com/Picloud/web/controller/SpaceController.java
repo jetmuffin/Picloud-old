@@ -41,6 +41,7 @@ import com.Picloud.web.dao.impl.SpaceDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
 import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Log;
+import com.Picloud.web.model.PageInfo;
 import com.Picloud.web.model.Space;
 import com.Picloud.web.model.ThreeDImage;
 import com.Picloud.web.model.User;
@@ -61,7 +62,7 @@ public class SpaceController {
 	@Autowired
 	private InfoDaoImpl infoDaoImpl;
 
-	private static int pageNum = 6;
+	private static int pageNum = 6+1;
 
 	/**
 	 * 查看所有空间
@@ -128,24 +129,36 @@ public class SpaceController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/{spaceKey}", method = RequestMethod.GET)
-	public String show(@PathVariable String spaceKey, Model model,
-			HttpSession session, ServletContext sc) throws Exception {
+	@RequestMapping(value = "/{spaceKey}/{page} ", method = RequestMethod.GET)
+	public String show(@PathVariable String spaceKey, @PathVariable int page, Model model,
+			HttpSession session) throws Exception {
 		model.addAttribute("module", module);
 		model.addAttribute("action", "图片空间");
 
-		ApplicationContext ac = (ApplicationContext) WebApplicationContextUtils
-				.getRequiredWebApplicationContext(sc);
 		User loginUser = (User) session.getAttribute("LoginUser");
 		Space space = mSpaceDaoImpl.find(spaceKey);
 		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
+		 PageInfo pi = (PageInfo) session.getAttribute("pageInfo");
+		 if(pi == null){
+			 pi = new PageInfo();
+			 pi.setNum(1);
+			 pi.setPage(0);
+			 pi.getStartKeys().add(" ");
+		 }
+		 pi.setPage(page);
 		 List<Image> images = mImageDaoImpl.imagePageByKey(loginUser.getUid(),
-		 " ", spaceKey, pageNum);
+		 pi.getStartKeys().get(pi.getPage()), spaceKey, pageNum);
+		 if(images == null ||images.size() < pageNum){
+			 pi.setIfHaveNext(false);
+		 }else{
+			 pi.setIfHaveNext(true);
+			 pi.setNum(pi.getNum()+1);
+			 pi.getStartKeys().add(images.get(6).getKey());
+		 }
 		 
 //		List<Image> images = mImageDaoImpl.load(spaceKey);
-		if (images != null) {
-			model.addAttribute("images", images);
-		}
+		 session.setAttribute("pageinfo", pi);
+		model.addAttribute("images", images);
 		model.addAttribute("activeSpace", space);
 		model.addAttribute(space);
 		model.addAttribute("spaces", spaces);
