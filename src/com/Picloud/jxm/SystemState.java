@@ -2,21 +2,23 @@ package com.Picloud.jxm;
 
 import java.text.DecimalFormat;
 
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.Picloud.config.SystemConfig;
 import com.Picloud.web.model.SystemStateInfo;
 
 public class SystemState {
 
-	private static String nameNodeInfo = "http://localhost:50070/jmx?qry=Hadoop:service=NameNode,name=NameNodeInfo";
-	private static String nameNodeStatus = "http://localhost:50070/jmx?qry=Hadoop:service=NameNode,name=NameNodeStatus";
-	private static String FSNamesystemState = "http://localhost:50070/jmx?qry=Hadoop:service=NameNode,name=FSNamesystemState";
-	private static String memory = "http://localhost:50070/jmx?qry=java.lang:type=Memory";
+
 	private static DecimalFormat df = new DecimalFormat("#.00");
 
 	public static SystemStateInfo getSystemState() {
+		String nameNodeInfo = SystemConfig.getNameNodeInfo();
+		String nameNodeStatus = SystemConfig.getNameNodeStatus();
+		String FSNamesystemState = SystemConfig.getFSNamesystemState();
+		String memory = SystemConfig.getMemory();
+		
 		SystemStateInfo info = new SystemStateInfo();
 
 		JSONObject jsonNameNodeInfo = new JSONObject().fromObject(SendGet
