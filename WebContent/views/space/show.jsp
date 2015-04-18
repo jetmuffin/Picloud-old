@@ -34,7 +34,7 @@
 									<div class="hr-line-dashed"></div>
 									<label class="control-label">其他空间</label>
 									<ul class="folder-list" style="padding: 0">
-										<c:forEach items="${spaces}"  var="otherspace">
+										<c:forEach items="${spaces}" var="otherspace">
 											<c:if test="${space.name ne otherspace.name}">
 												<li><a href="${ROOT}/space/${otherspace.key}">${otherspace.name }</a></li>
 											</c:if>
@@ -52,10 +52,10 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="col-lg-9 animated fadeInRight">
 						<div class="row">
-							<c:forEach items="${images}"  var="image">
+							<c:forEach items="${images}" var="image">
 								<div class="file-box col-lg-4">
 									<div class="file">
 										<a href="${ROOT }/server/${image.key}/view"> <span
@@ -65,8 +65,8 @@
 													src="${ROOT}/process/${image.key}/scale[198,-]" width=198>
 											</div>
 											<div class="file-name">
-												${image.name} <br> <small> 
-												<c:out value="${jt.getStrTime(image.createTime)}"></c:out> 
+												${image.name} <br> <small> <c:out
+														value="${jt.getStrTime(image.createTime)}"></c:out>
 												</small>
 											</div>
 										</a>
@@ -76,19 +76,12 @@
 							<div class="clear"></div>
 							<nav class="pull-right gallery-pag">
 							<ul class="pagination jet-pagination">
-								<if condition="($_GET['page'] eq 1) ">
-								<li class="disabled"><a href="">&laquo;</a></li>
-								<else />
-								<li><a
-									href="{:U('Picserver/space/'.$space['name']).'?page='.($_GET['page']-1)}&dir=prev">&laquo;</a></li>
-								</if>
-								<li><a href="">{$_GET['page']}</a></li>
-								<if condition="($pic_list.ifNext eq 'false')">
-								<li class="disabled"><a href="">&raquo;</a></li>
-								<else />
-								<li><a
-									href="{:U('Picserver/space/'.$space['name']).'?page='.($_GET['page']+1)}&dir=next">&raquo;</a></li>
-								</if>
+								<c:if test="${sessionScope.pageinfo.ifHaveNext =='false' }">
+									<li class="disabled"><a href="">&laquo;</a></li>
+								</c:if>
+								<c:if test="${sessionScope.pageinfo.ifHaveNext =='true' }">
+									<li><a href="${ROOT}/space/${image.key}/${sessionScope.pageinfo.page+1}" ></a></li>
+								</c:if>
 							</ul>
 							</nav>
 						</div>
