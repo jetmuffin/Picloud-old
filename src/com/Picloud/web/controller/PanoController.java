@@ -100,14 +100,14 @@ public class PanoController {
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
 					String musicPath = HDFS_UPLOAD_ROOT + "/"
-							+ loginUser.getUid() + "/Pano/Music";
+							+ loginUser.getUid() + "/Pano/Music/";
 
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
 					flag = imageWriter.uploadToHdfs(musicPath, item,
 							loginUser.getUid());
 					
 					PanoImage panoImage=panoImageDao.find(panoKey);
-					panoImage.setMus_path(musicPath);
+					panoImage.setMus_path(musicPath+item.getName());
 					panoImageDao.add(panoImage);
 					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName()+"的背景音乐");
 					mLogDaoImpl.add(log);
@@ -116,9 +116,11 @@ public class PanoController {
 			} catch (Exception e) {
 				throw new PanoImageException(e.getMessage());
 			}
-		 return "pano/edit";
+			return "redirect:"+panoKey+"/edit";
 	}
  }
+	
+	
 	/**
 	 *  全景图片编辑
 	 * 
@@ -235,13 +237,49 @@ public class PanoController {
 			panoImage.setInfo(info);
 			panoImage.setName(panoName);
 			panoImage.setUid(loginUser.getUid());
+			String createTime=JspUtil.getCurrentDateStr();
+			panoImage.setCreateTime(createTime);
 			panoImageDao.add(panoImage);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "创建全景图片"+panoImage.getName());
+			mLogDaoImpl.add(log);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:"+key+"/edit";
+		return "redirect:edit";
+	}
+	
+	/**
+	 * 修改全景的信息
+	 * @param panoName 全景图片的名字
+	 * @param info 全景图片的信息
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/{panoKey}/info", method = RequestMethod.POST)
+	public String info(@PathVariable String panoKey,HttpSession session, HttpServletRequest request) {
+	
+		String panoName=request.getParameter("panoName");
+		String info=request.getParameter("panoDesc");
+		User loginUser = (User) session.getAttribute("LoginUser");
+		try {
+			//使用图片名加用户昵称加密
+			PanoImage panoImage=panoImageDao.find(panoKey);
+			panoImage.setInfo(info);
+			panoImage.setName(panoName);
+			panoImageDao.add(panoImage);
+			
+			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "修改全景图片"+panoImage.getName()+"的信息");
+			mLogDaoImpl.add(log);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:edit";
 	}
 	/**
 	 * 查看全景图片
