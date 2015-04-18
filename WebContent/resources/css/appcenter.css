@@ -142,3 +142,10 @@ a.dim:active:before {
 .pano-form{
 	margin: 20px 10px;
 }
+.file-box{
+	width:220px;
+	float:left;
+}
+.scene-box{
+	margin-top:20px !important;
+}
