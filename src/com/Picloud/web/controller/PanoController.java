@@ -75,7 +75,26 @@ public class PanoController {
 		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
-	
+	/**
+	 *  全景图片编辑
+	 * 
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/{panoKey}/edit", method = RequestMethod.GET)
+	public String edit(@PathVariable String key,Model model, HttpSession session) {
+		model.addAttribute("module", module);
+		model.addAttribute("action", "全景图片编辑");
+
+		User loginUser = (User) session.getAttribute("LoginUser");
+		PanoImage panoImage = panoImageDao.find(key);
+		model.addAttribute("panoImages", panoImage);
+		
+		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "编辑全景图片");
+		mLogDaoImpl.add(log);
+		return "pano/edit";
+	}
 /**
  * 删除全景图片
  * @param imageName 图片名
@@ -160,12 +179,15 @@ public class PanoController {
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(@PathVariable String panoName,@PathVariable String info,HttpSession session, HttpServletRequest request) {
+	public String add(HttpSession session, HttpServletRequest request) {
 	
+		String panoName=request.getParameter("panoName");
+		String info=request.getParameter("panoDesc");
 		User loginUser = (User) session.getAttribute("LoginUser");
+		String key=" ";
 		try {
 			//使用图片名加用户昵称加密
-			String key=EncryptUtil.panoEncryptKey(panoName, loginUser.getNickname());
+			key=EncryptUtil.panoEncryptKey(panoName, loginUser.getNickname());
 			PanoImage panoImage=new PanoImage ();
 			panoImage.setKey(key);
 			panoImage.setInfo(info);
@@ -176,8 +198,8 @@ public class PanoController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return "redirect:edit";
+       System.out.println(key);
+		return "redirect:"+key+"/edit";
 	}
 	/**
 	 * 查看全景图片
