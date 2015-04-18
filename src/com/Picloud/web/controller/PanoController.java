@@ -75,6 +75,42 @@ public class PanoController {
 		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
+	@RequestMapping(value = "/{panoKey}/music", method = RequestMethod.POST)
+	public String music(@PathVariable String panoKey,HttpSession session,HttpServletRequest request){
+		
+		User  loginUser=(User) session.getAttribute("LoginUser");
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (!isMultipart) {
+			throw new PanoImageException("上传音乐错误，没有文件域！");
+		} else {
+			FileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			try {
+				List items = upload.parseRequest(request);
+				Iterator iter = items.iterator();
+				boolean flag = false;
+				while (iter.hasNext()) {
+					FileItem item = (FileItem) iter.next();
+					String musicPath = HDFS_UPLOAD_ROOT + "/"
+							+ loginUser.getUid() + "/Pano/Music";
+
+					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
+					flag = imageWriter.uploadToHdfs(musicPath, item,
+							loginUser.getUid());
+					
+					PanoImage panoImage=panoImageDao.find(panoKey);
+					panoImage.setMus_path(musicPath);
+					panoImageDao.add(panoImage);
+					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName()+"的背景音乐");
+					mLogDaoImpl.add(log);
+				}
+			
+			} catch (Exception e) {
+				throw new PanoImageException(e.getMessage());
+			}
+		 return "pano/edit";
+	}
+ }
 	/**
 	 *  全景图片编辑
 	 * 
