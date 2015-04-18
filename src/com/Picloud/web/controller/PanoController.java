@@ -101,7 +101,7 @@ public class PanoController {
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
 					String musicPath = HDFS_UPLOAD_ROOT + "/"
-							+ loginUser.getUid() + "/Pano/Music/";
+							+ loginUser.getUid() + "/Pano"+panoKey+"/Music/";
 
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
 					flag = imageWriter.uploadToHdfs(musicPath, item,
@@ -170,53 +170,71 @@ public class PanoController {
 		
 		return "pano/add";
 	}
-//	/**
-//	 * 上传全景图片
-//	 * 
-//	 * @param session
-//	 * @param request
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/add", method = RequestMethod.POST)
-//	public String add(HttpSession session, HttpServletRequest request) {
-//		
-//
-//		User loginUser = (User) session.getAttribute("LoginUser");
-//		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-//		if (!isMultipart) {
-//			throw new PanoImageException("上传全景图片错误，没有文件域！");
-//		} else {
-//			FileItemFactory factory = new DiskFileItemFactory();
-//			ServletFileUpload upload = new ServletFileUpload(factory);
-//			try {
-//				List items = upload.parseRequest(request);
-//				Iterator iter = items.iterator();
-//				boolean flag = false;
-//				while (iter.hasNext()) {
-//					FileItem item = (FileItem) iter.next();
-//					String hdfsPath = HDFS_UPLOAD_ROOT + "/"
-//							+ loginUser.getUid() + "/Pano/";
-//				
-//					String filePath = hdfsPath ;
-//					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-//					flag = imageWriter.uploadToHdfs(filePath, item,
-//							loginUser.getUid());
-//
-//					String key = EncryptUtil.imageEncryptKey(item.getName(),
-//							loginUser.getUid());
-//					String createTime = JspUtil.getCurrentDateStr();
-//					PanoImage panoImage = new PanoImage();//这句会报错，为了运行所以修改一些，反正也得重新写
-//					panoImageDao.add(panoImage);
-//					
-//					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
-//					mLogDaoImpl.add(log);
-//				}
-//			} catch (Exception e) {
-//				throw new PanoImageException(e.getMessage());
-//			}
-//		}
-//		return "redirect:list";
-//	}
+	/**
+	 * 上传全景图片
+	 * 
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/{panoKey}/scene", method = RequestMethod.POST)
+	public String scene(@PathVariable String panoKey,HttpSession session, HttpServletRequest request) {
+		
+
+		User loginUser = (User) session.getAttribute("LoginUser");
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (!isMultipart) {
+			throw new PanoImageException("上传全景图片错误，没有文件域！");
+		} else {
+			FileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			try {
+				List items = upload.parseRequest(request);
+				Iterator iter = items.iterator();
+
+				String hdfsPath = HDFS_UPLOAD_ROOT + "/"
+						+ loginUser.getUid() + "/Pano/"+panoKey+"/scene";
+				String sceneName=" ";
+				String sceneDesc=" ";
+				PanoImage panoImage=panoImageDao.find(panoKey);
+				int number=Integer.parseInt(panoImage.getNumber())+1;
+
+				
+				
+				while (iter.hasNext()) {
+					FileItem item = (FileItem) iter.next();
+					if (item.isFormField()) {  		//若为普通表单
+						
+						String name = item.getFieldName();
+						if(name.equals("sceneName")) {
+							 sceneName = item.getString();
+						} else if(name.equals("sceneDesc")) {
+							 sceneDesc = item.getString();
+						}
+
+					} else {
+						System.out.println(item.getContentType());
+						String fileName=number+"."+item.getContentType();
+						String filePath = hdfsPath+fileName;
+						ImageWriter imageWriter=new ImageWriter(infoDaoImpl);
+					    imageWriter.uploadToHdfs(filePath, item,loginUser.getUid());
+					}
+					
+					
+					panoImage.append(sceneName, sceneDesc);
+					panoImage.init();
+					
+					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
+					mLogDaoImpl.add(log);
+				}
+			} catch (Exception e) {
+				throw new PanoImageException(e.getMessage());
+			}
+		}
+		return "redirect:list";
+	}
+	
+	
 	/**
 	 * 添加全景的信息
 	 * @param panoName 全景图片的名字
