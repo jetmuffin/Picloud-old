@@ -138,7 +138,7 @@ public class SpaceController {
 		User loginUser = (User) session.getAttribute("LoginUser");
 		Space space = mSpaceDaoImpl.find(spaceKey);
 		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
-		 PageInfo pi = (PageInfo) session.getAttribute("pageinfo");
+		 PageInfo pi = (PageInfo) session.getAttribute("imagePagePnfo");
 		 if(pi == null){
 			 pi = new PageInfo();
 			 pi.setNum(1);
@@ -156,7 +156,7 @@ public class SpaceController {
 			 pi.getStartKeys().add(images.get(6).getKey());
 			 images.remove(6);
 		 }
-		 session.setAttribute("pageinfo", pi);
+		 session.setAttribute("imagePagePnfo", pi);
 		model.addAttribute("images", images);
 		model.addAttribute("activeSpace", space);
 		model.addAttribute(space);
