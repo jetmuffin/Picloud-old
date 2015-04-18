@@ -138,7 +138,7 @@ public class SpaceController {
 		User loginUser = (User) session.getAttribute("LoginUser");
 		Space space = mSpaceDaoImpl.find(spaceKey);
 		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
-		 PageInfo pi = (PageInfo) session.getAttribute("pageInfo");
+		 PageInfo pi = (PageInfo) session.getAttribute("pageinfo");
 		 if(pi == null){
 			 pi = new PageInfo();
 			 pi.setNum(1);
