@@ -33,89 +33,99 @@
 								</div>
 							</div>
 							<div class="ibox-content" style="display: block;">
-								<h2>制作全景项目</h2>
-								<p>注意:上传图片需要为标准的鱼眼图片，否则无法得到效果完美的全景图片。</p>
-								<form id="form" action="#" class="wizard-big" method="post" enctype="multipart/form-data">
-									<h1>填写全景信息</h1>
-									<fieldset>
-										<h2>项目信息</h2>
+								<div class="project row">
+									<div class="col-lg-12">
+										<h2>项目名称</h2>
 										<div class="row">
-											<div class="col-lg-8">
-												<div class="form-group">
-													<label>项目名称 *</label> <input id="panoName"
-														name="panoName" type="text" class="form-control required">
-												</div>
-												<div class="form-group">
-													<label>项目描述 *</label> <textarea id="panoDesc"
-														name="panoDesc" type="text" class="form-control required"></textarea>
-												</div>
-												<div class="form-group">
-													<label>背景音乐</label> <input id="panoMusic"
-														name="panoMusic" type="file" class="form-control "/>
-												</div>												
+											<div class="col-md-5">
+												<dl class="dl-horizontal">
+													<dt>项目名称:</dt>
+													<dd>项目名称</dd>
+													<dt>项目描述:</dt>
+													<dd>项目描述</dd>
+												</dl>
 											</div>
-											<div class="col-lg-4">
-												<div class="text-center">
-													<div style="margin-top: 20px">
-														<i class="fa fa-sign-in"
-															style="font-size: 180px; color: #e5e5e5"></i>
+											<div class="col-md-7">
+												<dl class="dl-horizontal">
+													<dt>项目创建时间:</dt>
+													<dd>time</dd>
+													<dt>更新时间:</dt>
+													<dd>time</dd>
+												</dl>
+											</div>
+											<div class="col-lg-12">
+												<dl class="dl-horizontal">
+													<dt>完成度:</dt>
+													<dd>
+														<div class="progress progress-striped active m-b-sm">
+															<div style="width: 60%;" class="progress-bar"></div>
+														</div>
+														<small>Project completed in <strong>60%</strong>.
+															Remaining close the project, sign a contract and invoice.
+														</small>
+													</dd>
+												</dl>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div role="tabpanel">
+								  <!-- Nav tabs -->
+								  <ul class="nav nav-tabs" role="tablist">
+								    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">项目信息</a></li>
+								    <li role="presentation"><a href="#music" aria-controls="profile" role="tab" data-toggle="tab">背景音乐</a></li>
+								    <li role="presentation"><a href="#scene" aria-controls="messages" role="tab" data-toggle="tab">场景编辑</a></li>
+								    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+								  </ul>
+								
+								  <!-- Tab panes -->
+								  <div class="tab-content">
+								    <div role="tabpanel" class="tab-pane active" id="home">
+											<form action="${ROOT}/pano/info" class="form-horizontal pano-form" method="post">
+												<div class="form-group">
+													<label class="col-sm-2 control-label">项目名称</label>
+
+													<div class="col-sm-10">
+													 <input type="text" class="form-control jet-input" id="panoName"/>
 													</div>
 												</div>
-											</div>
-										</div>
-									</fieldset>
-									<h1>编辑场景</h1>
-									<fieldset>
-										<h2>场景信息</h2>
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="row">
-													<div class="scene-item col-md-4">
-														<div class="ibox">
-															<div class="ibox-title">添加场景</div>
-															<div class="ibox-content">
-																场景图片
-																<input type="file" name="sceneImage_1" id="sceneImage_1"/>
-																场景描述
-																<textarea name="sceneDesc_1" id="sceneDesc_1" ></textarea>
-															</div>
-															<div class="ibox-content">
-																<div class="row">
-																	<div class="col-md-6">
-																		<button type="submit"
-																			class="btn btn-primary btn-block jet-button">
-																			<i class="fa fa-plus"></i> 添加
-																		</button>
-																	</div>
-																	<div class="col-md-6">
-																		<a type="reset" class="btn btn-default btn-block"><i
-																			class="fa fa-reply"></i> 取消</a>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>												
+												<div class="form-group">
+													<label class="col-sm-2 control-label">项目介绍</label>
+
+													<div class="col-sm-10">
+													 <input type="text" class="form-control jet-input" id="panoDesc"/>
+													</div>
+												</div>												
+												<div class="hr-line-dashed"></div>
+												<div class="form-group">
+													<div class="col-sm-4 col-sm-offset-2">
+														<button class="btn btn-primary jet-button" type="submit">保存</button>
+													</div>
 												</div>
+											</form>
+								    </div>
+								    <div role="tabpanel" class="tab-pane" id="music">
+											<form action="${ROOT}/pano/music" class="form-horizontal pano-form" method="post">
+												<div class="form-group">
+													<label class="col-sm-2 control-label">选择音乐</label>
 
-											</div>
+													<div class="col-sm-10">
+													 <input type="file" class="form-control jet-input" id="panoMusic"/>
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<div class="form-group">
+													<div class="col-sm-4 col-sm-offset-2">
+														<button class="btn btn-primary jet-button" type="submit">保存</button>
+													</div>
+												</div>
+											</form>
 										</div>
-									</fieldset>
-
-									<h1>Warning</h1>
-									<fieldset>
-										<div class="text-center" style="margin-top: 120px">
-											<h2>You did it Man :-)</h2>
-										</div>
-									</fieldset>
-
-									<h1>Finish</h1>
-									<fieldset>
-										<h2>Terms and Conditions</h2>
-										<input id="acceptTerms" name="acceptTerms" type="checkbox"
-											class="required"> <label for="acceptTerms">I
-											agree with the Terms and Conditions.</label>
-									</fieldset>
-								</form>
+								    <div role="tabpanel" class="tab-pane" id="scene">...</div>
+								    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+								  </div>
+								
+								</div>
 							</div>
 						</div>
 					</div>

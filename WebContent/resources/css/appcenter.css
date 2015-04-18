@@ -139,3 +139,6 @@ a.dim:active:before {
 .hd-dialog .chosen-container{
   width: 420px !important;
 }
+.pano-form{
+	margin: 20px 10px;
+}
