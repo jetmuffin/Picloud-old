@@ -99,6 +99,8 @@ public class PanoController {
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(Model model) {
+		model.addAttribute("module", module);
+		model.addAttribute("action", "制作全景图片");
 		
 		return "pano/add";
 	}
