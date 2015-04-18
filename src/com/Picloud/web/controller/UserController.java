@@ -120,7 +120,7 @@ public class UserController {
 	/**
 	 * 查看个人日志
 	 */
-	@RequestMapping(value="/log",method=RequestMethod.GET)
+	@RequestMapping(value="/log/{page}",method=RequestMethod.GET)
 	public String list(Model model){
 		model.addAttribute("action","操作日志");
 		model.addAttribute("module",module);

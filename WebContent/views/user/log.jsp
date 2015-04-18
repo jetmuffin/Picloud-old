@@ -19,7 +19,10 @@
 			<jsp:include page="../common/breadcrumb.jsp" />
 			<div class="wrapper wrapper-content animated fadeInDown">
 				<block name="content">
-					${user.uid} 你好!!!
+					
+					
+					
+					
 					<br />
 				</block>
 			</div>
