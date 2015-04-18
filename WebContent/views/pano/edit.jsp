@@ -174,6 +174,7 @@
 							<div class="modal-body">
 								<form action="${ROOT}/pano/${panoImage.key}/scene" method="POST"
 									enctype="multipart/form-data">
+										
 									<div class="form-group">
 										<label class="control-label">场景名称</label> <input
 											class="form-control jet-input" type="text" name="sceneName" />
@@ -192,7 +193,7 @@
 									data-dismiss="modal">取消</button>
 								<button type="submit" class="btn jet-button btn-primary">确认</button>
 							</div>
-							</form>
+						</form>
 						</div>
 					</div>
 				</div>

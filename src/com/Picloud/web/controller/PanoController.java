@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Picloud.config.SystemConfig;
 import com.Picloud.exception.FileException;
@@ -85,7 +86,7 @@ public class PanoController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{panoKey}/music", method = RequestMethod.POST)
-	public String music(@PathVariable String panoKey,HttpSession session,HttpServletRequest request){
+	public String music(@PathVariable String panoKey,RedirectAttributes attr,HttpSession session,HttpServletRequest request){
 		
 		User  loginUser=(User) session.getAttribute("LoginUser");
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -117,7 +118,8 @@ public class PanoController {
 			} catch (Exception e) {
 				throw new PanoImageException(e.getMessage());
 			}
-			return "redirect:edit?editMsg='修改成功'";
+			attr.addFlashAttribute("editMsg", "修改成功123!");
+			return "redirect:edit";
 	}
  }
 	
@@ -134,7 +136,6 @@ public class PanoController {
 		model.addAttribute("module", module);
 		model.addAttribute("action", "全景图片编辑");
 		
-		System.out.println(panoKey);
 		User loginUser = (User) session.getAttribute("LoginUser");
 		PanoImage panoImage = panoImageDao.find(panoKey);
 		model.addAttribute("panoImage", panoImage);
@@ -281,7 +282,7 @@ public class PanoController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{panoKey}/info", method = RequestMethod.POST)
-	public String info(@PathVariable String panoKey,HttpSession session, HttpServletRequest request) {
+	public String info(@PathVariable String panoKey,RedirectAttributes attr,HttpSession session, HttpServletRequest request) {
 	
 		String panoName=request.getParameter("panoName");
 		String info=request.getParameter("panoDesc");
@@ -300,7 +301,8 @@ public class PanoController {
 			// TODO Auto-generated catch block
 			throw new PanoImageException(e.getMessage());
 		}
-		return "redirect:edit?editMsg='修改成功'";
+		attr.addFlashAttribute("editMsg", "修改成功!");
+		return "redirect:edit";
 	}
 	/**
 	 * 查看全景图片
