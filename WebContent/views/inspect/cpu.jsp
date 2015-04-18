@@ -202,5 +202,6 @@
 
 	});
 	</script>
+	<script src="${RESOURCES}/js/cpu.js"></script>
 </body>
 </html>
