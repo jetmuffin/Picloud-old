@@ -1,6 +1,7 @@
 package com.Picloud.web.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,6 +24,7 @@ import com.Picloud.utils.JspUtil;
 import com.Picloud.web.dao.impl.LogDaoImpl;
 import com.Picloud.web.dao.impl.UserDaoImpl;
 import com.Picloud.web.model.Log;
+import com.Picloud.web.model.PageInfo;
 import com.Picloud.web.model.User;
 
 @Controller
@@ -33,6 +36,7 @@ public class UserController {
 	@Autowired
 	private LogDaoImpl mLogDaoImpl;
 	private String module = "用户中心";
+	private static int pageNum = 20+1;
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(String uid,String password,HttpSession session){
@@ -121,9 +125,28 @@ public class UserController {
 	 * 查看个人日志
 	 */
 	@RequestMapping(value="/log/{page}",method=RequestMethod.GET)
-	public String list(Model model){
+	public String list(@PathVariable int page, HttpSession session,Model model){
 		model.addAttribute("action","操作日志");
 		model.addAttribute("module",module);
+		User loginUser = (User) session.getAttribute("LoginUser");
+		PageInfo pi = (PageInfo) session.getAttribute("logPageInfo");
+		 if(pi == null){
+			 pi = new PageInfo();
+			 pi.setNum(1);
+			 pi.setPage(0);
+			 pi.getStartKeys().add(" ");
+		 }
+		 pi.setPage(page);
+		 List<Log> logs = mLogDaoImpl.logPage(loginUser.getUid(),pi.getStartKeys().get(pi.getPage()) , pageNum);
+		 if(logs == null ||logs.size() < pageNum){
+			 pi.setIfHaveNext(false);
+		 }else{
+			 pi.setIfHaveNext(true);
+			 pi.setNum(pi.getNum()+1);
+			 pi.getStartKeys().add(logs.get(pageNum-1).getKey());
+			 logs.remove(pageNum-1);
+		 }
+		 session.setAttribute("logPageInfo", pi);
 		return "user/log";
 	}
 	

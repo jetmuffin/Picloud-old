@@ -9,6 +9,7 @@ public class PanoImage {
 	String key="";
 	//图片名称
 	String name = "";
+	String sceneName="";
 	//场景数量
 	String  number="0";
 	//所属用户
@@ -30,7 +31,7 @@ public class PanoImage {
 		super();
 	}
 	public PanoImage(String key, String name, String number, String uid,
-			String createTime, String info, String path, String desc, String mus_path) {
+			String createTime, String info, String path, String desc, String mus_path, String sceneName) {
 		super();
 		this.key = key;
 		this.name = name;
@@ -41,14 +42,6 @@ public class PanoImage {
 		this.path = path;
 		this.desc = desc;
 		this.mus_path = mus_path;
-		for(int i = 0; i < Integer.valueOf(number); i++){
-			PanoScene sc = new PanoScene();
-			sc.setName(name+String.valueOf(i+1));
-			sc.setPath(path+"/"+name+"/"+sc.getName());
-			sc.setDesc(StringSplit.descSplit(desc, i));
-			this.scene.add(sc);
-		}
-		
 	}
 	public String getKey() {
 		return key;
@@ -102,21 +95,34 @@ public class PanoImage {
 		return desc;
 	}
 	public void setDesc(String desc) {
-		this.desc = desc;
-		//需要修改
-		for(int i = 0; i < Integer.valueOf(number); i++){
-			PanoScene sc = new PanoScene();
-			sc.setName(name+String.valueOf(i+1));
-			sc.setPath(path+"/"+name+"/"+sc.getName());
-			sc.setDesc(StringSplit.descSplit(desc, i));
-			this.scene.add(sc);
-		}
 	}
 	public String getMus_path() {
 		return mus_path;
 	}
 	public void setMus_path(String mus_path) {
 		this.mus_path = mus_path;
+	}
+	public String getSceneName() {
+		return sceneName;
+	}
+	public void setSceneName(String sceneName) {
+		this.sceneName = sceneName;
+	}
+	
+	public void append(String name, String desc){
+		this.sceneName = this.sceneName + '`' + name;
+		this.desc = this.desc +'`'+desc;
+		this.number = String.valueOf(Integer.valueOf(this.number)+1);
+	}
+	
+	public void init(){
+		for(int i = 0; i < Integer.valueOf(number); i++){
+			PanoScene sc = new PanoScene();
+			sc.setName(StringSplit.descSplit(sceneName, i));
+			sc.setPath(path+"/"+name+"/"+sc.getName());
+			sc.setDesc(StringSplit.descSplit(desc, i));
+			this.scene.add(sc);
+		}
 	}
 
 }
