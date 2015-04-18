@@ -133,11 +133,12 @@ public class PanoController {
 	public String edit(@PathVariable String panoKey,Model model, HttpSession session) {
 		model.addAttribute("module", module);
 		model.addAttribute("action", "全景图片编辑");
+		
 		System.out.println(panoKey);
 		User loginUser = (User) session.getAttribute("LoginUser");
 		PanoImage panoImage = panoImageDao.find(panoKey);
 		model.addAttribute("panoImage", panoImage);
-		
+	   session.setAttribute("editMsg", "修改成功");
 		return "pano/edit";
 	}
 /**
