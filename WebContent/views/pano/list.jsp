@@ -56,8 +56,11 @@
 									
 											<td class="project-create">创建时间：${pano.createTime } 
 											</td>
-											<td class="project-actions"><a
-												href="${ROOT}/pano/${pano.key }"
+											<td class="project-actions">
+											<a href="${ROOT}/pano/${pano.key}/edit"
+												class="btn btn-default btn-sm" target="_blank"><i
+													class="fa fa-folder"></i> 编辑 </a>
+											<a href="${ROOT}/pano/${pano.key}"
 												class="btn btn-default btn-sm" target="_blank"><i
 													class="fa fa-folder"></i> 查看 </a> <a href="${ROOT}/pano/${pano.key }/delete/"
 												class="btn btn-default btn-sm"><i class="fa fa-pencil"></i>
@@ -93,8 +96,8 @@
 											class="form-control jet-input" type="text" name="panoName" />
 									</div>
 									<div class="form-group">
-										<label class="control-label">项目描述</label> <input
-											class="form-control jet-input" type="text" name="panoDesc" />
+										<label class="control-label">项目描述</label> <textarea
+											class="form-control jet-input" type="text" name="panoDesc" ></textarea>
 									</div>
 							</div>
 							<div class="modal-footer">
@@ -117,6 +120,5 @@
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/common.js"></script>
-	<script type="text/javascript" src="${RESOURCES }/js/appcenter.js"></script>
 </body>
 </html>

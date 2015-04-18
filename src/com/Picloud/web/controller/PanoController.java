@@ -75,6 +75,50 @@ public class PanoController {
 		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
+	
+	/**
+	 * 上传music 
+	 * @param panoKey
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/{panoKey}/music", method = RequestMethod.POST)
+	public String music(@PathVariable String panoKey,HttpSession session,HttpServletRequest request){
+		
+		User  loginUser=(User) session.getAttribute("LoginUser");
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (!isMultipart) {
+			throw new PanoImageException("上传音乐错误，没有文件域！");
+		} else {
+			FileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			try {
+				List items = upload.parseRequest(request);
+				Iterator iter = items.iterator();
+				boolean flag = false;
+				while (iter.hasNext()) {
+					FileItem item = (FileItem) iter.next();
+					String musicPath = HDFS_UPLOAD_ROOT + "/"
+							+ loginUser.getUid() + "/Pano/Music";
+
+					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
+					flag = imageWriter.uploadToHdfs(musicPath, item,
+							loginUser.getUid());
+					
+					PanoImage panoImage=panoImageDao.find(panoKey);
+					panoImage.setMus_path(musicPath);
+					panoImageDao.add(panoImage);
+					Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName()+"的背景音乐");
+					mLogDaoImpl.add(log);
+				}
+			
+			} catch (Exception e) {
+				throw new PanoImageException(e.getMessage());
+			}
+		 return "pano/edit";
+	}
+ }
 	/**
 	 *  全景图片编辑
 	 * 
@@ -83,16 +127,14 @@ public class PanoController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{panoKey}/edit", method = RequestMethod.GET)
-	public String edit(@PathVariable String key,Model model, HttpSession session) {
+	public String edit(@PathVariable String panoKey,Model model, HttpSession session) {
 		model.addAttribute("module", module);
 		model.addAttribute("action", "全景图片编辑");
-
+		System.out.println(panoKey);
 		User loginUser = (User) session.getAttribute("LoginUser");
-		PanoImage panoImage = panoImageDao.find(key);
-		model.addAttribute("panoImages", panoImage);
+		PanoImage panoImage = panoImageDao.find(panoKey);
+		model.addAttribute("panoImage", panoImage);
 		
-		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "编辑全景图片");
-		mLogDaoImpl.add(log);
 		return "pano/edit";
 	}
 /**
@@ -192,13 +234,13 @@ public class PanoController {
 			panoImage.setKey(key);
 			panoImage.setInfo(info);
 			panoImage.setName(panoName);
+			panoImage.setUid(loginUser.getUid());
 			panoImageDao.add(panoImage);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-       System.out.println(key);
 		return "redirect:"+key+"/edit";
 	}
 	/**

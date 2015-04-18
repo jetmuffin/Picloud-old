@@ -139,3 +139,13 @@ a.dim:active:before {
 .hd-dialog .chosen-container{
   width: 420px !important;
 }
+.pano-form{
+	margin: 20px 10px;
+}
+.file-box{
+	width:220px;
+	float:left;
+}
+.scene-box{
+	margin-top:20px !important;
+}
