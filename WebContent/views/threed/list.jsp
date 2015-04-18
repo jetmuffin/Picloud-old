@@ -88,7 +88,7 @@
               <div class="form-group">
                 <label class="control-label">上传3D图片</label>
               </div>
-                              <form id="my-awesome-dropzone" class="dropzone dz-clickable" action="http://localhost:8080/PicServer/Write3D" method="post">
+            <form id="my-awesome-dropzone" class="dropzone dz-clickable" action="http://localhost:8080/PicServer/Write3D" method="post">
               <div class="dropzone-previews"></div>
               <div class="dropzone-group">
                 <div class="form-group">

@@ -66,9 +66,9 @@
 											</c:forEach>
 										</tbody>
 									</table>
-								<!--  <a type="button" class="btn btn-info " data-toggle="modal"
-										data-target="#myModal">制作全景图片</button>-->	
-										<a href="${ROOT}/pano/add" class="btn btn-info">制作全景图片</a>
+							  <button type="button" class="btn btn-info " data-toggle="modal"
+										data-target="#myModal">制作全景图片</button>
+										<!--	<a href="${ROOT}/pano/add" class="btn btn-info">制作全景图片</a>-->	
 								</div>
 							</div>
 						</div>
@@ -89,12 +89,12 @@
 								<form action="${ROOT}/pano/add" method="POST"
 									enctype="multipart/form-data">
 									<div class="form-group">
-										<label class="control-label">上传全景图片</label> <input
-											class="form-control jet-input" type="file" name="upl-file" />
+										<label class="control-label">项目名称</label> <input
+											class="form-control jet-input" type="text" name="panoName" />
 									</div>
 									<div class="form-group">
-										<label class="control-label">注意</label>
-										<p>上传图片需要为标准的鱼眼图片，否则无法得到效果完美的全景图片。</p>
+										<label class="control-label">项目描述</label> <input
+											class="form-control jet-input" type="text" name="panoDesc" />
 									</div>
 							</div>
 							<div class="modal-footer">
