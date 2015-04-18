@@ -117,8 +117,7 @@ public class PanoController {
 			} catch (Exception e) {
 				throw new PanoImageException(e.getMessage());
 			}
-
-			return "redirect:edit";
+			return "redirect:edit?editMsg='修改成功'";
 	}
  }
 	
@@ -139,7 +138,8 @@ public class PanoController {
 		User loginUser = (User) session.getAttribute("LoginUser");
 		PanoImage panoImage = panoImageDao.find(panoKey);
 		model.addAttribute("panoImage", panoImage);
-	   session.setAttribute("editMsg", "修改成功");
+	   
+	   
 		return "pano/edit";
 	}
 /**
@@ -282,7 +282,7 @@ public class PanoController {
 			// TODO Auto-generated catch block
 			throw new PanoImageException(e.getMessage());
 		}
-		return "redirect:edit";
+		return "redirect:edit?editMsg='修改成功'";
 	}
 	/**
 	 * 查看全景图片
