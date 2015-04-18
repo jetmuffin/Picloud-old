@@ -194,37 +194,44 @@ public class PanoController {
 				Iterator iter = items.iterator();
 
 				String hdfsPath = HDFS_UPLOAD_ROOT + "/"
-						+ loginUser.getUid() + "/Pano/"+panoKey+"/scene";
+						+ loginUser.getUid() + "/Pano/"+panoKey+"/scene/";
+				System.out.println(hdfsPath);
 				String sceneName="";
 				String sceneDesc="";
 				PanoImage panoImage=panoImageDao.find(panoKey);
 				int number=Integer.parseInt(panoImage.getNumber())+1;
 
-				
-				
 				while (iter.hasNext()) {
+					System.out.println("1");
 					FileItem item = (FileItem) iter.next();
 					if (item.isFormField()) {  		//若为普通表单
-						
 						String name = item.getFieldName();
 						if(name.equals("sceneName")) {
 							 sceneName = item.getString();
+							 System.out.println(2);
 						} else if(name.equals("sceneDesc")) {
 							 sceneDesc = item.getString();
-							 System.out.println(sceneDesc);
 						}
-
 					} else {
-						String fileName=number+"."+item.getContentType();
-						String filePath = hdfsPath+fileName;
-						ImageWriter imageWriter=new ImageWriter(infoDaoImpl);
-					    imageWriter.uploadToHdfs(filePath, item,loginUser.getUid());
+						String type = JspUtil.getFileType(item.getName());
+						if(panoImage.getType().equals("")){
+							panoImage.setType(type);
+							String fileName=number+"."+type;
+							String filePath = hdfsPath+fileName;
+							ImageWriter imageWriter=new ImageWriter(infoDaoImpl);
+						    imageWriter.uploadToHdfs(filePath, item,loginUser.getUid());
+						}
+						else if(panoImage.getType().equals(type)){
+							String fileName=number+"."+type;
+							String filePath = hdfsPath+fileName;
+							ImageWriter imageWriter=new ImageWriter(infoDaoImpl);
+						    imageWriter.uploadToHdfs(filePath, item,loginUser.getUid());
+						}
+						else throw new PanoImageException("图片格式不正确");
 					}
 				}
 				panoImage.append(sceneName, sceneDesc);
-				panoImage.init();
 				panoImageDao.add(panoImage);
-				
 				Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传全景图片"+panoImage.getName());
 				mLogDaoImpl.add(log);
 			} catch (Exception e) {
@@ -250,7 +257,9 @@ public class PanoController {
 		String panoName=request.getParameter("panoName");
 		String info=request.getParameter("panoDesc");
 		User loginUser = (User) session.getAttribute("LoginUser");
-		String key=" ";
+		String hdfsPath = HDFS_UPLOAD_ROOT + "/"
+				+ loginUser.getUid() + "/Pano/";
+		String key="";
 		try {
 			//使用图片名加用户昵称加密
 			key=EncryptUtil.panoEncryptKey(panoName, loginUser.getNickname());
@@ -259,18 +268,17 @@ public class PanoController {
 			panoImage.setInfo(info);
 			panoImage.setName(panoName);
 			panoImage.setUid(loginUser.getUid());
+			panoImage.setPath(hdfsPath+key);
 			String createTime=JspUtil.getCurrentDateStr();
 			panoImage.setCreateTime(createTime);
 			panoImageDao.add(panoImage);
-			
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "创建全景图片"+panoImage.getName());
 			mLogDaoImpl.add(log);
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new PanoImageException(e.getMessage());
 		}
-		return "redirect:" + key + "edit";
+		return "redirect:" + key + "/edit";
 	}
 	
 	/**

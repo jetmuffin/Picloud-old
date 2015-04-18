@@ -142,6 +142,11 @@ public class JspUtil {
 		return String.valueOf(0);
 	}
 	
+	public static String getFileType(String fileName){
+		int index = fileName.lastIndexOf(".");
+		return fileName.substring(index+1);
+	}
+	
 }
 
 

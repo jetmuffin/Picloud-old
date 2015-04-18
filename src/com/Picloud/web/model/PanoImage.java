@@ -26,7 +26,7 @@ public class PanoImage {
 	//场景
 	List<PanoScene> scene = new ArrayList<PanoScene>();
 	//
-	private String type;
+	private String type="";
 	
 	String mus_path="";
 	
@@ -131,7 +131,7 @@ public class PanoImage {
 		for(int i = 1; i <= Integer.parseInt(number); i++){
 			PanoScene sc = new PanoScene();
 			sc.setName(StringSplit.descSplit(sceneName, i));
-			sc.setPath(path+"/"+name+"/"+sc.getName());
+			sc.setPath(path+"/"+i+"."+type+"/"+sc.getName());
 			sc.setDesc(StringSplit.descSplit(this.desc, i));
 			this.scene.add(sc);
 		}
