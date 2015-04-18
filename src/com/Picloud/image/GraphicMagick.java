@@ -390,13 +390,13 @@ public class GraphicMagick {
 	 * @param hue					色调(默认值0或360)
 	 * @return
 	 */
-	public byte[] modulate(byte[] sourceBuffer,double brightness,double saturation ,double hue){
+	public byte[] modulate(byte[] sourceBuffer,double brightness){
 		System.out.println("brightnessContrast");
 		IMOperation op = new IMOperation();
 		byte[] imageOutData = null;
 			
 		op.addImage("-");
-		op.modulate(brightness,saturation,hue);
+		op.modulate(brightness);
 		op.addImage("jpg:-");
 		
 		ConvertCmd convert = new ConvertCmd(true);

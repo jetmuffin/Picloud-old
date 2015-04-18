@@ -16,6 +16,7 @@ public class DeleteAllHbase {
 		hbaseOperationImpl.dropTable("cloud_pano");
 		hbaseOperationImpl.dropTable("cloud_space");
 		hbaseOperationImpl.dropTable("cloud_threeD");
+		hbaseOperationImpl.dropTable("cloud_dustbin");
 		ctx.close();
 	}
 

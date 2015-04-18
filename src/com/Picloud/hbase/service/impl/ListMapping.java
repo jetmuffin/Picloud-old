@@ -265,6 +265,9 @@ public class ListMapping {
 				if(v.equals("desc")){
 					panoImage.setDesc(val);
 				}
+				if(v.equals("mus_path")){
+					panoImage.setMus_path(val);
+				}
 			}
 			list.add(panoImage);
 		}
