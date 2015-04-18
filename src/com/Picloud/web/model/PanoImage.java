@@ -11,7 +11,7 @@ public class PanoImage {
 	//图片名称
 	String name = "";
 	//场景数量
-	String  number;
+	String  number="0";
 	//所属用户
 	String uid = "";
 	//上传时间
