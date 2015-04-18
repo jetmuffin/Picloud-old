@@ -154,6 +154,7 @@ public class SpaceController {
 			 pi.setIfHaveNext(true);
 			 pi.setNum(pi.getNum()+1);
 			 pi.getStartKeys().add(images.get(6).getKey());
+			 images.remove(6);
 		 }
 		 
 //		List<Image> images = mImageDaoImpl.load(spaceKey);

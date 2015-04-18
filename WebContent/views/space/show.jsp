@@ -76,11 +76,19 @@
 							<div class="clear"></div>
 							<nav class="pull-right gallery-pag">
 							<ul class="pagination jet-pagination">
+								<c:if test="${sessionScope.pageinfo.page < 0 }">
+									<li class="disabled"><a href="">&laquo;</a></li>
+								</c:if>
+								<c:if test="${sessionScope.pageinfo.ifHaveNext >= 0 }">
+									<li><a
+										href="${ROOT}/space/${image.key}/${sessionScope.pageinfo.page-1}"></a></li>
+								</c:if>
 								<c:if test="${sessionScope.pageinfo.ifHaveNext =='false' }">
 									<li class="disabled"><a href="">&laquo;</a></li>
 								</c:if>
 								<c:if test="${sessionScope.pageinfo.ifHaveNext =='true' }">
-									<li><a href="${ROOT}/space/${image.key}/${sessionScope.pageinfo.page+1}" ></a></li>
+									<li><a
+										href="${ROOT}/space/${space.key}/${sessionScope.pageinfo.page+1}"></a></li>
 								</c:if>
 							</ul>
 							</nav>
