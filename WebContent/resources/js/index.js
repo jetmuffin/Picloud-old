@@ -2,7 +2,6 @@ $(document).ready(function(){
     
     var url_base = $('#url_base').attr('data-url');
     var url = url_base + '/space/spaces.json';
-    console.log(url);
     var color = [
         "#1ab394",
         "#79d2c0",
@@ -10,7 +9,7 @@ $(document).ready(function(){
         "#169C80",
         "#3FB4A7",
         "#3FADB4"
-    ]
+        ]
 			$.getJSON(url, function(spaces) {
 				var tot_size = 0;
 
@@ -21,6 +20,7 @@ $(document).ready(function(){
 
 				console.log(tot_size);
 				var data = new Array();
+				
 				$.each(spaces, function(i, val) {
 					var v = {
 						label : val.name,

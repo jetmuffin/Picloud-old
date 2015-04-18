@@ -50,7 +50,7 @@ public class MenuConfig  extends HttpServlet{
 		//个人中心
 		 actions = new ArrayList<Action>();
 		actions.add(new Action("Account", "帐号管理","update"));
-		actions.add(new Action("Log", "操作日志","log"));
+		actions.add(new Action("Log", "操作日志","log/0"));
 		Module module_usercenter = new Module("user", "个人中心", "user", "#",actions);
 		modules.add(module_usercenter);
 		
