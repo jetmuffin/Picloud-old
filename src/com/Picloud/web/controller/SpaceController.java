@@ -3,10 +3,12 @@ package com.Picloud.web.controller;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.core.ApplicationContext;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Picloud.config.SystemConfig;
@@ -57,6 +60,8 @@ public class SpaceController {
 	private SystemConfig systemConfig;
 	@Autowired
 	private InfoDaoImpl infoDaoImpl;
+
+	private static int pageNum = 6;
 
 	/**
 	 * 查看所有空间
@@ -125,15 +130,19 @@ public class SpaceController {
 	 */
 	@RequestMapping(value = "/{spaceKey}", method = RequestMethod.GET)
 	public String show(@PathVariable String spaceKey, Model model,
-			HttpSession session) throws Exception {
+			HttpSession session, ServletContext sc) throws Exception {
 		model.addAttribute("module", module);
 		model.addAttribute("action", "图片空间");
 
+		ApplicationContext ac = (ApplicationContext) WebApplicationContextUtils
+				.getRequiredWebApplicationContext(sc);
 		User loginUser = (User) session.getAttribute("LoginUser");
 		Space space = mSpaceDaoImpl.find(spaceKey);
 		List<Space> spaces = mSpaceDaoImpl.load(loginUser.getUid());
-//		List<Image> images = mImageDaoImpl.imagePageByKey(loginUser.getUid(), " ", spaceKey, 6);
-				List<Image> images = mImageDaoImpl.load(spaceKey);
+		 List<Image> images = mImageDaoImpl.imagePageByKey(loginUser.getUid(),
+		 " ", spaceKey, pageNum);
+		 
+//		List<Image> images = mImageDaoImpl.load(spaceKey);
 		if (images != null) {
 			model.addAttribute("images", images);
 		}
@@ -163,6 +172,7 @@ public class SpaceController {
 
 	/**
 	 * 快速上传处理
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
@@ -184,19 +194,21 @@ public class SpaceController {
 			boolean flag = false;
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
-				
+
 				if (item.isFormField()) { // 若为普通表单
 					String name = item.getFieldName();
 					if (name.equals("space")) {
-						
+
 						spaceName = item.getString();
-						spaceName =  new String(spaceName.getBytes("iso8859-1"),"utf-8");
+						spaceName = new String(spaceName.getBytes("iso8859-1"),
+								"utf-8");
 						spaceKey = EncryptUtil.spaceEncryptKey(spaceName,
 								loginUser.getUid());
 					}
 				} else {
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-					imageWriter.write(item, loginUser.getUid(), spaceKey,LocalPath);					
+					imageWriter.write(item, loginUser.getUid(), spaceKey,
+							LocalPath);
 				}
 			}
 		} catch (Exception e) {
@@ -234,8 +246,8 @@ public class SpaceController {
 	 */
 	@RequestMapping(value = "/{spaceKey}/upload", method = RequestMethod.POST)
 	public String upload(@PathVariable String spaceKey,
-			HttpServletRequest request, HttpServletResponse response, HttpSession session)
-			throws FileUploadException {
+			HttpServletRequest request, HttpServletResponse response,
+			HttpSession session) throws FileUploadException {
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		List items = upload.parseRequest(request);
@@ -247,27 +259,28 @@ public class SpaceController {
 		try {
 
 			while (iter.hasNext()) {
-				
+
 				FileItem item = (FileItem) iter.next();
-				if(item.isFormField()){
+				if (item.isFormField()) {
 					String temp = item.getString();
 					System.out.println(temp);
 				} else {
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-					flag = imageWriter.write(item, loginUser.getUid(), spaceKey,LocalPath);					
+					flag = imageWriter.write(item, loginUser.getUid(),
+							spaceKey, LocalPath);
 				}
 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(flag){
+		if (flag) {
 			response.setContentType("text/html;charset=gb2312");
 			response.setStatus(200);
-			} else {
+		} else {
 			response.setContentType("text/html;charset=gb2312");
 			response.setStatus(302);
-			}
+		}
 		return "test";
 	}
 
@@ -289,46 +302,47 @@ public class SpaceController {
 		req.setAttribute("e", e);
 		return "error";
 	}
-	
+
 	/**
 	 * 读取空间信息
+	 * 
 	 * @param spaceKey
 	 * @return Space信息JSON
 	 */
-	@RequestMapping(value="/{spaceKey}.json",method=RequestMethod.GET)
+	@RequestMapping(value = "/{spaceKey}.json", method = RequestMethod.GET)
 	@ResponseBody
-	public Space show(@PathVariable String spaceKey){
+	public Space show(@PathVariable String spaceKey) {
 		Space space = new Space();
 		space = mSpaceDaoImpl.find(spaceKey);
 		return space;
 	}
-	
 
 	/**
 	 * 读取空间内所有图片信息
+	 * 
 	 * @param spaceKey
 	 * @return Space所有图片信息JSON
 	 */
-	@RequestMapping(value="/{spaceKey}/images.json",method=RequestMethod.GET)
+	@RequestMapping(value = "/{spaceKey}/images.json", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Image> getAllImages (@PathVariable String spaceKey){
-		List<Image> images = mImageDaoImpl.load(spaceKey); 
+	public List<Image> getAllImages(@PathVariable String spaceKey) {
+		List<Image> images = mImageDaoImpl.load(spaceKey);
 		return images;
 	}
-	
-		/**
+
+	/**
 	 * 读取用户 所有空间
+	 * 
 	 * @param uid
 	 * @return
 	 */
-	@RequestMapping(value="/spaces.json",method=RequestMethod.GET)
+	@RequestMapping(value = "/spaces.json", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Space> getAllSpace (HttpSession session){
+	public List<Space> getAllSpace(HttpSession session) {
 		User LoginUser = (User) session.getAttribute("LoginUser");
-		List<Space> spaces =  mSpaceDaoImpl.load(LoginUser.getUid());
+		List<Space> spaces = mSpaceDaoImpl.load(LoginUser.getUid());
 		return spaces;
 	}
-	
 
 	@RequestMapping(value = "/{spaceKey}/test", method = RequestMethod.POST)
 	public String uploadTest(@PathVariable String spaceKey,
@@ -340,7 +354,8 @@ public class SpaceController {
 		List items = upload.parseRequest(request);
 		@SuppressWarnings("rawtypes")
 		Iterator iter = items.iterator();
-		User loginUser = new User("test", "1", "", "", "", "test", "123456", "0", "0", "0");
+		User loginUser = new User("test", "1", "", "", "", "test", "123456",
+				"0", "0", "0");
 		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
 				+ loginUser.getUid() + '/' + spaceKey + '/';
 		try {
@@ -348,7 +363,8 @@ public class SpaceController {
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();
 				ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
-				imageWriter.write(item, loginUser.getUid(), spaceKey,LocalPath);
+				imageWriter
+						.write(item, loginUser.getUid(), spaceKey, LocalPath);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -356,13 +372,15 @@ public class SpaceController {
 		// 同步线程
 		return "test";
 	}
-	
+
 	@RequestMapping(value = "/{spaceKey}/test2", method = RequestMethod.POST)
-	public String test(@PathVariable String spaceKey,HttpSession session, HttpServletRequest request) throws FileUploadException {
+	public String test(@PathVariable String spaceKey, HttpSession session,
+			HttpServletRequest request) throws FileUploadException {
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		//User loginUser = (User) session.getAttribute("LoginUser");
-		User loginUser = new User("test", "", "", "", "", "test", "123456", "0", "0", "0");
+		// User loginUser = (User) session.getAttribute("LoginUser");
+		User loginUser = new User("test", "", "", "", "", "test", "123456",
+				"0", "0", "0");
 		String hdfsPath = "/upload" + "/" + loginUser.getUid();
 		List items = upload.parseRequest(request);
 		Iterator iter = items.iterator();
