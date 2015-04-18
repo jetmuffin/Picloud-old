@@ -87,8 +87,12 @@
 									<li class="disabled"><a href="">&laquo;</a></li>
 								</c:if>
 								<c:if test="${sessionScope.pageinfo.ifHaveNext =='true' }">
+<<<<<<< HEAD
 									<li><a
 										href="${ROOT}/space/${space.key}/${sessionScope.pageinfo.page+1}"></a></li>
+=======
+									<li><a href="${ROOT}/space/${space.key}/${sessionScope.pageinfo.page+1}" ></a>sessionScope.pageinfo.page+1</li>
+>>>>>>> 88f8a74ea8a01d50945249b9904c96b870ac0003
 								</c:if>
 							</ul>
 							</nav>

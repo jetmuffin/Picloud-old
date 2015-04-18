@@ -156,8 +156,6 @@ public class SpaceController {
 			 pi.getStartKeys().add(images.get(6).getKey());
 			 images.remove(6);
 		 }
-		 
-//		List<Image> images = mImageDaoImpl.load(spaceKey);
 		 session.setAttribute("pageinfo", pi);
 		model.addAttribute("images", images);
 		model.addAttribute("activeSpace", space);
