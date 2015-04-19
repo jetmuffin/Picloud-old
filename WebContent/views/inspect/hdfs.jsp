@@ -60,7 +60,7 @@
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
 								<h5>
-									全景图片 <small>全景图片列表</small>
+									DataNode <small>DataNode节点状态</small>
 								</h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"><i class="fa fa-chevron-up"></i></a> <a
@@ -68,9 +68,63 @@
 								</div>
 							</div>
 							<div class="ibox-content" style="display: block;">
+									<table class="table table-striped table table-hover dataTables-example">
+										<thead>
+											<tr>
+												<th>node</th>
+												<th>Capacity</th>
+												<th>Used</th>
+												<th>Non DFS Used</th>
+												<th>Remaining</th>
+												<th>Blocks</th>
+												<th>Block pool used</th>
+												<th>Failed Volumes</th>
+												<th>Version</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach items="${systemState.datanodes}" var="datanode" >
+											<tr>
+												<td>${datanode.node}</td>
+												<td>${datanode.capacity}</td>
+												<td>${datanode.used}</td>
+												<td>${datanode.nonDFSUsed}</td>
+												<td>${datanode.remaining}</td>
+												<td>${datanode.blocks}</td>
+												<td>${datanode.blockPoolUsed}</td>
+												<td>${datanode.failedVolumes}</td>
+												<td>${datanode.version}</td>
+											</tr>
+												</c:forEach>
+										</tbody>
+									</table>
 							</div>
 						</div>
 					</div>
+					<div class="col-md-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>
+									DataNode <small>DataNode使用量 - </small>
+								</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link"><i class="fa fa-chevron-up"></i></a> <a
+										class="close-link"><i class="fa fa-times"></i></a>
+								</div>
+							</div>
+							<div class="ibox-content" style="display: block;">
+								<c:forEach items="${systemState.datanodes}" var="datanodePie" varStatus="status">
+									<div class="col-md-3">
+										<div class="flot-pie-chart-datanode" data-used="${datanodePie.used}" data-nondDfsUsed="${datanodePie.nonDFSUsed}" data-remaining="${datanodePie.remaining}" id="flot-pie-chart-datanode-${status.count-1}" style="height:280px"
+												>
+										</div>
+										<div class="datanode-tag">${datanodePie.node}</div>
+									</div>
+								</c:forEach>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>					
 				</div>
 				<div id="url_base" data-url="${IP}${ROOT}"></div>
 				</block>

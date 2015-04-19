@@ -543,3 +543,6 @@ body.mini-navbar .nav-second-level li a:hover{
         transform: translateY(0);
     }
 }
+.datanode-tag{
+	text-align:center;
+}
