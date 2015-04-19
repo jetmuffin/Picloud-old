@@ -31,7 +31,7 @@ public class IndexController {
 	@Autowired
 	private ImageDaoImpl mImageDaoImpl;
 	
-	@RequestMapping(value="/index",method=RequestMethod.GET)
+	@RequestMapping(value={"/index","/"},method=RequestMethod.GET)
 	public String index(Model model,HttpSession session){
 		model.addAttribute("module",module);
 		

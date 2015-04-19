@@ -5,6 +5,7 @@
   $(function(){
 		var imageEditor = $('#imageEditor');
  		var image = imageEditor.attr('data-image');
+ 		var imageKey = imageEditor.attr('data-key');
  		var imageUrl = imageEditor.attr('data-imageUrl');
  		var visitUrl = imageEditor.attr('data-visit');
  		var updateUrl = imageEditor.attr('data-update');
@@ -212,7 +213,12 @@
 			$('#confirmModal').modal();
 			
 			$('#confirmSave').click(function(){
-				window.location.href = updateLink;
+				$.ajax({
+					  url: updateLink,
+					  success: function(html){
+						  location.reload();
+					  }
+					});
 			})
 		});
 		

@@ -89,7 +89,7 @@
 	</div>
 
 		<div class="green-editor modal inmodal in " id="imageEditor" tabindex="-1" role="dialog"
-			aria-hidden="false" data-image="${image.name}" data-imageUrl="${IP}${ROOT}/server/${image.key}" data-visit="${IP}${ROOT}/process/" data-update="${IP}${ROOT}/process/update/">
+			aria-hidden="false" data-image="${image.name}" data-key="${image.key}"data-imageUrl="${IP}${ROOT}/server/${image.key}" data-visit="${IP}${ROOT}/process/" data-update="${IP}${ROOT}/process/update/">
 			<div class="modal-dialog animated bounceInRight">
 				<div class='picloud-container' id='picloud-container' ></div>
 			</div>
