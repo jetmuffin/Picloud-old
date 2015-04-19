@@ -304,8 +304,16 @@ public class SpaceController {
 		model.addAttribute("activeSpace", spaceName);
 
 		User LoginUser = (User) session.getAttribute("LoginUser");
-		String key = spaceName + "_" + LoginUser.getUid();
-		mSpaceDaoImpl.delete(key);
+//		String key = spaceName + "_" + LoginUser.getUid();
+		String key;
+		try {
+			key = EncryptUtil.spaceEncryptKey(spaceName, LoginUser.getUid());
+			mSpaceDaoImpl.delete(key);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "redirect:/space/spaces";
 	}
 

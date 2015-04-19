@@ -180,7 +180,7 @@
 													src="${ROOT}/process/${image.key}/scale[198,-]" width=198/>
 												</div>
 												<div class="file-name">
-													${image.name} <br> <small>${image.space}</small>
+													${image.name} <br> 
 												</div> </a>
 										</div>
 									</div>
