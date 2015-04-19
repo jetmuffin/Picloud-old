@@ -106,15 +106,6 @@ public class ImageDaoImpl implements IImageDao {
 
 
 	/**
-	 * 根据图片名字前缀匹配检索图片
-	 */
-	@Override
-	public List<Image> imageNameMatching(String uid, String subStr) {
-		ResultScanner rs = mHbaseOperationImpl.imageNameMatching(uid, subStr);
-		return mListMapping.imageListMapping(rs);
-	}
-
-	/**
 	 * 根据时间分页
 	 */
 	@Override
