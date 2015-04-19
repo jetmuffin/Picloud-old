@@ -242,7 +242,7 @@ public class GraphicMagick {
 	 * @throws IM4JavaException
 	 */
 	public byte[] textWaterMask(String text, int fontsize, String color,
-			int offsetX, int offsetY, int dissolve) throws IOException, InterruptedException,
+			int offsetX, int offsetY) throws IOException, InterruptedException,
 			IM4JavaException {
 		IMOperation op = new IMOperation();
 		String option = " text " + offsetX + "," + offsetY + " \'" + text
