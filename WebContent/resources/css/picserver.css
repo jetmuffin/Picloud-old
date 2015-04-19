@@ -268,3 +268,6 @@ color:#000;
 .green-editor .picloud-save{
 		border-left: 1px solid #ccc;
 }
+#confirmModal .modal-dialog{
+	width: 400px;
+}

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Picloud.config.SystemConfig;
@@ -330,6 +331,7 @@ public class PanoController {
 		attr.addFlashAttribute("editMsg", "修改项目信息成功!");
 		return "redirect:edit";
 	}
+	
 	/**
 	 * 查看全景图片
 	 * @param imageName 图片名
@@ -346,6 +348,21 @@ public class PanoController {
 			return "pano/show";
 		}
 	
+		/**
+		 * 查看全景图片
+		 * @param imageName 图片名
+		 * @param session
+		 * @return
+		 * @throws Exception
+		 */
+			@RequestMapping(value="/{panokey}.json",method=RequestMethod.GET)
+			@ResponseBody
+			public PanoImage show(@PathVariable String panokey,Model model) throws Exception{
+
+				PanoImage panoImage = panoImageDao.find(panokey);
+				return panoImage;
+			}
+			
 		/**
 		 * 查看全景图片
 		 * @param imageName 图片名
@@ -411,9 +428,39 @@ public class PanoController {
 					bos.close();
 					output.close();
 				}catch(Exception e){
-					throw new ThreeDImageException(e.getMessage());
+					throw new PanoImageException(e.getMessage());
 				}
 			}
+			
+			@RequestMapping(value="/readMusic",method=RequestMethod.GET)
+			public void readMusic(String name,String path,HttpSession session,HttpServletResponse response) throws Exception{
+				User loginUser = (User) session.getAttribute("LoginUser");
+				try{
+					HdfsHandler hdfsHandler = new HdfsHandler();
+					byte[] fileByte =  hdfsHandler.readFile(path);
+					response.reset();
+					OutputStream output = response.getOutputStream();// 得到输出流
+					response.setContentType("audio/mp3");  
+
+					InputStream imageIn = new ByteArrayInputStream(fileByte);
+					BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+					BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+					byte data[] = new byte[4096];// 缓冲字节数
+					int size = 0;
+					size = bis.read(data);
+					while (size != -1) {
+						bos.write(data, 0, size);
+						size = bis.read(data);
+					}				
+					bis.close();
+					bos.flush();// 清空输出缓冲流
+					bos.close();
+					output.close();
+				}catch(Exception e){
+					throw new PanoImageException(e.getMessage());
+				}
+			}
+			
 			
 		@ExceptionHandler(value=(PanoImageException.class))
 		public String handlerException(Exception e,HttpServletRequest req){

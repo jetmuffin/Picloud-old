@@ -49,28 +49,51 @@
 												<dl class="dl-horizontal">
 													<dt>项目名称:</dt>
 													<dd>${panoImage.name}</dd>
-													<dt>项目描述:</dt>
-													<dd>${panoImage.info}</dd>
+
 												</dl>
 											</div>
 											<div class="col-md-7">
 												<dl class="dl-horizontal">
 													<dt>项目创建时间:</dt>
-													<dd>${panoImage.createTime }</dd>
+													<dd>${jt.getStrTime(panoImage.createTime) }</dd>
 												</dl>
+											</div>
+											<div class="col-md-12">
+											<dl class="dl-horizontal">
+											<dt>项目描述:</dt>
+													<dd>${panoImage.info}</dd>
+											</dl>
 											</div>
 											<div class="col-lg-12">
 												<dl class="dl-horizontal">
 													<dt>完成度:</dt>
 													<dd>
+														<c:set value="0" var="finish" />
+														<c:if test="${not empty panoImage.mus_path}">
+															<c:set value="${finish+25}" var="finish"/>
+														</c:if>
+														<c:if test="${not empty panoImage.scene}">
+															<c:set value="${finish+25}" var="finish"/>
+														</c:if>						
+															<c:if test="${not empty panoImage.info}">
+															<c:set value="${finish+25}" var="finish"/>
+														</c:if>			
+															<c:if test="${not empty panoImage.name}">
+															<c:set value="${finish+25}" var="finish"/>
+														</c:if>																																						
 														<div class="progress progress-striped active m-b-sm">
-															<div style="width: 60%;" class="progress-bar"></div>
+															<div style="width: ${finish}%;" class="progress-bar"></div>
 														</div>
-														<small>Project completed in <strong>60%</strong>.
-															Remaining close the project, sign a contract and invoice.
+														<small>全景完成度 <strong>${finish}%</strong>.
+															添加全部内容,可以使全景项目展示效果达到最佳!
 														</small>
 													</dd>
 												</dl>
+											</div>
+											<div class="col-lg-12">
+												<dl class="dl-horizontal">
+													<dt>完成度:</dt>
+													<dd><a href="${ROOT}/pano/${panoImage.key}" class="btn jet-button btn-primary">立即查看</a></dd>											
 											</div>
 										</div>
 									</div>
@@ -81,7 +104,7 @@
 								    <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">项目信息</a></li>
 								    <li role="presentation"><a href="#music" aria-controls="profile" role="tab" data-toggle="tab">背景音乐</a></li>
 								    <li role="presentation"><a href="#scene" aria-controls="messages" role="tab" data-toggle="tab">场景编辑</a></li>
-								    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+								    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">设置</a></li>
 								  </ul>
 								
 								  <!-- Tab panes -->
@@ -90,7 +113,6 @@
 											<form action="${ROOT}/pano/${panoImage.key}/info" class="form-horizontal pano-form" method="post">
 												<div class="form-group">
 													<label class="col-sm-2 control-label">项目名称</label>
-
 													<div class="col-sm-10">
 													 <input type="text" value="${panoImage.name}" class="form-control jet-input" name="panoName" id="panoName"/>
 													</div>
@@ -156,7 +178,28 @@
 												</div>
 											</div>
 										</div>
-								    <div role="tabpanel" class="tab-pane" id="settings">...</div>
+								    <div role="tabpanel" class="tab-pane" id="settings">
+										<form action="${ROOT}/pano/${panoImage.key}/music" enctype="multipart/form-data" class="form-horizontal pano-form" method="post">
+												<div class="form-group">
+													<label class="col-sm-2 control-label">音乐自动播放</label>
+													<div class="col-sm-10">
+														<input class="form-control jet-input" name="musicOn" type="checkbox" checked value="1" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-2 control-label">播放介绍文字</label>
+													<div class="col-sm-10">
+													 <input class="form-control jet-input" name="textOn" type="checkbox" checked value="1" />
+													</div>
+												</div>
+												<div class="hr-line-dashed"></div>
+												<div class="form-group">
+													<div class="col-sm-4 col-sm-offset-2">
+														<button class="btn btn-primary jet-button" type="submit">保存</button>
+													</div>
+												</div>
+											</form>								    
+								    </div>
 								  </div>
 								
 								</div>

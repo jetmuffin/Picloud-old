@@ -9,7 +9,7 @@ body {
 .toolbar {
 	position: absolute;
 	width: 100%;
-	bottom: 15%;
+	bottom: 50px;
 	background-color: rgba(0, 0, 0, 0.5);
 	padding: 10px 10px;
 	border-top: 1px solid #fff;
@@ -127,4 +127,10 @@ body {
 		background-size: 64px 320px;
 	background-image: url(../images/vtourskin.png);
 	background-position: -32px -32px;
+}
+
+.toolbar .next.disable{
+		background-size: 64px 320px;
+	background-image: url(../images/vtourskin.png);
+	background-position: 0px -32px;
 }

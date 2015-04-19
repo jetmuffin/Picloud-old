@@ -209,6 +209,12 @@
 		
 		$('.picloud-save').click(function(){
 			var updateLink = editor.getUpdateLink();
-			console.log(updateLink);
+			$('#confirmModal').modal();
+			
+			$('#confirmSave').click(function(){
+				window.location.href = updateLink;
+			})
 		});
+		
+
     });

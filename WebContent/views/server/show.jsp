@@ -89,7 +89,7 @@
 	</div>
 
 		<div class="green-editor modal inmodal in " id="imageEditor" tabindex="-1" role="dialog"
-			aria-hidden="false" data-image="${image.name}" data-imageUrl="${IP}${ROOT}/server/${image.key}" data-visit="${IP}${ROOT}/process/" data-visit="${IP}${ROOT}/process/update/">
+			aria-hidden="false" data-image="${image.name}" data-imageUrl="${IP}${ROOT}/server/${image.key}" data-visit="${IP}${ROOT}/process/" data-update="${IP}${ROOT}/process/update/">
 			<div class="modal-dialog animated bounceInRight">
 				<div class='picloud-container' id='picloud-container' ></div>
 			</div>
@@ -121,7 +121,27 @@
         </div>
       </div>
     </div>
-    
+    	<div class="modal" id="confirmModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog hd-dialog  ">
+						<div class="modal-content bounceIn">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">取消</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">保存图片</h4>
+							</div>
+							<div class="modal-body">
+								保存图片会覆盖原图片,确认保存吗?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">取消</button>
+								<button type="submit" class="btn jet-button btn-primary" id="confirmSave">确认</button>
+							</div>
+						</div>
+					</div>
+				</div>
 		<script type="text/javascript"
 		src="${RESOURCES }/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="${RESOURCES }/js/bootstrap.min.js"></script>

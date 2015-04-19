@@ -51,7 +51,9 @@ public class LoginInterceptor implements Filter {
         		session.setAttribute("LOGIN_MSG", message);
         		res.sendRedirect("/Picloud/login.jsp");
         	}
+        	
         }
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		chain.doFilter(request, response);
 	}
 
