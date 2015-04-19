@@ -164,6 +164,8 @@ public class GraphicMagick {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Pipe pipeOut = new Pipe(null, out);
 			ConvertCmd convert = new ConvertCmd(true);
+
+			convert.setSearchPath("/usr/local/opt/graphicsmagick/bin");
 			convert.setInputProvider(pipeIn);
 			convert.setOutputConsumer(pipeOut);
 			convert.run(op);

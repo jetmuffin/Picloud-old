@@ -108,7 +108,7 @@ public class PanoController {
 				while (iter.hasNext()) {
 					FileItem item = (FileItem) iter.next();
 					String musicPath = HDFS_UPLOAD_ROOT + "/"
-							+ loginUser.getUid() + "/Pano"+panoKey+"/Music/";
+							+ loginUser.getUid() + "/Pano/"+panoKey+"/Music/";
 
 					ImageWriter imageWriter = new ImageWriter(infoDaoImpl);
 					flag = imageWriter.uploadToHdfs(musicPath, item,
@@ -214,8 +214,12 @@ public class PanoController {
 						String name = item.getFieldName();
 						if(name.equals("sceneName")) {
 							 sceneName = item.getString();
+							 sceneName = new String(sceneName.getBytes("iso8859-1"),
+										"utf-8");
 						} else if(name.equals("sceneDesc")) {
 							 sceneDesc = item.getString();
+							 sceneDesc = new String(sceneDesc.getBytes("iso8859-1"),
+										"utf-8");
 						}
 					//若为文件
 					} else {
