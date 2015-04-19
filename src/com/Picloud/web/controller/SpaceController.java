@@ -410,4 +410,23 @@ public class SpaceController {
 		}
 		return "test";
 	}
+	
+	/**
+	 * 搜索空间下的图片
+	 * @param spaceKey
+	 * @param subStr
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/{spaceKey}/{subStr}", method = RequestMethod.GET)
+	public String search(@PathVariable String spaceKey, @PathVariable String subStr, Model model,
+			HttpSession session) {
+		model.addAttribute("module", module);
+		model.addAttribute("action", "图片空间");
+		User LoginUser = (User) session.getAttribute("LoginUser");
+		List<Image> images = mSpaceDaoImpl.search(LoginUser.getUid(), spaceKey, subStr);
+		model.addAttribute("searchRes", images);
+		return "space";
+	}
 }

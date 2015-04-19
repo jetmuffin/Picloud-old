@@ -30,6 +30,4 @@ public interface IImageDao {
 	
 	public List<Image> getOtherImages( String spaceId,String imageName,int num);
 
-	
-
 }

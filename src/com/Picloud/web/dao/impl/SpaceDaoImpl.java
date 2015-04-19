@@ -11,6 +11,7 @@ import com.Picloud.hbase.service.impl.BeanMapping;
 import com.Picloud.hbase.service.impl.HbaseOperationImpl;
 import com.Picloud.hbase.service.impl.ListMapping;
 import com.Picloud.web.dao.ISpaceDao;
+import com.Picloud.web.model.Image;
 import com.Picloud.web.model.Space;
 import com.Picloud.web.model.User;
 
@@ -77,5 +78,14 @@ public class SpaceDaoImpl implements ISpaceDao {
 	public List<Space> load(String uid) {
 		ResultScanner rs = mHbaseOperationImpl.queryByColumn("cloud_space", "attr", "uid",uid);
 		return mListMapping.spaceListMapping(rs);
+	}
+
+	/**
+	 * 搜索空间下的图片
+	 */
+	@Override
+	public List<Image> search(String uid, String space, String subStr) {
+		ResultScanner rs = mHbaseOperationImpl.imageNameMatching(uid, space, subStr);
+		return mListMapping.imageListMapping(rs);
 	}
 }
