@@ -51,7 +51,6 @@
 									<td><c:out value="${jt.getStrTime(log.time)}"></c:out></td>
 									<td>${log.operation}</td>
 								</tr>
-									
 								</c:forEach>												
 									</tbody>
 								</table>

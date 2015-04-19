@@ -17,7 +17,7 @@ $(document).ready(function(){
 			var dfsRemaining = percentToNum(data.dfsRemainingPercent);
 			var nonDFSUsed = 100 - dfsUsed - dfsRemaining;
 			
-			
+			console.log(data);
 			var data = new Array();
 			var v = {
 					label : 'dfsUsed',

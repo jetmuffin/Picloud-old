@@ -136,7 +136,6 @@ public class HDController {
 		HdCut hdCut = new HdCut();
 		hdCut.HdCutx(imageBuffer, hdfsHdPath, image.getName(), BLOCK_SIZE, width, height);
 		Long end = new Date().getTime();  
-		System.out.println((end-start)/1000 +  "s");
 		
 		HdImage hdImage = new HdImage();
 		hdImage.setKey(EncryptUtil.hdEncryptKey(image.getName(), loginUser.getUid()));

@@ -131,7 +131,8 @@ public class PanoImage {
 		for(int i = 1; i <= Integer.parseInt(number); i++){
 			PanoScene sc = new PanoScene();
 			sc.setName(StringSplit.descSplit(sceneName, i));
-			sc.setPath(path+"/"+i+"."+type+"/"+sc.getName());
+			sc.setPath(path+"/scene/"+i+"."+type);
+			sc.setThumb(path+"/thumb/"+i+"."+type);
 			sc.setDesc(StringSplit.descSplit(this.desc, i));
 			this.scene.add(sc);
 		}

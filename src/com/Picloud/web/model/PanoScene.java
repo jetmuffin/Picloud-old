@@ -9,6 +9,14 @@ public class PanoScene {
 	String name;
 	String desc;
 	String path;
+	String thumb;
+	
+	public String getThumb() {
+		return thumb;
+	}
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
+	}
 	public String getName() {
 		return name;
 	}

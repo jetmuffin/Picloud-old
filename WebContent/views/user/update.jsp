@@ -20,6 +20,13 @@
 			<jsp:include page="../common/breadcrumb.jsp" />
 			<div class="wrapper wrapper-content animated fadeInDown">
 				<block name="content">
+  				<c:if test="${not empty userMsg}">
+	    			<div class="alert alert-info alert-dismissable">
+						<button aria-hidden="true" data-dismiss="alert" class="close"
+							type="button">×</button>
+								${userMsg}
+					</div>					
+  				</c:if>				
 				<div class="row">
 					<div class="col-md-12">
 						<div class="ibox float-e-margins">
@@ -33,7 +40,7 @@
 								</div>
 							</div>
 							<div class="ibox-content" style="display: block;">
-								<sf:form method="post"  class="form-horizontal" modelAttribute="user" action="update">
+								<sf:form method="post"  class="form-horizontal" modelAttribute="user" action="${ROOT}/user/update">
 									<div class="form-group">
 										<label class="col-lg-2 control-label">用户名</label>
 										<div class="col-lg-10">

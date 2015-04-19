@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,7 +33,9 @@ import com.Picloud.exception.PanoImageException;
 import com.Picloud.exception.ThreeDImageException;
 import com.Picloud.exception.UserException;
 import com.Picloud.hdfs.HdfsHandler;
+import com.Picloud.image.GraphicMagick;
 import com.Picloud.image.ImageWriter;
+import com.Picloud.utils.ByteUtil;
 import com.Picloud.utils.EncryptUtil;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.LogDaoImpl;
@@ -54,6 +57,8 @@ public class PanoController {
 	private InfoDaoImpl infoDaoImpl;
 	@Autowired
 	private LogDaoImpl mLogDaoImpl;
+	@Autowired
+	private HdfsHandler mHdfsHandler;
 	
 	private static final String HDFS_UPLOAD_ROOT = "/upload";
 
@@ -119,7 +124,7 @@ public class PanoController {
 			} catch (Exception e) {
 				throw new PanoImageException(e.getMessage());
 			}
-			attr.addFlashAttribute("editMsg", "修改成功123!");
+			attr.addFlashAttribute("editMsg", "修改背景音乐成功!");
 			return "redirect:edit";
 	}
  }
@@ -195,39 +200,52 @@ public class PanoController {
 
 				String hdfsPath = HDFS_UPLOAD_ROOT + "/"
 						+ loginUser.getUid() + "/Pano/"+panoKey+"/scene/";
-				System.out.println(hdfsPath);
 				String sceneName="";
 				String sceneDesc="";
+				String filePath;
+				String fileName;
 				PanoImage panoImage=panoImageDao.find(panoKey);
 				int number=Integer.parseInt(panoImage.getNumber())+1;
 
 				while (iter.hasNext()) {
-					System.out.println("1");
 					FileItem item = (FileItem) iter.next();
-					if (item.isFormField()) {  		//若为普通表单
+					//若为普通表单
+					if (item.isFormField()) {  		
 						String name = item.getFieldName();
 						if(name.equals("sceneName")) {
 							 sceneName = item.getString();
-							 System.out.println(2);
 						} else if(name.equals("sceneDesc")) {
 							 sceneDesc = item.getString();
 						}
+					//若为文件
 					} else {
 						String type = JspUtil.getFileType(item.getName());
+						//首次上传
 						if(panoImage.getType().equals("")){
 							panoImage.setType(type);
-							String fileName=number+"."+type;
-							String filePath = hdfsPath+fileName;
-							ImageWriter imageWriter=new ImageWriter(infoDaoImpl);
-						    imageWriter.uploadToHdfs(filePath, item,loginUser.getUid());
+							fileName=number+"."+type;
+							filePath = hdfsPath+fileName;
 						}
+						//非首次上传图片格式限制
 						else if(panoImage.getType().equals(type)){
-							String fileName=number+"."+type;
-							String filePath = hdfsPath+fileName;
-							ImageWriter imageWriter=new ImageWriter(infoDaoImpl);
-						    imageWriter.uploadToHdfs(filePath, item,loginUser.getUid());
+							fileName=number+"."+type;
+							filePath = hdfsPath+fileName;
 						}
 						else throw new PanoImageException("图片格式不正确");
+						InputStream origin = item.getInputStream();
+						mHdfsHandler.upLoad(origin, filePath);
+//						ImageWriter imageWriter=new ImageWriter(infoDaoImpl);
+//						imageWriter.uploadToHdfs(filePath, item,loginUser.getUid());
+						
+						//制作缩略图
+						InputStream in = item.getInputStream();
+						byte[] buffer = ByteUtil.inputStreamToByte(in);
+						GraphicMagick gm = new GraphicMagick(buffer,type);
+						byte[] bufferOut = gm.scaleImage(220);
+						InputStream is = new ByteArrayInputStream(bufferOut); 
+						String thumbPath = HDFS_UPLOAD_ROOT + "/"
+								+ loginUser.getUid() + "/Pano/"+panoKey+"/thumb/" + number+"."+type;;
+								mHdfsHandler.upLoad(is, thumbPath);
 					}
 				}
 				panoImage.append(sceneName, sceneDesc);
@@ -238,7 +256,7 @@ public class PanoController {
 				throw new PanoImageException(e.getMessage());
 			}
 		}
-		attr.addFlashAttribute("editMsg", "修改成功123!");
+		attr.addFlashAttribute("editMsg", "添加场景成功");
 		return "redirect:edit";
 	}
 	
@@ -309,7 +327,7 @@ public class PanoController {
 			// TODO Auto-generated catch block
 			throw new PanoImageException(e.getMessage());
 		}
-		attr.addFlashAttribute("editMsg", "修改成功!");
+		attr.addFlashAttribute("editMsg", "修改项目信息成功!");
 		return "redirect:edit";
 	}
 	/**
@@ -367,6 +385,35 @@ public class PanoController {
 					throw new PanoImageException(e.getMessage());
 				}
 			}	
+			
+			@RequestMapping(value="/readFile",method=RequestMethod.GET)
+			public void read(String name,String path,HttpSession session,HttpServletResponse response) throws Exception{
+				User loginUser = (User) session.getAttribute("LoginUser");
+				try{
+					HdfsHandler hdfsHandler = new HdfsHandler();
+					byte[] fileByte =  hdfsHandler.readFile(path);
+					response.reset();
+					OutputStream output = response.getOutputStream();// 得到输出流
+					response.setContentType("image/jpeg;charset=GB2312");  
+
+					InputStream imageIn = new ByteArrayInputStream(fileByte);
+					BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+					BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+					byte data[] = new byte[4096];// 缓冲字节数
+					int size = 0;
+					size = bis.read(data);
+					while (size != -1) {
+						bos.write(data, 0, size);
+						size = bis.read(data);
+					}				
+					bis.close();
+					bos.flush();// 清空输出缓冲流
+					bos.close();
+					output.close();
+				}catch(Exception e){
+					throw new ThreeDImageException(e.getMessage());
+				}
+			}
 			
 		@ExceptionHandler(value=(PanoImageException.class))
 		public String handlerException(Exception e,HttpServletRequest req){

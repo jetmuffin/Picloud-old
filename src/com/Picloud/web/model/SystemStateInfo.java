@@ -91,5 +91,18 @@ public class SystemStateInfo {
 	public void setDatanodes(List<DataNodeState> datanodes) {
 		this.datanodes = datanodes;
 	}
+	@Override
+	public String toString() {
+		return "SystemStateInfo [dfsUsed=" + dfsUsed + ", nonDFSUsed="
+				+ nonDFSUsed + ", dfsRemaining=" + dfsRemaining
+				+ ", dfsUsedPercent=" + dfsUsedPercent
+				+ ", dfsRemainingPercent=" + dfsRemainingPercent
+				+ ", blockPoolUsed=" + blockPoolUsed
+				+ ", blockPoolUsedPercent=" + blockPoolUsedPercent
+				+ ", nodeUsageMin=" + nodeUsageMin + ", nodeUsageMedian="
+				+ nodeUsageMedian + ", nodeUsageMax=" + nodeUsageMax
+				+ ", nodeUsageStdDev=" + nodeUsageStdDev + ", datanodes="
+				+ datanodes + "]";
+	}
 	
 }

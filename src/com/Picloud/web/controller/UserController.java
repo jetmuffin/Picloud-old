@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Picloud.exception.UserException;
 import com.Picloud.utils.JspUtil;
@@ -116,7 +117,7 @@ public class UserController {
 		if (!pwd_old.equals(LoginUser.getPassword())) {
 			throw new UserException("原密码不正确");
 		}
-
+		System.out.println(user);
 		mUserDaoImpl.update(user);
 		session.setAttribute("LoginUser", user);
 		return "redirect:/user/update";

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<jsp:useBean id="jt" class="com.Picloud.utils.JspUtil" scope="page" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -134,20 +135,23 @@
 								    <div role="tabpanel" class="tab-pane" id="scene">
 											
 											<div class="row scene-box">
+
 												<div class="col-lg-12">
+												<c:forEach items="${panoImage.scene}" var="scene" varStatus="status">
+													
 													<div class="file-box">
 														<div class="file">
 															<a href="#"> <span class="corner"></span>
 																<div class="icon">
-																	<i class="fa fa-file"></i>
+																	<img src="${ROOT}/pano/readFile?path=${jt.urlEncode(scene.thumb)}" alt="${scene.name}" />
 																</div>
 																<div class="file-name">
-																	Document_2014.doc <br> <small>Added: Jan
-																		11, 2014</small>
+																	${scene.name} <br> <small>${scene.desc}</small>
 																</div>
 															</a>
 														</div>
-													</div>
+													</div>													
+												</c:forEach>												
 														<button class="btn btn-primary jet-button"  data-toggle="modal" data-target="#sceneModal" >添加场景</button>
 												</div>
 											</div>

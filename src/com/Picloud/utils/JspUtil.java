@@ -1,5 +1,6 @@
 package com.Picloud.utils;
 
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -147,6 +148,9 @@ public class JspUtil {
 		return fileName.substring(index+1);
 	}
 	
+	public static String urlEncode(String url){
+		return URLEncoder.encode(url);
+	}
 }
 
 

@@ -82,7 +82,7 @@ public class SystemState {
 
 		JSONObject datanode = jsonInfo.getJSONObject("LiveNodes");
 	
-		JSONObject node = datanode.getJSONObject("localhost");
+		JSONObject node = datanode.getJSONObject("Jeff-PC");
 		
 		DataNodeState dns = new DataNodeState();
 		dns.setNode(node.getString("xferaddr"));
@@ -114,7 +114,7 @@ public class SystemState {
 		return info;
 	}
 //
-//	public static void main(String[] args) {
-//		System.out.println(getSystemState());
-//	}
+	public static void main(String[] args) {
+		System.out.println(getSystemState());
+	}
 }

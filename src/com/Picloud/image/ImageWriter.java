@@ -196,6 +196,7 @@ public class ImageWriter {
 			return false;
 		}
 	}
+	
 
 	/**
 	 * 将byte型文件写入hdfs中, 代码未测试

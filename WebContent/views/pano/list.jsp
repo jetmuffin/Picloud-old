@@ -39,7 +39,6 @@
 											<tr>
 												<td class="project-title"><a href="project_detail.html">示例物品</a>
 												</td>
-												<td class="project-completion">图片大小: 4.8MB</td>
 												<td class="project-create">创建时间：2014-12-10</td>
 												<td class="project-actions"><if
 														condition="($pano['name'] eq 'example.jpg')"> <a
@@ -49,7 +48,6 @@
 														class="btn btn-default btn-sm"><i class="fa fa-pencil"></i>
 														删除 </a></td>
 											</tr>
-											
 											<c:forEach var="pano"  items="${panoImages}" > 
 											<td class="project-title"><a target="_blank" href="${ROOT}/pano/${pano.key }">${pano.name}</a>
 											</td>
