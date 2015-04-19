@@ -12,6 +12,7 @@ import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.hdfs.MapfileHandler;
 import com.Picloud.hdfs.SequencefileHandler;
 import com.Picloud.utils.JspUtil;
+import com.Picloud.utils.PropertiesUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.LogDaoImpl;
@@ -51,7 +52,7 @@ public class TestImageWriter {
 	 */
 	public boolean write(FileItem item){
 		boolean flag;
-		final String LocalPath = SystemConfig.getSystemPath()
+		final String LocalPath = PropertiesUtil.getValue("systemPath")
 				+ LOCAL_UPLOAD_ROOT + "/test/";
 		double fileLength = (double) item.getSize() / 1024 / 1024;
 		// 文件大小判断
@@ -104,7 +105,7 @@ public class TestImageWriter {
 		try {
 
 			// 本地目录为“根目录/用户名/时间戳"
-			final String LocalPath = SystemConfig.getSystemPath()
+			final String LocalPath = PropertiesUtil.getValue("systemPath")
 					+ LOCAL_UPLOAD_ROOT + "/test/";
 			// 文件是否存在
 			File LocalUidDir = new File(LocalPath);

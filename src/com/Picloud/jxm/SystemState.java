@@ -6,6 +6,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.Picloud.config.SystemConfig;
+import com.Picloud.utils.PropertiesUtil;
 import com.Picloud.web.model.DataNodeState;
 import com.Picloud.web.model.SystemStateInfo;
 
@@ -15,10 +16,10 @@ public class SystemState {
 	private static DecimalFormat df = new DecimalFormat("#.00");
 
 	public static SystemStateInfo getSystemState() {
-		String nameNodeInfo = SystemConfig.getNameNodeInfo();
-		String nameNodeStatus = SystemConfig.getNameNodeStatus();
-		String FSNamesystemState = SystemConfig.getFSNamesystemState();
-		String memory = SystemConfig.getMemory();
+		String nameNodeInfo = PropertiesUtil.getValue("nameNodeInfo");
+		String nameNodeStatus = PropertiesUtil.getValue("nameNodeStatus");
+		String FSNamesystemState = PropertiesUtil.getValue("FSNamesystemState");
+		String memory = PropertiesUtil.getValue("memory");
 		
 		SystemStateInfo info = new SystemStateInfo();
 

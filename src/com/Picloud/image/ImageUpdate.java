@@ -17,6 +17,7 @@ import com.Picloud.config.SystemConfig;
 import com.Picloud.hdfs.HdfsHandler;
 import com.Picloud.hdfs.MapfileHandler;
 import com.Picloud.utils.EncryptUtil;
+import com.Picloud.utils.PropertiesUtil;
 import com.Picloud.web.dao.impl.DustbinDaoImpl;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
@@ -135,7 +136,7 @@ public class ImageUpdate {
 	public boolean updateSmallImage(byte[] imagebyte, String uid, String space,Image image) {
 		try {
 		// 本地目录为“根目录/用户名/时间戳"
-		final String LocalUidPath = SystemConfig.getSystemPath()
+		final String LocalUidPath = PropertiesUtil.getValue("systemPath")
 				+ LOCAL_UPLOAD_ROOT + "/" + uid + '/';
 		final String LocalPath = LocalUidPath + '/' + space + '/';
 		ByteArrayInputStream input = new ByteArrayInputStream(imagebyte);

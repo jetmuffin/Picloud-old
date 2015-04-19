@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.im4java.core.CompositeCmd;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.GMOperation;
@@ -32,6 +33,7 @@ import org.im4java.process.Pipe;
 
 import com.Picloud.config.SystemConfig;
 import com.Picloud.hdfs.HdfsHandler;
+import com.Picloud.utils.PropertiesUtil;
 
 public class GraphicMagick {
 	Pipe pipeIn = null;
@@ -304,7 +306,7 @@ public class GraphicMagick {
 	 */
 	public byte[] textWaterMask(String text, int fontsize, String color,
 			int offsetX, int offsetY,int alpha) throws InfoException{
-		String logoTmpSrc = SystemConfig.getLogoTmpSrc();
+		String logoTmpSrc = PropertiesUtil.getValue("logoTmpSrc");
 		try {
 			converFontToImage(text,fontsize,color);
 		} catch (Exception e) {
@@ -329,7 +331,7 @@ public class GraphicMagick {
 	 * @throws Exception
 	 */
 	public  void converFontToImage(String text,int fontSize,String color) throws Exception{  
-		String logoTmpSrc = SystemConfig.getLogoTmpSrc();
+		String logoTmpSrc = PropertiesUtil.getValue("logoTmpSrc");
 		Font font=new Font("Microsoft YaHei",Font.BOLD,fontSize);  
 		File file=new File(logoTmpSrc);  
 		Rectangle2D r=font.getStringBounds(text, new FontRenderContext(AffineTransform.getScaleInstance(1, 1),false,false));  

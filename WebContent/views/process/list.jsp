@@ -33,17 +33,8 @@
 							<div class="ibox-content" style="display: block;">
 								<div class="row applist">
 									<div class="col-md-4 app-item">
-										<a class="jet-button btn btn-primary dim btn-large-dim"
-											href="{:U('Index/Appcenter/process')}"><i
-											class="fa fa-paint-brush "></i></a>
-										<div class="app-detail">
-											<h3>图片处理</h3>
-											<p>对图片进行裁剪，缩放，加水印等处理</p>
-										</div>
-									</div>
-									<div class="col-md-4 app-item">
 										<a class="btn btn-info btn-large-dim dim"
-											href="{:U('Index/Appcenter/hidfpic')}"><i
+											href="${ROOT}/hd/list"><i
 											class="fa fa-eye"></i> </a>
 										<div class="app-detail">
 											<h3>高清图片</h3>
@@ -52,7 +43,7 @@
 									</div>
 									<div class="col-md-4 app-item">
 										<a class="btn btn-danger  dim btn-large-dim"
-											href="{:U('Index/Appcenter/overallview')}"><i
+											href="${ROOT}/pano/list"><i
 											class="fa fa-globe"></i></a>
 										<div class="app-detail">
 											<h3>全景展示</h3>
@@ -61,7 +52,7 @@
 									</div>
 									<div class="col-md-4 app-item">
 										<a class="btn btn-warning  dim btn-large-dim"
-											href="{:U('Index/Appcenter/tdgood')}"><i
+											href="${ROOT}/threeD/list"><i
 											class="fa fa-globe"></i></a>
 										<div class="app-detail">
 											<h3>3D物品</h3>

@@ -35,6 +35,7 @@ import com.Picloud.exception.ThreeDImageException;
 import com.Picloud.image.ImageWriter;
 import com.Picloud.utils.JspUtil;
 import com.Picloud.utils.EncryptUtil;
+import com.Picloud.utils.PropertiesUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.SpaceDaoImpl;
@@ -200,7 +201,7 @@ public class SpaceController {
 		List items = upload.parseRequest(request);
 		Iterator iter = items.iterator();
 		User loginUser = (User) session.getAttribute("LoginUser");
-		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
+		final String LocalPath = PropertiesUtil.getValue("localUploadPath") + "/"
 				+ loginUser.getUid() + '/' + spaceKey + '/';
 		try {
 			boolean flag = false;
@@ -265,7 +266,7 @@ public class SpaceController {
 		List items = upload.parseRequest(request);
 		Iterator iter = items.iterator();
 		User loginUser = (User) session.getAttribute("LoginUser");
-		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
+		final String LocalPath = PropertiesUtil.getValue("localUploadPath")+ "/"
 				+ loginUser.getUid() + '/' + spaceKey + '/';
 		boolean flag = false;
 		try {
@@ -376,7 +377,7 @@ public class SpaceController {
 		Iterator iter = items.iterator();
 		User loginUser = new User("test", "1", "", "", "", "test", "123456",
 				"0", "0", "0");
-		final String LocalPath = systemConfig.getLocalUploadPath() + "/"
+		final String LocalPath = PropertiesUtil.getValue("localUploadPath")+ "/"
 				+ loginUser.getUid() + '/' + spaceKey + '/';
 		try {
 			boolean flag = false;

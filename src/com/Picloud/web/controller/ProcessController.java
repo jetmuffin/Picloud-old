@@ -29,6 +29,7 @@ import com.Picloud.exception.UserException;
 import com.Picloud.image.GraphicMagick;
 import com.Picloud.image.ImageReader;
 import com.Picloud.image.ImageUpdate;
+import com.Picloud.utils.PropertiesUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
 import com.Picloud.web.dao.impl.LogDaoImpl;
@@ -428,7 +429,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		String logoSrc = systemConfig.getImagePath() + logo;
+		String logoSrc = PropertiesUtil.getValue("imagePath") + logo;
 		byte[] bufferOut = gm.imgWaterMask(logoSrc, width, height, startX, startY, optical);
 		
 		if (bufferOut != null) {
@@ -484,7 +485,7 @@ public class ProcessController {
 		ImageReader imageReader = new ImageReader(infoDaoImpl);
 		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		String logoSrc = systemConfig.getImagePath() + logo;
+		String logoSrc = PropertiesUtil.getValue("imagePath") + logo;
 		byte[] bufferOut = gm.imgWaterMask(logoSrc, width, height, startX, startY, optical);
 		
 		if (bufferOut != null) {
