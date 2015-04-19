@@ -291,6 +291,7 @@ public class GraphicMagick {
 //		return imageOutData;
 //	}
 
+
 	/**
 	 * @param text		文字内容
 	 * @param fontsize	字体大小
@@ -317,7 +318,9 @@ public class GraphicMagick {
 		return imgWaterMask(logoTmpSrc, width, height,offsetX, offsetY, alpha);
 	}
 	
-	
+	public void textToImage(String text,int fontSize,String color){
+		
+	}
 	/**
 	 * 文字转换为图片
 	 * @param text

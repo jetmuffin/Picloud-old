@@ -39,6 +39,7 @@
 									<div class="dropzone-previews"></div>
 									<div class="dropzone-group">
 										<button type="submit" class="btn btn-primary pull-right">提交</button>
+										<label for="" style="float:left">空间:</label>
 										<c:if test="${spaces!=null}">
 											<select class="form-control jet-input" name="space">
 												<c:forEach items="${spaces}" var="space">

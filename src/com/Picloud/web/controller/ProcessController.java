@@ -66,6 +66,7 @@ public class ProcessController {
 		return "process/list";
 	}
 	
+	
 	@RequestMapping(value="/scale",method=RequestMethod.GET)
 	public String  scale(Model model,HttpSession session){
 		model.addAttribute("module", module);
@@ -109,6 +110,7 @@ public class ProcessController {
 		model.addAttribute("spaces",spaces);
 		return "process/watermark";
 	}
+	
 	/**
 	 * 缩放图片查看
 	 * 
@@ -135,6 +137,43 @@ public class ProcessController {
 		if (bufferOut != null) {
 			// 输出byte为图片
 			InputStream imageIn = new ByteArrayInputStream(bufferOut);
+			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
+			OutputStream output = response.getOutputStream();
+			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
+			byte data[] = new byte[4096];// 缓冲字节数
+			int size = 0;
+			size = bis.read(data);
+			while (size != -1) {
+				bos.write(data, 0, size);
+				size = bis.read(data);
+			}
+			bis.close();
+			bos.flush();// 清空输出缓冲流
+			bos.close();
+			
+			output.close();
+
+		} else {
+			throw new ProcessException("请输入正确的参数！");
+		}
+	}
+
+	/**
+	 * 未修改的默认图片
+	 * 
+	 */
+	@RequestMapping(value = "/{imageKey}/default", method = RequestMethod.GET)
+	public void mdefault(@PathVariable String imageKey,HttpSession session,
+			HttpServletResponse response) throws Exception {
+
+		Image image = mImageDaoImpl.find(imageKey);
+		User loginUser = (User) session.getAttribute("LoginUser");
+		ImageReader imageReader = new ImageReader(infoDaoImpl);
+		byte[] buffer = imageReader.readPicture(imageKey);
+
+		if (buffer != null) {
+			// 输出byte为图片
+			InputStream imageIn = new ByteArrayInputStream(buffer);
 			BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
 			OutputStream output = response.getOutputStream();
 			BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流
@@ -489,12 +528,13 @@ public class ProcessController {
 			@PathVariable String color,@PathVariable int dissolve,HttpSession session,HttpServletResponse response) throws Exception {
 		
 		User loginUser = (User) session.getAttribute("LoginUser");
-		ImageReader imageReader = new ImageReader(infoDaoImpl);		byte[] buffer = imageReader.readPicture(imageKey);
-		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		Image image = mImageDaoImpl.find(imageKey);
+		ImageReader imageReader = new ImageReader(infoDaoImpl);		
+		byte[] buffer = imageReader.readPicture(imageKey);
+		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
 		 text = new String(text.getBytes("iso8859-1"),
 					"utf-8");
 		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY,dissolve);
-		System.out.println(text);
 		if (bufferOut != null) {
 			// 输出byte为图片
 			InputStream imageIn = new ByteArrayInputStream(bufferOut);
@@ -540,16 +580,17 @@ public class ProcessController {
 	public void  textmarkUpdate(@PathVariable String imageKey,
 			@PathVariable int startX, @PathVariable int startY,
 			@PathVariable int fontSize, @PathVariable String text,
-			@PathVariable String color,@PathVariable int dissolve,HttpSession session,HttpServletResponse response) throws Exception {
+			@PathVariable String color,@PathVariable int alpha,HttpSession session,HttpServletResponse response) throws Exception {
 		
 		User loginUser = (User) session.getAttribute("LoginUser");
+		Image image = mImageDaoImpl.find(imageKey);
 		ImageReader imageReader = new ImageReader(infoDaoImpl);		byte[] buffer = imageReader.readPicture(imageKey);
-		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
-		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY,dissolve);
+		GraphicMagick gm = new GraphicMagick(buffer, image.getType());
+		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY,alpha);
 		
 		if (bufferOut != null) {
 
-			Image image = mImageDaoImpl.find(imageKey);
+			
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 			

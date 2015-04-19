@@ -427,14 +427,16 @@ public class SpaceController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "/{spaceKey}/{subStr}", method = RequestMethod.GET)
-	public String search(@PathVariable String spaceKey, @PathVariable String subStr, Model model,
+	@RequestMapping(value = "/{spaceKey}/search", method = RequestMethod.GET)
+	public String search(@PathVariable String spaceKey, String key, Model model,
 			HttpSession session) {
 		model.addAttribute("module", module);
 		model.addAttribute("action", "图片空间");
 		User LoginUser = (User) session.getAttribute("LoginUser");
-		List<Image> images = mSpaceDaoImpl.search(LoginUser.getUid(), spaceKey, subStr);
-		model.addAttribute("searchRes", images);
-		return "space";
+		List<Image> images = mSpaceDaoImpl.search(LoginUser.getUid(), spaceKey, key);
+		Space space = mSpaceDaoImpl.find(spaceKey);
+		model.addAttribute("images", images);
+		model.addAttribute("space", space);
+		return "space/show";
 	}
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="jt" class="com.Picloud.utils.JspUtil" scope="page" />
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -58,7 +59,7 @@
                       图片大小: ${threeD.size}MB
                     </td>
                     <td class="project-create">
-                      创建时间：${threeD.createTime}
+                      创建时间：${jt.getStrTime(threeD.createTime)}
                     </td>
                     <td class="project-actions">
                       <a href="${ROOT}/threeD/${threeD.key }" class="btn btn-default btn-sm"  target="_blank"><i class="fa fa-folder"></i> 查看 </a>

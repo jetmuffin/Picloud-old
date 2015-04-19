@@ -42,7 +42,7 @@
 									</ul>
 									<div class="picture-search">
 										<label class="control-label">搜索图片</label>
-										<form action="{:U('Picserver/search')}" method="get">
+										<form action="${ROOT}/space/${space.key}/search" method="get">
 											<input type="text" placeholder="搜索" name="key"
 												class="form-control jet-input">
 										</form>
@@ -94,10 +94,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="switch">
-					<a href=""><i class="fa fa-heart"></i>缩略图</a> &nbsp;|&nbsp; <a
-						href=""><i class="fa fa-heart"></i>列表</a>
-				</div>
+
 				</block> </block>
 			</div>
 			<jsp:include page="../common/footer.jsp" />

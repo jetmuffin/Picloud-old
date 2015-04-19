@@ -41,7 +41,7 @@ public class IndexController {
 		
 		List<Space> spaces = mSpaceDaoImpl.load(user.getUid());
 		List<Log> logs = mLogDaoImpl.getByTime(user.getUid(),yesterday ,today);
-		List<Image> recentImages = mImageDaoImpl.imagePageByTime(today, user.getUid(), 5);
+		List<Image> recentImages = mImageDaoImpl.imagePageByTime(today, user.getUid(), 4);
 		
 		session.setAttribute("lastLogin", JspUtil.getLastTime(user.getLastLogin()));
 		model.addAttribute("spaces",spaces);

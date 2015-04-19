@@ -123,7 +123,7 @@
 															<span class="label label-primary">${k}</span>
 														</c:when>
 													</c:choose>
-													<a href="space/${space.key}"><span>${space.name}</span></a>
+													<a href="space/${space.key}/0"><span>${space.name}</span></a>
 													<small class="pull-right">${space.number}张 /<c:out value="${jt.cutLength(space.storage)}"></c:out>MB</small>
 												</div>
 												<div class="hr-line-dashed"></div>

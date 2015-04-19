@@ -394,11 +394,12 @@
           }
         },
 
-        setFilters: function(newUrl){
+        setFilters: function(newUrl,filter){
           this.canvas.remove(this.image);
           var plugin = this;
           var img = new Image();
           img.src = newUrl;
+          plugin.filter = filter;
           img.onload = function(){
             plugin.size = editor.getSize(img.width,img.height);
             plugin.image = new fabric.Image(img, {
@@ -480,7 +481,11 @@
 
         brightness: function(url,img){
           var brightness = editor.plugin.image.filters[0]['brightness'];
-          return url + img + '/brightness[' + brightness + ']';
+          return url + img + '/brightness[' + (brightness/2+100) + ']';
+        },
+        filters:function(url,img){
+        			var filter = editor.plugin.filter;
+        						return url+img+'/'+filter;
         }
       }
 
@@ -516,6 +521,7 @@
           case 'watermark': var logo = this.getImage(editor.logo);return this.link.watermark(editor.visitUrl,image,logo);break;
           case 'rotate': return this.link.rotate(editor.visitUrl,image);break;
           case 'brightness': return this.link.brightness(editor.visitUrl,image);break;
+          case 'filters': return this.link.filters(editor.visitUrl,image);break;
           default: return;
         }
       }
@@ -531,6 +537,7 @@
             case 'watermark': var logo = this.getImage(editor.logo);return this.link.watermark(editor.updateUrl,image,logo);break;
             case 'rotate': return this.link.rotate(editor.updateUrl,image);break;
             case 'brightness': return this.link.brightness(editor.updateUrl,image);break;
+            case 'filters': return this.link.filters(editor.updateUrl,image);break;
             default: return;
           }
         }

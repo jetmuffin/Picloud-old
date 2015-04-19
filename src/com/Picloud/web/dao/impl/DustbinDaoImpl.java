@@ -30,9 +30,8 @@ public class DustbinDaoImpl implements IDustbinDao{
 			//传值有问题，处理一下
 			return;
 		}
-		mHbaseOperationImpl.insertData("cloud_dustbin", dustbin.getKey(), "attr", "key", dustbin.getKey());
-		mHbaseOperationImpl.insertData("cloud_dustbin", dustbin.getPicName(), "attr", "picName", dustbin.getPicName());
-		mHbaseOperationImpl.insertData("cloud_dustbin", dustbin.getPicName(), "attr", "mapfileName", dustbin.getMapfileName());
+		mHbaseOperationImpl.insertData("cloud_dustbin", dustbin.getKey(), "attr", "picName", dustbin.getPicName());
+		mHbaseOperationImpl.insertData("cloud_dustbin", dustbin.getKey(), "attr", "mapfileName", dustbin.getMapfileName());
 	}
 
 	@Override

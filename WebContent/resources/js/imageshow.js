@@ -176,6 +176,13 @@
 	  			 }
 	  		});	
 	  	}
+	  	
+	  	//滤镜变化
+	  $('.picloud-controls-filters .picloud-controls-item-group').click(function(){
+	  		var filter = $(this).attr('data-filter');
+	  			var newUrl = url_base+'/process/'+imageKey+'/'+filter;
+	  			editor.plugin.setFilters(newUrl,filter);
+	  	});
 	  
 		//添加chosen-select事件,加载相应的图片option
 		$('#spaces_select').change(function(){
