@@ -292,7 +292,7 @@ public class HbaseOperationImpl implements IHbaseOperation {
 	 * 根据图片名字前缀匹配检索图片
 	 */
 	@Override
-	public ResultScanner imageNameMatching(String uid, String subStr) {
+	public ResultScanner imageNameMatching(String uid, String space, String subStr) {
 		try {
 			HTable table = new HTable(mConfiguration, "cloud_image");
 			List<Filter> filters = new ArrayList<Filter>();
@@ -305,6 +305,10 @@ public class HbaseOperationImpl implements IHbaseOperation {
 			Filter filter1 = new SingleColumnValueFilter(Bytes.toBytes("attr"),
 					Bytes.toBytes("uid"), CompareOp.EQUAL, Bytes.toBytes(uid));
 			filters.add(filter1);
+			
+			Filter filter2 = new SingleColumnValueFilter(Bytes.toBytes("attr"),
+					Bytes.toBytes("space"), CompareOp.EQUAL, Bytes.toBytes(space));
+			filters.add(filter2);
 
 			Scan s = new Scan();
 			FilterList filterList = new FilterList(filters);

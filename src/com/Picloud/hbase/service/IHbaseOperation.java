@@ -79,7 +79,7 @@ public interface IHbaseOperation {
       * @param subStr
       * @return
       */
-     public ResultScanner imageNameMatching(String uid, String subStr);
+     public ResultScanner imageNameMatching(String uid, String space, String subStr);
      
      /**
       * 日志分页
