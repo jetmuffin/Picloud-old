@@ -1,6 +1,15 @@
 package com.Picloud.image;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Transparency;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -241,47 +250,102 @@ public class GraphicMagick {
 	 * @throws InterruptedException
 	 * @throws IM4JavaException
 	 */
+//	public byte[] textWaterMask(String text, int fontsize, String color,
+//			int offsetX, int offsetY, int dissolve) throws IOException, InterruptedException,
+//			IM4JavaException {
+//		IMOperation op = new IMOperation();
+//		String option = " text " + offsetX + "," + offsetY + " \'" + text
+//				+ "\'";
+//		String fontpath = SystemConfig.getSystemPath() + "/font/msyh.ttf";
+//		color = "#" + color;
+//		color = "rgba\\(0,0,0,0.4\\)";
+//		String formatOp = format + ":-";
+//		byte[] imageOutData = null;
+//
+//		//TODO 文字透明度
+//		
+//		try {
+//			op.font(fontpath).gravity("northwest").pointsize(fontsize)
+//					.fill(color).annotate(20,20,offsetX,offsetY,text);
+//			op.addImage("-");
+//			op.addImage(formatOp);
+//
+//			// gif动图特殊处理
+//			if (format == "gif")
+//				op.coalesce();
+//
+//			ByteArrayOutputStream out = new ByteArrayOutputStream();
+//			Pipe pipeOut = new Pipe(null, out);
+//			ConvertCmd convert = new ConvertCmd(true);
+//			convert.setInputProvider(pipeIn);
+//			convert.setOutputConsumer(pipeOut);
+//
+//			System.out.println(op);
+//			convert.run(op);
+//			
+//			imageOutData = out.toByteArray();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return imageOutData;
+//	}
+
+	/**
+	 * @param text		文字内容
+	 * @param fontsize	字体大小
+	 * @param color		字体颜色
+	 * @param offsetX	X偏移
+	 * @param offsetY	Y偏移
+	 * @param alpha		透明度
+	 * @return
+	 * @throws InfoException 
+	 */
 	public byte[] textWaterMask(String text, int fontsize, String color,
-			int offsetX, int offsetY, int dissolve) throws IOException, InterruptedException,
-			IM4JavaException {
-		IMOperation op = new IMOperation();
-		String option = " text " + offsetX + "," + offsetY + " \'" + text
-				+ "\'";
-		String fontpath = SystemConfig.getSystemPath() + "/font/msyh.ttf";
-		color = "#" + color;
-		color = "rgba\\(0,0,0,0.4\\)";
-		String formatOp = format + ":-";
-		byte[] imageOutData = null;
-
-		//TODO 文字透明度
-		
+			int offsetX, int offsetY,int alpha) throws InfoException{
+		String logoTmpSrc = SystemConfig.getLogoTmpSrc();
 		try {
-			op.font(fontpath).gravity("northwest").pointsize(fontsize)
-					.fill(color).annotate(20,20,offsetX,offsetY,text);
-			op.addImage("-");
-			op.addImage(formatOp);
-
-			// gif动图特殊处理
-			if (format == "gif")
-				op.coalesce();
-
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Pipe pipeOut = new Pipe(null, out);
-			ConvertCmd convert = new ConvertCmd(true);
-			convert.setInputProvider(pipeIn);
-			convert.setOutputConsumer(pipeOut);
-
-			System.out.println(op);
-			convert.run(op);
-			
-			imageOutData = out.toByteArray();
-
+			converFontToImage(text,fontsize,color);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return imageOutData;
+		
+		int width = new Info(logoTmpSrc).getImageWidth() ;
+		int height = new Info(logoTmpSrc).getImageHeight() ;
+		
+		return imgWaterMask(logoTmpSrc, width, height,offsetX, offsetY, alpha);
 	}
-
+	
+	
+	/**
+	 * 文字转换为图片
+	 * @param text
+	 * @param fontSize
+	 * @param color
+	 * @throws Exception
+	 */
+	public  void converFontToImage(String text,int fontSize,String color) throws Exception{  
+		String logoTmpSrc = SystemConfig.getLogoTmpSrc();
+		Font font=new Font("Microsoft YaHei",Font.BOLD,fontSize);  
+		File file=new File(logoTmpSrc);  
+		Rectangle2D r=font.getStringBounds(text, new FontRenderContext(AffineTransform.getScaleInstance(1, 1),false,false));  
+		int unitHeight=(int)Math.floor(r.getHeight());  
+		int width=(int)Math.round(r.getWidth())+1;  
+		int height=unitHeight+3;
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);  
+		Graphics2D g2d = image.createGraphics();  
+		image = g2d.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);  
+		g2d.dispose();  
+		g2d = image.createGraphics();  
+		g2d.setColor(Color.WHITE);  
+		g2d.setStroke(new BasicStroke(1));  
+		g2d.setColor(new Color(Integer.parseInt(color, 16)));
+		g2d.setFont(font);  
+		g2d.drawString(text, 0,font.getSize()); 	 
+		ImageIO.write(image, "png", file);
+	}   
+	
 	/**
 	 * 
 	 * @param logoSrc
@@ -296,7 +360,7 @@ public class GraphicMagick {
 		String formatOp = format + ":-";
 		byte[] imageOutData = null;
 		try {
-			op.dissolve(dissolve*100);
+			op.dissolve(dissolve);
 			op.gravity("northwest");
 			op.geometry(width, height, offsetX, offsetY);
 			op.addImage(logoSrc);
@@ -313,6 +377,7 @@ public class GraphicMagick {
 			convert.setInputProvider(pipeIn);
 			convert.setOutputConsumer(pipeOut);
 			convert.run(op);
+			System.out.println(op);
 			imageOutData = out.toByteArray();
 			
 		} catch (Exception e) {

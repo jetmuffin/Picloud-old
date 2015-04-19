@@ -279,7 +279,7 @@
               hoverCursor:"default"
             });
             plugin.canvas.add(plugin.backgroundImage);
-          }
+            
           	if(logoUrl != null){
                 var logoImage = new Image();
                 logoImage.src = logoUrl;
@@ -292,6 +292,8 @@
                   plugin.canvas.add(plugin.logo);
                 }
           	}
+          }
+
   
           return this;
         },
@@ -438,24 +440,25 @@
           var left = Math.round((textmark.left - editor.plugin.backgroundImage.left)/scale);
           var top = Math.round((textmark.top - editor.plugin.backgroundImage.top)/scale);
           var text = textmark.text;
-          var opacity = textmark.opacity;
+          var opacity = textmark.opacity*100;
           var fontSize = textmark.fontSize;
           var color = textmark.fill;
           if(color == 'rgb(0,0,0)')
             color = '#000000';
           //TODO add opacity
           color = color.substr(1);
-          return url + img + '/textmark[' + left + ',' + top + ',' + text + ',' + fontSize + ',' + color +']';
+          return url + img + '/textmark[' + left + ',' + top + ',' + text + ',' + fontSize + ',' + color +',' + opacity+']';
         },
 
         watermark: function(url,img,logo){
           var logo = editor.getImage(editor.logo);
           var watermark = editor.plugin.logo;
-          var height = Math.round(watermark.height*watermark.scaleY);
-          var width = Math.round(watermark.width*watermark.scaleX);
-          var left = Math.round(watermark.left - editor.plugin.backgroundImage.left);
-          var top = Math.round(watermark.top - editor.plugin.backgroundImage.top);
-          var opacity = watermark.opacity;
+          var scale = editor.plugin.size.scale;
+          var height = Math.round(watermark.height*watermark.scaleY/scale);
+          var width = Math.round(watermark.width*watermark.scaleX/scale);
+          var left = Math.round((watermark.left - editor.plugin.backgroundImage.left)/scale);
+          var top = Math.round((watermark.top - editor.plugin.backgroundImage.top)/scale);
+          var opacity = watermark.opacity*100;
           return url + img + '/watermark[' + left + ',' + top + ',' + width + ',' + height + ',' + logo + ',' + opacity +']';
         },
 

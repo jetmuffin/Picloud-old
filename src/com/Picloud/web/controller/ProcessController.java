@@ -491,8 +491,10 @@ public class ProcessController {
 		User loginUser = (User) session.getAttribute("LoginUser");
 		ImageReader imageReader = new ImageReader(infoDaoImpl);		byte[] buffer = imageReader.readPicture(imageKey);
 		GraphicMagick gm = new GraphicMagick(buffer, "jpg");
+		 text = new String(text.getBytes("iso8859-1"),
+					"utf-8");
 		byte[] bufferOut = gm.textWaterMask(text, fontSize, color, startX, startY,dissolve);
-		
+		System.out.println(text);
 		if (bufferOut != null) {
 			// 输出byte为图片
 			InputStream imageIn = new ByteArrayInputStream(bufferOut);
