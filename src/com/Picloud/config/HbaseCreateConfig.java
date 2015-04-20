@@ -67,6 +67,7 @@ public class HbaseCreateConfig {
 				} else {
 					HTableDescriptor tableDescriptor = new HTableDescriptor(
 							TableName.valueOf(mNameList.get(i)));
+					System.out.println("创建表:"+mNameList.get(i));
 					// 添加列族
 					for (int j = 0; j < columnNumbers; j++) {
 						tableDescriptor.addFamily(new HColumnDescriptor(
