@@ -79,9 +79,6 @@ public class PanoController {
 		System.out.println("user"+loginUser);
 		List<PanoImage> panoImages = panoImageDao.load(loginUser.getUid());
 		model.addAttribute("panoImages", panoImages);
-		
-		Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "查看全景图片");
-		mLogDaoImpl.add(log);
 		return "pano/list";
 	}
 	

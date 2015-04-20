@@ -36,28 +36,17 @@
             <div class="project-list">
               <table class="table table-hover">
                 <tbody>
-                  <tr>
-                    <td class="project-title">
-                      <a href="project_detail.html">示例图片</a>
-                    </td>
-                    <td class="project-completion">
-                      图片大小: 4.8MB
-                    </td>
-                    <td class="project-create">
-                      创建时间：2014-12-10
-                    </td>
-                    <td class="project-actions">
-                      <a href="{:U('Appcenter/hidfpic/example.jpg')}" class="btn btn-default btn-sm"  target="_blank"><i class="fa fa-folder"></i> 查看 </a>
-                      <a href="#" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
-                    </td>
-                  </tr>
+                 
+                 		<c:if test="${empty hdImages}">
+                 											暂未上传图片
+                 		</c:if>
                     <c:forEach var="hdImage"  items="${hdImages}" > 
                     <tr>
                       <td class="project-title">
                         <a href="${ROOT}/hd/${hdImage.key}">${hdImage.name}</a>
                       </td>
                       <td class="project-completion">
-                        图片大小: ${hdImage.size}MB
+                        图片大小: ${jt.cutLength(hdImage.size)}MB
                       </td>
                       <td class="project-create">
                         创建时间：${jt.getStrTime(hdImage.createTime)}

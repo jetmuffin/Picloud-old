@@ -119,6 +119,7 @@ public class ThreeDController {
 			String key = "";
 			try {
 				List items = upload.parseRequest(request);
+				System.out.println(items.size());
 				Iterator iter = items.iterator();
 				boolean flag = false;
 				while (iter.hasNext()) {

@@ -37,18 +37,9 @@
 								<div class="project-list">
 									<table class="table table-hover">
 										<tbody>
-											<tr>
-												<td class="project-title"><a href="project_detail.html">示例物品</a>
-												</td>
-												<td class="project-create">创建时间：2014-12-10</td>
-												<td class="project-actions"><if
-														condition="($pano['name'] eq 'example.jpg')"> <a
-														href="{:U('Appcenter/overallview/example.jpg')}"
-														class="btn btn-default btn-sm" target="_blank"><i
-														class="fa fa-folder"></i> 查看 </a> <a href="#"
-														class="btn btn-default btn-sm"><i class="fa fa-pencil"></i>
-														删除 </a></td>
-											</tr>
+										    <c:if test="${empty panoImages}">
+                 											暂未上传图片
+                 		</c:if>
 											<c:forEach var="pano"  items="${panoImages}" > 
 											<td class="project-title"><a target="_blank" href="${ROOT}/pano/${pano.key }">${pano.name}</a>
 											</td>

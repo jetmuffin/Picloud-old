@@ -134,9 +134,9 @@
 								    <div role="tabpanel" class="tab-pane" id="music">
 											<form action="${ROOT}/pano/${panoImage.key}/music" enctype="multipart/form-data" class="form-horizontal pano-form" method="post">
 												<div class="form-group">
-													<label class="col-sm-2 control-label">背景音乐</label>
+													<label class="col-sm-2 control-label" >背景音乐</label>
 													<div class="col-sm-10">
-													<label class="col-sm-2 control-label">${panoImage.mus_path}</label>
+													<label class="col-sm-2 control-label" style="white-space: nowrap;">${panoImage.mus_path}</label>
 														
 													</div>
 												</div>

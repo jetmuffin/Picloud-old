@@ -4,9 +4,34 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>${TITLE}</title>
+<link rel="stylesheet" href="${RESOURCES}/css/common.css" />
+<style>
+.middle-box{
+max-width: 400px;
+z-index: 100;
+margin: 0 auto;
+padding-top: 40px;
+text-align:center;
+margin-top:30px;
+}
+.middle-box h1{
+	font-size:120px;
+}
+.font-bold{
+	font-weight:bold;
+	padding:10px;
+}
+</style>
 </head>
 <body>
-${e.message}
+
+<div class="middle-box text-center animated fadeInDown">
+        <h1>出错了</h1>
+<h3 class="font-bold">错误信息:</h3>
+        <div class="error-desc">
+           <h3>${e.message}</h3>
+        </div>
+    </div>
 </body>
 </html>

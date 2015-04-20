@@ -546,3 +546,12 @@ body.mini-navbar .nav-second-level li a:hover{
 .datanode-tag{
 	text-align:center;
 }
+.middle-box {
+max-width: 400px;
+z-index: 100;
+margin: 0 auto;
+padding-top: 40px;
+}
+.middle-box h1 {
+font-size: 170px;
+}
