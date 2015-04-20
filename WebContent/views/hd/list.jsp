@@ -45,9 +45,6 @@
                       <td class="project-title">
                         <a href="${ROOT}/hd/${hdImage.key}">${hdImage.name}</a>
                       </td>
-                      <td class="project-completion">
-                        图片大小: ${jt.cutLength(hdImage.size)}MB
-                      </td>
                       <td class="project-create">
                         创建时间：${jt.getStrTime(hdImage.createTime)}
                       </td>
