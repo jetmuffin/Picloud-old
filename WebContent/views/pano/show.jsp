@@ -18,7 +18,7 @@
   <div class="bg-wrapper">
     <div id="container"  data-key="${panoImage.key}" ></div>
     <div id="url_base" data-url = "${IP}${ROOT}"></div>
-    		<h2 id="title" style="width:100%;position:absolute;top:20px;text-align:center">
+    		<h2 id="title" style="width:100%;position:absolute;top:20px;text-align:center;color:#fff;font-size:40px;background:rgba(0,0,0,0.5);">
     					
     		</h2>
 		 <div class="toolbar">
@@ -39,11 +39,11 @@
 		 </div>
 		 </div>
 		   	<c:if test="${not empty panoImage.mus_path}">
-  			<!--  	<audio src="${IP}${ROOT}/pano/readMusic?path=${jt.urlEncode(panoImage.mus_path)}" loop autoplay>
+  			 	<audio controls="controls"  style="position:absolute;top:20px;right:20px;" src="${IP}${ROOT}/pano/readMusic?path=${jt.urlEncode(panoImage.mus_path)}" loop autoplay>
 							Your browser does not support the audio element.
-							</audio>-->	
+							</audio>
 							
-							 <embed style="position:absolute;top:0;right:10px;"autoplay="true" src="${IP}${ROOT}/pano/readMusic?path=${jt.urlEncode(panoImage.mus_path)}"/>       
+			<!-- 				 <embed style="position:absolute;top:0;right:10px;"autoplay="true"  loop=tsrc="${IP}${ROOT}/pano/readMusic?path=${jt.urlEncode(panoImage.mus_path)}"/>    -->    
   	</c:if>
   <div id="s" style="width:100%; color:#000;position:absolute;bottom:20px; white-space:nowrap; overflow:hidden; height:20px;">
     <div id="noticeList" style="position:absolute; z-index:1000;top:0; height:20px;"></div>

@@ -5,9 +5,9 @@ $(document).ready(function(){
 	var url_base = $('#url_base').attr('data-url');
 	var url_hdfs = url_base + '/inspect/hdfs.json';
     var color = [
+                 "#EFEFEF",
                  "#1ab394",
-                 "#79d2c0",
-                 "#53F5D4",
+                 "#CCC",
                  "#169C80",
                  "#3FB4A7",
                  "#3FADB4"

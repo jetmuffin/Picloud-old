@@ -63,7 +63,7 @@
 										</div>
 										<div class="col-md-6">
 											<a
-												href="${space.name }/delete"
+												href="${ROOT}/space/${space.key }/delete"
 												class="btn btn-default btn-block"><i class="fa fa-trash"></i>
 												删除</a>
 										</div>

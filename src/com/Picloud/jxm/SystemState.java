@@ -12,7 +12,6 @@ import com.Picloud.web.model.SystemStateInfo;
 
 public class SystemState {
 
-
 	private static DecimalFormat df = new DecimalFormat("#.00");
 
 	public static SystemStateInfo getSystemState() {
@@ -20,7 +19,7 @@ public class SystemState {
 		String nameNodeStatus = PropertiesUtil.getValue("nameNodeStatus");
 		String FSNamesystemState = PropertiesUtil.getValue("FSNamesystemState");
 		String memory = PropertiesUtil.getValue("memory");
-		
+
 		SystemStateInfo info = new SystemStateInfo();
 
 		JSONObject jsonNameNodeInfo = new JSONObject().fromObject(SendGet
@@ -78,43 +77,59 @@ public class SystemState {
 
 		String nodeUsageStdDev = jsonNode.getString("stdDev");
 		info.setNodeUsageStdDev(nodeUsageStdDev);
-		
-		//////////////////////////////
+
+		// ////////////////////////////
 
 		JSONObject datanode = jsonInfo.getJSONObject("LiveNodes");
-	
-		JSONObject node = datanode.getJSONObject("Jeff-PC");
-		
-		DataNodeState dns = new DataNodeState();
-		dns.setNode(node.getString("xferaddr"));
-		
-		Double datanodecapacity =Double.valueOf( node.getString("capacity"))/ (1024 * 1024 * 1024);
-		dns.setCapacity(df.format(datanodecapacity)+"GB");
-		
-		Double datanodeused =Double.valueOf( node.getString("used"))/ (1024 * 1024);
-		dns.setUsed(df.format(datanodeused)+"MB");
-		
-		Double nonDfsUsedSpace =Double.valueOf( node.getString("nonDfsUsedSpace"))/ (1024 * 1024*1024);
-		dns.setNonDFSUsed(df.format(nonDfsUsedSpace)+"GB");
-		
-		Double datanoderemaining =Double.valueOf( node.getString("remaining"))/ (1024 * 1024*1024);
-		dns.setRemaining(df.format(datanoderemaining)+"GB");
-		
-		dns.setBlocks(node.getString("numBlocks"));
-		
-		Double datanodeblockPoolUsed =Double.valueOf( node.getString("blockPoolUsed"))/ (1024 * 1024);
-		dns.setBlockPoolUsed((df.format(datanodeblockPoolUsed)+"MB"));
-		
-		dns.setFailedVolumes(node.getString("volfails"));
-		
-		dns.setVersion(node.getString("version"));
-		
-		info.getDatanodes().add(dns);
-		
+
+		for (int i = 0; i < 2; i++) {
+			String str = "";
+			if(i ==0)str = "inenrac-ubuntu";
+			else if(i==1) str ="sloriac-ThinkPad";
+			else str = "Jeff-PC";
+			
+			JSONObject node1 = (JSONObject) datanode
+					.getJSONObject(str);
+			
+			if(node1 == null)
+					continue;
+			DataNodeState dns = new DataNodeState();
+			dns.setNode(node1.getString("xferaddr"));
+
+			Double datanodecapacity = Double.valueOf(node1
+					.getString("capacity")) / (1024 * 1024 * 1024);
+			dns.setCapacity(df.format(datanodecapacity) + "GB");
+
+			Double datanodeused = Double.valueOf(node1.getString("used"))
+					/ (1024 * 1024);
+			dns.setUsed(df.format(datanodeused) + "MB");
+
+			Double nonDfsUsedSpace = Double.valueOf(node1
+					.getString("nonDfsUsedSpace")) / (1024 * 1024 * 1024);
+			dns.setNonDFSUsed(df.format(nonDfsUsedSpace) + "GB");
+
+			Double datanoderemaining = Double.valueOf(node1
+					.getString("remaining")) / (1024 * 1024 * 1024);
+			dns.setRemaining(df.format(datanoderemaining) + "GB");
+
+			dns.setBlocks(node1.getString("numBlocks"));
+
+			Double datanodeblockPoolUsed = Double.valueOf(node1
+					.getString("blockPoolUsed")) / (1024 * 1024);
+			dns.setBlockPoolUsed((df.format(datanodeblockPoolUsed) + "MB"));
+
+			dns.setFailedVolumes(node1.getString("volfails"));
+
+			dns.setVersion(node1.getString("version"));
+
+			info.getDatanodes().add(dns);
+		}
+
 		System.out.println(info);
 		return info;
 	}
-//
+
+	//
 	public static void main(String[] args) {
 		System.out.println(getSystemState());
 	}

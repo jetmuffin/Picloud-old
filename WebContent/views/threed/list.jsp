@@ -36,13 +36,9 @@
             <div class="project-list">
               <table class="table table-hover">
                 <tbody>
-                 
-                 		<c:if test="${empty threeDImages}">
-                 											暂未上传图片
-                 		</c:if>
                     <c:forEach var="threeD"  items="${threeDImages}" > 
                     <td class="project-title">
-                      <a href="${ROOT}/threeD/${threeD.key }">${threeD.name}</a>
+                      <a href="${ROOT}/threeD/${threeD.key}">${threeD.name}</a>
                     </td>
                     <td class="project-completion">
                       图片大小: ${jt.cutLength(threeD.size)}MB

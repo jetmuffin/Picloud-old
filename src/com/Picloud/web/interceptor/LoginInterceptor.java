@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/LoginInterceptor")
 public class LoginInterceptor implements Filter {
 
-	 String[] IGNORE_PAGE = new String[] { "login.jsp", "register.jsp","/login","/register","/resources","/server","/process"};  
+	 String[] IGNORE_PAGE = new String[] { "login.jsp", "register.jsp","/login","/register","/resources","/server","/process","/pano","/hd","/threeD"};  
 
     public LoginInterceptor() {
         // TODO Auto-generated constructor stub

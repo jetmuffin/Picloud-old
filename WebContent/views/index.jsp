@@ -14,7 +14,7 @@
 </head>
 <body>
 	<div class="wrap">
-		<jsp:include page="common/header.jsp" />
+		<jsp:include page="../views/common/header.jsp" />
 		<div class="page-wrapper">
 			<jsp:include page="common/navbar.jsp" />
 			<jsp:include page="common/breadcrumb.jsp" />
@@ -66,7 +66,7 @@
 												</small>
 											</div>
 											<div class="progress progress-small">
-												<div style="width: <?php echo $user['totSize']/5;?>%;"
+												<div style="width:${jt.cutLength(LoginUser.imageTotalSize)/500};%;"
 													class="progress-bar progress-default"></div>
 											</div>
 										</div>

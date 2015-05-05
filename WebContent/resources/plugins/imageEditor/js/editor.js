@@ -84,7 +84,7 @@
               left: plugin.image.left + plugin.image.width * plugin.image.scaleX / 2,
               top: plugin.image.top - 20,
               fontFamily: 'Impact',
-              fill: '#fff',
+              fill: '#000000',
               visible: false,
             });
             plugin.canvas.add(widthTag);
@@ -94,7 +94,7 @@
               left: plugin.image.left + plugin.image.width * plugin.image.scaleX + 20,
               top: plugin.image.top + plugin.image.height * plugin.image.scaleY/2,
               fontFamily: 'Impact',
-              fill: '#fff',
+              fill: '#000000',
               visible: false
             });
             plugin.canvas.add(heightTag);

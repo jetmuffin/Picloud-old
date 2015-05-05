@@ -119,7 +119,6 @@ public class ThreeDController {
 			String key = "";
 			try {
 				List items = upload.parseRequest(request);
-				System.out.println(items.size());
 				Iterator iter = items.iterator();
 				boolean flag = false;
 				while (iter.hasNext()) {
@@ -149,9 +148,11 @@ public class ThreeDController {
 				
 				//更新Hbase
 				totalSize = totalSize/1024/1024 ;
+				int num =items.size()-2;
+				System.out.println(num);
 				String createTime = JspUtil.getCurrentDateStr();
 				ThreeDImage threeDImage = new ThreeDImage(key, threeDImageName,
-						loginUser.getUid(), createTime, Double.toString(totalSize), Integer.toString(items.size()-1));
+						loginUser.getUid(), createTime, Double.toString(totalSize), Integer.toString(num));
 				threeDImageDao.add(threeDImage);
 				
 				Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "上传3D图片"+threeDImage.getName());
@@ -175,6 +176,7 @@ public class ThreeDController {
 			User loginUser = (User) session.getAttribute("LoginUser");
 
 			ThreeDImage threeDImage = threeDImageDao.find(threeDkey);
+			System.out.println(threeDImage);
 			model.addAttribute("threeDImage", threeDImage);
 			return "threed/show";
 		}
@@ -198,7 +200,7 @@ public class ThreeDController {
 				response.reset();
 				OutputStream output = response.getOutputStream();// 得到输出流
 				response.setContentType("image/jpeg;charset=GB2312");  
-
+				
 				InputStream imageIn = new ByteArrayInputStream(fileByte);
 				BufferedInputStream bis = new BufferedInputStream(imageIn);// 输入缓冲流
 				BufferedOutputStream bos = new BufferedOutputStream(output);// 输出缓冲流

@@ -29,6 +29,7 @@ import com.Picloud.exception.UserException;
 import com.Picloud.image.GraphicMagick;
 import com.Picloud.image.ImageReader;
 import com.Picloud.image.ImageUpdate;
+import com.Picloud.memcached.Memcached;
 import com.Picloud.utils.PropertiesUtil;
 import com.Picloud.web.dao.impl.ImageDaoImpl;
 import com.Picloud.web.dao.impl.InfoDaoImpl;
@@ -300,6 +301,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() + "按照宽度："+width+"缩放了图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -393,6 +396,8 @@ public class ProcessController {
 			startY+"按照宽度："+width+"高度："+height+"裁剪了图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -498,6 +503,8 @@ public class ProcessController {
 					"Logo宽度："+width+"Logo高度："+height+"透明度"+optical+"添加了水印图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -598,6 +605,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"按照坐标："+startX+"，"+startY+ "大小："+fontSize+"颜色："+color+"添加了水印文字"+text);
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -671,6 +680,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"按照亮度："+brightness+"调节图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -825,6 +836,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"镜面翻转图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -897,6 +910,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"Lomo处理了图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -967,6 +982,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"灰化图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -1038,6 +1055,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"使用素炭笔处理了图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -1107,6 +1126,8 @@ public class ProcessController {
 			ImageUpdate imageUpdate=new ImageUpdate(infoDaoImpl);
 			imageUpdate.updateImage(bufferOut, loginUser.getUid(), image.getSpace(),imageKey);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -1178,6 +1199,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"锐化了图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");
@@ -1249,6 +1272,8 @@ public class ProcessController {
 			Log log=new Log(loginUser.getUid(),loginUser.getNickname() +"模糊了图片"+image.getName());
 			mLogDaoImpl.add(log);
 			
+			Memcached mcc = new Memcached();
+			mcc.flush();
 			response.setStatus(200);
 		} else {
 			throw new ProcessException("请输入正确的参数！");

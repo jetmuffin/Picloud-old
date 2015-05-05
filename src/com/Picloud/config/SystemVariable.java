@@ -31,7 +31,7 @@ public class SystemVariable extends HttpServlet {
 		UPLOAD = ROOT + "/resources/upload";
 		VIEWS = ROOT + "/views";
 		TITLE = "Picloud图片存储云";
-		IP = "http://localhost:8080";
+		IP = "http://master";
 		
 		application.setAttribute("ROOT",ROOT);
 		application.setAttribute("RESOURCES", RESOURCES);
